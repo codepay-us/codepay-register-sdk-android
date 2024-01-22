@@ -39,7 +39,8 @@ public class Payment {
         data.getBiz_data().setMerchant_order_no(params.merchantOrderNo);
         data.getBiz_data().setTrans_type("" + params.transType);
         data.getBiz_data().setOrder_amount(params.transAmount);
-        data.getBiz_data().setConfirm_on_terminal(true);
+        data.getBiz_data().setConfirm_on_terminal(false);
+        data.getBiz_data().setPay_scenario("SWIPE_CARD");
         data.setRequest_id(params.msgId);
         data.setTopic(params.getTopic());
         data.setApp_id(params.getAppId());

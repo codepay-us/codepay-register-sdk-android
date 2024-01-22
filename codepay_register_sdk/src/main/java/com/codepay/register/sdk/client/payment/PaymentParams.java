@@ -10,7 +10,7 @@ public class PaymentParams {
     String appId;
     //Merchant order number.
     String merchantOrderNo;
-
+    //Orig merchant order number
     String origMerchantOrderNo;
     //trans Amount
     String transAmount;
@@ -42,9 +42,21 @@ public class PaymentParams {
 
     String msgId;
 
+    String payScenario;
+
+    Boolean confirmOnTerminal;
+
     private VoiceData voice_data;
 
     private PrintData print_data;
+
+    public Boolean getConfirmOnTerminal() {
+        return confirmOnTerminal;
+    }
+
+    public void setConfirmOnTerminal(Boolean confirmOnTerminal) {
+        this.confirmOnTerminal = confirmOnTerminal;
+    }
 
     public void setOrigMerchantOrderNo(String origMerchantOrderNo) {
         this.origMerchantOrderNo = origMerchantOrderNo;
@@ -168,6 +180,14 @@ public class PaymentParams {
         this.notifyUrl = notifyUrl;
     }
 
+    public String getPayScenario() {
+        return payScenario;
+    }
+
+    public void setPayScenario(String payScenario) {
+        this.payScenario = payScenario;
+    }
+
     public void setPayMethod(String payMethod) {
         this.payMethod = payMethod;
     }
@@ -186,6 +206,8 @@ public class PaymentParams {
         json.put("app_id", this.appId);
         if (null != merchantOrderNo) {
             json.put("merchant_order_no", this.merchantOrderNo);
+            json.put("confirm_on_terminal", false);
+            json.put("pay_scenario", "SWIPE_CARD");
         }
         if (null != transAmount) {
             json.put("trans_amount", this.transAmount);

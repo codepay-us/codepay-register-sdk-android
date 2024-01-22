@@ -60,6 +60,7 @@ class PaymentActivity : Activity() {
             params.merchantOrderNo = merchantOrderNo
             params.transAmount = amount
             params.msgId = "111111"
+            params.confirmOnTerminal = false
             val voiceData = params.voice_data
             voiceData.content = "AddpayCashier2 Received a new order"
             voiceData.content_locale = "en-US"

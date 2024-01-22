@@ -303,6 +303,8 @@ public class ECRHubMessageData {
          */
         private String pay_method_category;
 
+        private String pay_scenario;
+
         /**
          * 支付方式id
          */
@@ -349,6 +351,18 @@ public class ECRHubMessageData {
 
         private boolean is_auto_settlement;
 
+
+        public boolean isConfirm_on_terminal() {
+            return confirm_on_terminal;
+        }
+
+        public String getPay_scenario() {
+            return pay_scenario;
+        }
+
+        public void setPay_scenario(String pay_scenario) {
+            this.pay_scenario = pay_scenario;
+        }
 
         public void setIs_auto_settlement(boolean is_auto_settlement) {
             this.is_auto_settlement = is_auto_settlement;

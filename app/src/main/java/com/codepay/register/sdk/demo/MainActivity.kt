@@ -79,6 +79,9 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
         when (v.id) {
             R.id.tv_btn_1 -> {
                 mPairServer?.start(this@MainActivity)
+                runOnUiThread {
+                    Toast.makeText(this, "Start Server", Toast.LENGTH_LONG).show()
+                }
             }
 
             R.id.tv_btn_2 -> {
