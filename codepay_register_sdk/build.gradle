@@ -1,0 +1,76 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles 'consumer-rules.pro'
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
+        debug {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    sourceSets {
+        main {
+            java {
+                srcDir 'src/main/java'
+            }
+        }
+    }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        maven {
+            url 'http://123.56.84.239:8070/nexus/content/groups/public'
+        }
+        maven {
+            url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
+        }
+    }
+}
+
+buildscript {
+    repositories {
+        maven {
+            url 'https://maven.aliyun.com/repository/public/'
+        }
+        maven {
+            url 'https://maven.aliyun.com/nexus/content/groups/public/'
+        }
+        google()
+        jcenter()
+    }
+}
+
+dependencies {
+    // OkHttp
+    api "com.squareup.okhttp3:okhttp:4.9.2"
+    api 'androidx.appcompat:appcompat:1.0.0'
+    api "com.squareup.okhttp3:logging-interceptor:4.9.2"
+    implementation group: 'org.jmdns', name: 'jmdns', version: '3.5.8'
+    //retrofit2
+    implementation 'org.java-websocket:Java-WebSocket:1.4.0'
+    api 'com.squareup.retrofit2:retrofit:2.7.1'
+    api 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
+}

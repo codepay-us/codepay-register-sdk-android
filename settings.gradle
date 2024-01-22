@@ -1,0 +1,2 @@
+include ':app', ':codepay_register_sdk'
+rootProject.name='codepay_register_sdk_demo'
