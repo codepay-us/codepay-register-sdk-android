@@ -111,10 +111,12 @@ public class Payment {
             data.getVoice_data().setContent_locale(params.getVoice_data().getContent_locale());
         }
         data.getBiz_data().setOrig_merchant_order_no(params.getOrigMerchantOrderNo());
+        data.getBiz_data().setOrig_merchant_order_no(params.getOrigMerchantOrderNo());
+        data.getBiz_data().setPay_method_category(params.getPayMethod());
         data.getBiz_data().setMerchant_order_no(params.merchantOrderNo);
         data.getBiz_data().setTrans_type("" + params.transType);
         data.getBiz_data().setOrder_amount(params.transAmount);
-        data.getBiz_data().setConfirm_on_terminal(true);
+        data.getBiz_data().setConfirm_on_terminal(false);
         data.setRequest_id(params.msgId);
         data.setTopic(params.getTopic());
         data.setApp_id(params.getAppId());
