@@ -73,7 +73,7 @@ class RefundActivity : Activity() {
             params.voice_data = voiceData
             runOnUiThread {
                 tv_btn_3.text =
-                    tv_btn_3.text.toString() + "\n" + "Send data" + params.toJSON().toString()
+                    "Send data" + params.toJSON().toString()
             }
             MainActivity.mClient.payment.refund(params, object :
                 ECRHubResponseCallBack {

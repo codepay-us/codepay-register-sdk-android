@@ -1,5 +1,6 @@
 package com.codepay.register.sdk.demo
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
@@ -17,6 +18,10 @@ import com.codepay.register.sdk.listener.ECRHubPairListener
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack
 import com.codepay.register.sdk.util.ECRHubMessageData
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.tv_btn_1
+import kotlinx.android.synthetic.main.activity_main.tv_btn_2
+import kotlinx.android.synthetic.main.activity_main.tv_btn_3
+import kotlinx.android.synthetic.main.activity_payment.*
 
 class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubPairListener {
     companion object {
@@ -75,6 +80,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
         isConnected = false
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onClick(v: View) {
         when (v.id) {
             R.id.tv_btn_1 -> {
@@ -100,6 +106,9 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                 }
                 var ip = "ws://" + mPairedList[0].ip_address + ":" + mPairedList[0].port
                 ECRHubClient.getInstance().connect(ip)
+                runOnUiThread {
+                    tv_text_1.text = "connect $ip"
+                }
             }
 
             R.id.tv_btn_3 -> {
@@ -110,6 +119,9 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                     return
                 }
                 mClient.disConnect()
+                runOnUiThread {
+                    tv_text_1.text = ""
+                }
             }
 
             R.id.tv_btn_5 -> {
@@ -134,6 +146,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                         mClient.disConnect()
                         runOnUiThread {
                             ll_layout1.visibility = View.GONE
+//                            tv_text_1.text = ""
                             Toast.makeText(this@MainActivity, "Unpair Success!", Toast.LENGTH_LONG)
                                 .show()
                         }
@@ -143,6 +156,9 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
             }
 
             R.id.tv_btn_10 -> {
+                runOnUiThread {
+                    Toast.makeText(this, "The APP is exiting...", Toast.LENGTH_LONG).show()
+                }
                 mPairServer?.stop()
                 mClient.disConnect()
                 finish()

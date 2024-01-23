@@ -56,31 +56,31 @@ class PaymentActivity : Activity() {
             val params = PaymentParams()
             params.transType = Constants.TRANS_TYPE_PURCHASE
             params.appId = "wz6012822ca2f1as78"
-            merchantOrderNo = "123" + getCurDateStr("yyyyMMddHHmmss")
+            merchantOrderNo = "DEMO" + getCurDateStr("yyyyMMddHHmmss")
             params.merchantOrderNo = merchantOrderNo
             params.transAmount = amount
             params.msgId = "111111"
             params.confirmOnTerminal = false
             val voiceData = params.voice_data
-            voiceData.content = "AddpayCashier2 Received a new order"
+            voiceData.content = "CodePay Register Received a new order"
             voiceData.content_locale = "en-US"
             params.voice_data = voiceData
             runOnUiThread {
                 tv_btn_3.text =
-                    tv_btn_3.text.toString() + "\n" + "Send data:" + params.toJSON().toString()
+                    "Send data  -->  " + params.toJSON().toString()
             }
             MainActivity.mClient.payment.purchase(params, object :
                 ECRHubResponseCallBack {
                 override fun onError(errorCode: String?, errorMsg: String?) {
                     runOnUiThread {
-                        tv_btn_3.text = tv_btn_3.text.toString() + "\n" + "Failure:" + errorMsg
+                        tv_btn_3.text = tv_btn_3.text.toString() + "\n" + "Failure  <--  " + errorMsg
                     }
                 }
 
                 override fun onSuccess(data: String?) {
                     runOnUiThread {
                         tv_btn_3.text =
-                            tv_btn_3.text.toString() + "\n" + "Result:" + data.toString()
+                            tv_btn_3.text.toString() + "\n" + "Result  <--  " + data.toString()
                     }
                 }
             })
