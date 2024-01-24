@@ -75,7 +75,7 @@
             android:background="#FFFFFF"
             android:gravity="center"
             android:padding="10dp"
-            android:text="Refund" />
+            android:text="Refund/Void" />
 
         <TextView
             android:id="@+id/tv_btn_8"

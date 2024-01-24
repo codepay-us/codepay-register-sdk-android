@@ -32,7 +32,7 @@ class QueryActivity : Activity() {
             params.msg_id = "11322"
             runOnUiThread {
                 tv_btn_3.text =
-                    tv_btn_3.text.toString() + "\n" + "Send data" + params.toJSON().toString()
+                    "Send data" + params.toJSON().toString()
             }
             MainActivity.mClient.payment.query(params, object :
                 ECRHubResponseCallBack {

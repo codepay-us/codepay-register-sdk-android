@@ -124,4 +124,33 @@ public class Payment {
             webSocketClient.send(JSON.toJSON(data).toString());
         }
     }
+
+    public void cancel(PaymentParams params, ECRHubResponseCallBack callBack) {
+        responseCallBack = callBack;
+        if (null == params.getTopic()) {
+            params.setTopic(PAYMENT_TOPIC);
+        }
+        if (null == params.transType) {
+            params.setTransType(Constants.TRANS_TYPE_VOID);
+        }
+        ECRHubMessageData data = new ECRHubMessageData();
+        if (null != params.getVoice_data() && null != params.getVoice_data().getContent()) {
+            data.getVoice_data().setContent(params.getVoice_data().getContent());
+            data.getVoice_data().setContent_locale(params.getVoice_data().getContent_locale());
+        }
+        data.getBiz_data().setOrig_merchant_order_no(params.getOrigMerchantOrderNo());
+        data.getBiz_data().setOrig_merchant_order_no(params.getOrigMerchantOrderNo());
+        data.getBiz_data().setPay_method_category(params.getPayMethod());
+        data.getBiz_data().setMerchant_order_no(params.merchantOrderNo);
+        data.getBiz_data().setTrans_type("" + params.transType);
+//        data.getBiz_data().setOrder_amount(params.transAmount);
+        data.getBiz_data().setConfirm_on_terminal(false);
+        data.setRequest_id(params.msgId);
+        data.setTopic(params.getTopic());
+        data.setApp_id(params.getAppId());
+        if (null != webSocketClient && webSocketClient.isOpen()) {
+            webSocketClient.send(JSON.toJSON(data).toString());
+        }
+    }
+
 }
