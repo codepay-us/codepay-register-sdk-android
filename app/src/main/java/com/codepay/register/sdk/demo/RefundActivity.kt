@@ -3,7 +3,9 @@ package com.codepay.register.sdk.demo
 import android.app.Activity
 import android.os.Bundle
 import android.widget.Toast
-import com.codepay.register.sdk.client.payment.PaymentParams
+import com.alibaba.fastjson.JSON
+import com.codepay.register.sdk.client.payment.PaymentRequestParams
+import com.codepay.register.sdk.client.payment.PaymentResponseParams
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack
 import com.codepay.register.sdk.util.Constants
 import kotlinx.android.synthetic.main.activity_refund.edit_input_amount
@@ -59,14 +61,15 @@ class RefundActivity : Activity() {
                 Toast.makeText(this, "Please input merchant order no", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-            val params = PaymentParams()
-            params.transType = Constants.TRANS_TYPE_REFUND
-            params.appId = "wz6012822ca2f1as78"
-            params.origMerchantOrderNo = merchantOrderNo
-            params.merchantOrderNo = "123" + getCurDateStr("yyyyMMddHHmmss")
-            params.payMethod = "BANKCARD"
-            params.transAmount = amount
-            params.msgId = "111111"
+            val params =
+                PaymentRequestParams()
+            params.trans_type = Constants.TRANS_TYPE_REFUND
+            params.app_id = "wz6012822ca2f1as78"
+            params.orig_merchant_order_no = merchantOrderNo
+            params.merchant_order_no = "123" + getCurDateStr("yyyyMMddHHmmss")
+            params.pay_method_id = "BANKCARD"
+            params.order_amount = amount
+            params.msg_id = "111111"
             val voiceData = params.voice_data
             voiceData.content = "AddpayCashier2 Received a new order"
             voiceData.content_locale = "en-US"
@@ -83,10 +86,10 @@ class RefundActivity : Activity() {
                     }
                 }
 
-                override fun onSuccess(data: String?) {
+                override fun onSuccess(data: PaymentResponseParams?) {
                     runOnUiThread {
                         tv_btn_3.text =
-                            tv_btn_3.text.toString() + "\n" + "Result:" + data.toString()
+                            tv_btn_3.text.toString() + "\n" + "Result:" + JSON.toJSON(data)
                     }
                 }
             })

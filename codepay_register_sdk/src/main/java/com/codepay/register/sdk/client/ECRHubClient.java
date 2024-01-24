@@ -8,6 +8,7 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.codepay.register.sdk.client.payment.Payment;
+import com.codepay.register.sdk.client.payment.PaymentResponseParams;
 import com.codepay.register.sdk.device.ECRHubDevice;
 import com.codepay.register.sdk.listener.ECRHubConnectListener;
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack;
@@ -71,12 +72,12 @@ public class ECRHubClient {
         webSocketClient = new WebSocketClient(uri) {
             @Override
             public void onMessage(String message) {
-                ECRHubMessageData data = JSON.parseObject(message, ECRHubMessageData.class);
+                PaymentResponseParams data = JSON.parseObject(message, PaymentResponseParams.class);
                 if (data.getTopic().equals(ECR_HUB_TOPIC_PAIR) || data.getTopic().equals(ECR_HUB_TOPIC_UNPAIR)) {
-                    pairCallBack.onSuccess(JSON.toJSON(data).toString());
+                    pairCallBack.onSuccess(data);
                 } else if (!data.getTopic().equals(HEART_BEAT_TOPIC)) {
                     if (null != payment && null != payment.getResponseCallBack()) {
-                        payment.getResponseCallBack().onSuccess(JSON.toJSON(data).toString());
+                        payment.getResponseCallBack().onSuccess(data);
                     }
                 }
             }

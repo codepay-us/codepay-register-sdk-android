@@ -3,7 +3,9 @@ package com.codepay.register.sdk.demo
 import android.app.Activity
 import android.os.Bundle
 import android.widget.Toast
-import com.codepay.register.sdk.client.payment.PaymentParams
+import com.alibaba.fastjson.JSON
+import com.codepay.register.sdk.client.payment.PaymentRequestParams
+import com.codepay.register.sdk.client.payment.PaymentResponseParams
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack
 import com.codepay.register.sdk.util.Constants
 import kotlinx.android.synthetic.main.activity_payment.edit_input_amount
@@ -53,14 +55,15 @@ class PaymentActivity : Activity() {
                 Toast.makeText(this, "Please input amount", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-            val params = PaymentParams()
-            params.transType = Constants.TRANS_TYPE_PURCHASE
-            params.appId = "wz6012822ca2f1as78"
+            val params =
+                PaymentRequestParams()
+            params.trans_type = Constants.TRANS_TYPE_PURCHASE
+            params.app_id = "wz6012822ca2f1as78"
             merchantOrderNo = "123" + getCurDateStr("yyyyMMddHHmmss")
-            params.merchantOrderNo = merchantOrderNo
-            params.transAmount = amount
-            params.msgId = "111111"
-            params.confirmOnTerminal = false
+            params.merchant_order_no = merchantOrderNo
+            params.order_amount = amount
+            params.msg_id = "111111"
+            params.confirm_on_terminal = false
             val voiceData = params.voice_data
             voiceData.content = "AddpayCashier2 Received a new order"
             voiceData.content_locale = "en-US"
@@ -77,10 +80,10 @@ class PaymentActivity : Activity() {
                     }
                 }
 
-                override fun onSuccess(data: String?) {
+                override fun onSuccess(data: PaymentResponseParams?) {
                     runOnUiThread {
                         tv_btn_3.text =
-                            tv_btn_3.text.toString() + "\n" + "Result:" + data.toString()
+                            tv_btn_3.text.toString() + "\n" + "Result:" + JSON.toJSON(data).toString()
                     }
                 }
             })

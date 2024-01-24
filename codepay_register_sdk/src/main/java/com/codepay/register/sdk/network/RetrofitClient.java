@@ -1,6 +1,7 @@
 package com.codepay.register.sdk.network;
 
 import com.alibaba.fastjson.JSONObject;
+import com.codepay.register.sdk.client.payment.PaymentResponseParams;
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack;
 
 import java.util.concurrent.TimeUnit;
@@ -67,7 +68,7 @@ public class RetrofitClient {
                     return;
                 }
                 JSONObject result = response.body();
-                callBack.onSuccess(result.toString());
+                callBack.onSuccess(JSONObject.parseObject(result.toString(), PaymentResponseParams.class));
             }
 
             @Override
@@ -86,7 +87,7 @@ public class RetrofitClient {
                     return;
                 }
                 JSONObject result = response.body();
-                callBack.onSuccess(result.toString());
+                callBack.onSuccess(JSONObject.parseObject(result.toString(), PaymentResponseParams.class));
             }
 
             @Override
@@ -105,7 +106,7 @@ public class RetrofitClient {
                     return;
                 }
                 JSONObject result = response.body();
-                callBack.onSuccess(result.toString());
+                callBack.onSuccess(JSONObject.parseObject(result.toString(), PaymentResponseParams.class));
             }
 
             @Override

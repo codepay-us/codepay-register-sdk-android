@@ -10,6 +10,7 @@ import android.view.View.OnClickListener
 import android.widget.Toast
 import com.codepay.register.sdk.client.ECRHubClient
 import com.codepay.register.sdk.client.ECRHubConfig
+import com.codepay.register.sdk.client.payment.PaymentResponseParams
 import com.codepay.register.sdk.device.ECRHubDevice
 import com.codepay.register.sdk.device.ECRHubWebSocketDiscoveryService
 import com.codepay.register.sdk.listener.ECRHubConnectListener
@@ -130,7 +131,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                         }
                     }
 
-                    override fun onSuccess(data: String?) {
+                    override fun onSuccess(data: PaymentResponseParams?) {
                         mClient.disConnect()
                         runOnUiThread {
                             ll_layout1.visibility = View.GONE

@@ -1,5 +1,7 @@
 package com.codepay.register.sdk.listener;
 
+import com.codepay.register.sdk.client.payment.PaymentResponseParams;
+
 /**
  * api return callback
  * User: pupan
@@ -25,5 +27,5 @@ public interface ECRHubResponseCallBack {
      *
      * @param data response
      */
-    void onSuccess(String data);
+    void onSuccess(PaymentResponseParams data);
 }

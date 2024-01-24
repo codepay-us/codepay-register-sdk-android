@@ -3,7 +3,9 @@ package com.codepay.register.sdk.demo
 import android.app.Activity
 import android.os.Bundle
 import android.widget.Toast
-import com.codepay.register.sdk.client.payment.PaymentParams
+import com.alibaba.fastjson.JSON
+import com.codepay.register.sdk.client.payment.PaymentRequestParams
+import com.codepay.register.sdk.client.payment.PaymentResponseParams
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack
 import kotlinx.android.synthetic.main.activity_close.edit_input_merchant_order_no
 import kotlinx.android.synthetic.main.activity_close.tv_btn_1
@@ -23,10 +25,11 @@ class CloseActivity : Activity() {
                 Toast.makeText(this, "please input merchant order no", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-            val params = PaymentParams()
-            params.origMerchantOrderNo = merchantOrderNo
-            params.appId = "wz6012822ca2f1as78"
-            params.msgId = "11322"
+            val params =
+                PaymentRequestParams()
+            params.orig_merchant_order_no = merchantOrderNo
+            params.app_id = "wz6012822ca2f1as78"
+            params.msg_id = "11322"
             MainActivity.mClient.payment.close(params, object :
                 ECRHubResponseCallBack {
                 override fun onError(errorCode: String?, errorMsg: String?) {
@@ -35,10 +38,10 @@ class CloseActivity : Activity() {
                     }
                 }
 
-                override fun onSuccess(data: String?) {
+                override fun onSuccess(data: PaymentResponseParams?) {
                     runOnUiThread {
                         tv_btn_3.text =
-                            tv_btn_3.text.toString() + "\n" + "result:" + data.toString()
+                            tv_btn_3.text.toString() + "\n" + "result:" + JSON.toJSON(data)
                     }
                 }
 
