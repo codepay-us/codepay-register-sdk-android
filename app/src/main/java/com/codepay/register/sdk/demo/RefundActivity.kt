@@ -97,13 +97,13 @@ class RefundActivity : Activity() {
                 Toast.makeText(this, "Please input merchant order no", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-            val params = PaymentParams()
-            params.transType = Constants.TRANS_TYPE_VOID
-            params.appId = "wz6012822ca2f1as78"
-            params.origMerchantOrderNo = merchantOrderNo
-            params.merchantOrderNo = "123" + getCurDateStr("yyyyMMddHHmmss")
-            params.payMethod = "BANKCARD"
-            params.msgId = "111111"
+            val params = PaymentRequestParams()
+            params.trans_type = Constants.TRANS_TYPE_VOID
+            params.app_id = "wz6012822ca2f1as78"
+            params.orig_merchant_order_no = merchantOrderNo
+            params.merchant_order_no = "123" + getCurDateStr("yyyyMMddHHmmss")
+            params.pay_method_id = "BANKCARD"
+            params.msg_id = "111111"
             val voiceData = params.voice_data
             voiceData.content = "CodePay Register Received a new order"
             voiceData.content_locale = "en-US"
@@ -120,10 +120,10 @@ class RefundActivity : Activity() {
                     }
                 }
 
-                override fun onSuccess(data: String?) {
+                override fun onSuccess(data: PaymentResponseParams?) {
                     runOnUiThread {
                         tv_btn_3.text =
-                            tv_btn_3.text.toString() + "\n" + "Result:" + data.toString()
+                            tv_btn_3.text.toString() + "\n" + "Result:" + JSON.toJSON(data)
                     }
                 }
             })
