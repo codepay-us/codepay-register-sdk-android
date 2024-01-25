@@ -3,7 +3,11 @@ package com.codepay.register.sdk.demo
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
+import android.net.NetworkInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -85,32 +89,69 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
     override fun onClick(v: View) {
         when (v.id) {
             R.id.tv_btn_1 -> {
-                mPairServer?.start(this@MainActivity)
-                runOnUiThread {
-                    Toast.makeText(this, "Start Server", Toast.LENGTH_LONG).show()
+                // Get the connectivity manager
+                val connectivityManager =
+                    getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                val network = connectivityManager.activeNetwork
+                // Check if the network is connected and is of type WI-FI
+                val capabilities = connectivityManager.getNetworkCapabilities(network)
+                if (capabilities != null && capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    mPairServer?.start(this@MainActivity)
+                    runOnUiThread {
+                        Toast.makeText(this, "Start Server", Toast.LENGTH_LONG).show()
+                    }
+                } else {
+                    // If not connected to WI-FI, display a prompt
+                    runOnUiThread {
+                        Toast.makeText(
+                            this,
+                            "Please connect to WI-FI before performing this operation",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
+
             }
 
             R.id.tv_btn_2 -> {
-                mPairedList = mPairServer!!.pairedDeviceList
-                if (mPairedList.isEmpty()) {
-                    runOnUiThread {
-                        Toast.makeText(this, "Paired list is empty", Toast.LENGTH_LONG).show()
+                // Get the connectivity manager
+                val connectivityManager =
+                    getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                val network = connectivityManager.activeNetwork
+                // Check if the network is connected and is of type WI-FI
+                val capabilities = connectivityManager.getNetworkCapabilities(network)
+                if (capabilities != null && capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
+                    mPairedList = mPairServer!!.pairedDeviceList
+                    if (mPairedList.isEmpty()) {
+                        runOnUiThread {
+                            Toast.makeText(this, "Paired list is empty", Toast.LENGTH_LONG).show()
+                        }
+                        return
                     }
-                    return
-                }
-                if (isConnected) {
-                    runOnUiThread {
-                        Toast.makeText(this, "Server is connect", Toast.LENGTH_LONG).show()
+                    if (isConnected) {
+                        runOnUiThread {
+                            Toast.makeText(this, "Server is connected", Toast.LENGTH_LONG).show()
+                        }
+                        return
                     }
-                    return
-                }
-                var ip = "ws://" + mPairedList[0].ip_address + ":" + mPairedList[0].port
-                ECRHubClient.getInstance().connect(ip)
-                runOnUiThread {
-                    tv_text_1.text = "connect $ip"
+                    // Perform the connection operation
+                    var ip = "ws://" + mPairedList[0].ip_address + ":" + mPairedList[0].port
+                    ECRHubClient.getInstance().connect(ip)
+                    runOnUiThread {
+                        tv_text_1.text = "connect $ip"
+                    }
+                } else {
+                    // If not connected to WI-FI, display a prompt
+                    runOnUiThread {
+                        Toast.makeText(
+                            this,
+                            "Please connect to WI-FI before performing this operation",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
             }
+
 
             R.id.tv_btn_3 -> {
                 if (!isConnected) {
