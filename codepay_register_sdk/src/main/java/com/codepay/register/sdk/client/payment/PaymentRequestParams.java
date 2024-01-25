@@ -61,6 +61,8 @@ public class PaymentRequestParams {
 
     Boolean confirm_on_terminal;
 
+    Boolean on_screen_tip;
+
     private String card_type;
 
     private VoiceData voice_data;
@@ -209,6 +211,14 @@ public class PaymentRequestParams {
         this.pay_scenario = pay_scenario;
     }
 
+    public Boolean getOn_screen_tip() {
+        return on_screen_tip;
+    }
+
+    public void setOn_screen_tip(Boolean on_screen_tip) {
+        this.on_screen_tip = on_screen_tip;
+    }
+
     public void setPay_method_id(String pay_method_id) {
         this.pay_method_id = pay_method_id;
     }
@@ -225,6 +235,10 @@ public class PaymentRequestParams {
             json.put("merchant_order_no", this.merchant_order_no);
             json.put("confirm_on_terminal", false);
             json.put("pay_scenario", "SWIPE_CARD");
+            json.put("on_screen_tip", false);
+        }
+        if (null != orig_merchant_order_no) {
+            json.put("orig_merchant_order_no", this.orig_merchant_order_no);
         }
         if (null != order_amount) {
             json.put("order_amount", this.order_amount);
@@ -235,14 +249,14 @@ public class PaymentRequestParams {
         json.put("trans_type", this.trans_type);
         json.put("pay_method_category", this.pay_method_id);
         if (null != description) {
-            json.put("tip_amount", this.tip_amount);
+            json.put("description", this.description);
         }
         if (null != notify_url) {
             json.put("notify_url", this.notify_url);
         }
-        if (null != notify_url) {
-            json.put("notify_url", this.notify_url);
-        }
+//        if (null != notify_url) {
+//            json.put("notify_url", this.notify_url);
+//        }
         if (null != attach) {
             json.put("attach", this.attach);
         }

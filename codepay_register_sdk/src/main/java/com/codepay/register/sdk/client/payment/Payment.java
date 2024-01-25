@@ -111,7 +111,6 @@ public class Payment {
             data.getVoice_data().setContent_locale(params.getVoice_data().getContent_locale());
         }
         data.getBiz_data().setOrig_merchant_order_no(params.getOrig_merchant_order_no());
-        data.getBiz_data().setOrig_merchant_order_no(params.getOrig_merchant_order_no());
         data.getBiz_data().setPay_method_category(params.getPay_method_id());
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.getBiz_data().setTrans_type("" + params.trans_type);

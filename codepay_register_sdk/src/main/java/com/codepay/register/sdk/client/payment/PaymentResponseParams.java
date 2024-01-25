@@ -158,6 +158,10 @@ public class PaymentResponseParams {
 
         private String tip_amount;
 
+        private String service_charge_amount;
+
+        private String tax_amount;
+
         private String price_currency;
 
         private String trans_type;
@@ -167,6 +171,22 @@ public class PaymentResponseParams {
         private boolean is_auto_settlement;
 
         private String card_type;
+
+        public String getService_charge_amount() {
+            return service_charge_amount;
+        }
+
+        public void setService_charge_amount(String service_charge_amount) {
+            this.service_charge_amount = service_charge_amount;
+        }
+
+        public String getTax_amount() {
+            return tax_amount;
+        }
+
+        public void setTax_amount(String tax_amount) {
+            this.tax_amount = tax_amount;
+        }
 
         public void setCard_type(String card_type) {
             this.card_type = card_type;
@@ -196,22 +216,12 @@ public class PaymentResponseParams {
             this.is_auto_settlement = is_auto_settlement;
         }
 
-        String token;
-
         public void setCashback_amount(String cashback_amount) {
             this.cashback_amount = cashback_amount;
         }
 
         public String getCashback_amount() {
             return cashback_amount;
-        }
-
-        public void setToken(String token) {
-            this.token = token;
-        }
-
-        public String getToken() {
-            return token;
         }
 
         public void setLimit_length(boolean limit_length) {

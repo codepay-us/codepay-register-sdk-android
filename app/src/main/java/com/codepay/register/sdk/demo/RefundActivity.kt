@@ -43,6 +43,7 @@ class RefundActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_refund)
+        val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
         tv_btn_2.setOnClickListener {
             finish()
         }
@@ -53,15 +54,15 @@ class RefundActivity : Activity() {
                 return@setOnClickListener
             }
             val merchantOrderNo = edit_input_merchant_order_no.text.toString()
-            if (merchantOrderNo.isEmpty()) {
-                Toast.makeText(this, "Please input merchant order no", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
-            val params =
-                PaymentRequestParams()
+            val params = PaymentRequestParams()
             params.trans_type = Constants.TRANS_TYPE_REFUND
             params.app_id = "wz6012822ca2f1as78"
-            params.orig_merchant_order_no = merchantOrderNo
+            if (merchantOrderNo.isEmpty()){
+                params.orig_merchant_order_no = sharedPreferences.getString("merchant_order_no","").toString()
+            } else {
+                params.orig_merchant_order_no = merchantOrderNo
+
+            }
             params.merchant_order_no = "123" + getCurDateStr("yyyyMMddHHmmss")
             params.pay_method_id = "BANKCARD"
             params.order_amount = amount
@@ -93,14 +94,14 @@ class RefundActivity : Activity() {
 
         tv_btn_4.setOnClickListener {
             val merchantOrderNo = edit_input_merchant_order_no.text.toString()
-            if (merchantOrderNo.isEmpty()) {
-                Toast.makeText(this, "Please input merchant order no", Toast.LENGTH_LONG).show()
-                return@setOnClickListener
-            }
             val params = PaymentRequestParams()
             params.trans_type = Constants.TRANS_TYPE_VOID
             params.app_id = "wz6012822ca2f1as78"
-            params.orig_merchant_order_no = merchantOrderNo
+            if (merchantOrderNo.isEmpty()){
+                params.orig_merchant_order_no = sharedPreferences.getString("merchant_order_no","").toString()
+            } else {
+                params.orig_merchant_order_no = merchantOrderNo
+            }
             params.merchant_order_no = "123" + getCurDateStr("yyyyMMddHHmmss")
             params.pay_method_id = "BANKCARD"
             params.msg_id = "111111"

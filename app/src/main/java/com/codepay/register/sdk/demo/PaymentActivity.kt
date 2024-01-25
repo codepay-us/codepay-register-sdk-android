@@ -46,6 +46,7 @@ class PaymentActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_payment)
+        val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
         tv_btn_2.setOnClickListener {
             finish()
         }
@@ -55,8 +56,7 @@ class PaymentActivity : Activity() {
                 Toast.makeText(this, "Please input amount", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-            val params =
-                PaymentRequestParams()
+            val params = PaymentRequestParams()
             params.trans_type = Constants.TRANS_TYPE_PURCHASE
             params.app_id = "wz6012822ca2f1as78"
             merchantOrderNo = "123" + getCurDateStr("yyyyMMddHHmmss")
@@ -81,6 +81,9 @@ class PaymentActivity : Activity() {
                 }
 
                 override fun onSuccess(data: PaymentResponseParams?) {
+                    val editor = sharedPreferences.edit()
+                    editor.putString("merchant_order_no", params.merchant_order_no)
+                    editor.apply()
                     runOnUiThread {
                         tv_btn_3.text =
                             tv_btn_3.text.toString() + "\n" + "Result:" + JSON.toJSON(data).toString()
