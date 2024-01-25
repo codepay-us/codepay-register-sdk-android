@@ -144,7 +144,7 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback {
                     boolean isChange = false;
                     for (int i = 0; i < list.size(); i++) {
                         ECRHubDevice device = list.get(i);
-                        if (info.containsKey("device_sn") && device.getWs_address().equals(info.getString("device_sn"))) {
+                        if (info.containsKey("name") && device.getWs_address().equals(info.getString("name"))) {
                             if (!info.getString("ip_address").equals(device.getIp_address()) || !info.getString("port").equals(device.getPort())) {
                                 isChange = true;
                                 device.setPort(info.getString("port"));
@@ -176,7 +176,11 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback {
                         if (sInfo.getInet4Addresses().length > 0) {
                             ipv4 = sInfo.getInet4Addresses()[0].getHostAddress();
                         }
-                        jsonObj.put("name", sInfo.getName());
+                        if (sInfo.getName().contains("_")) {
+                            jsonObj.put("name", sInfo.getName().split("_")[0]);
+                        } else {
+                            jsonObj.put("name", sInfo.getName());
+                        }
                         jsonObj.put("ip_address", ipv4);
                         jsonObj.put("port", sInfo.getPort());
                         byte[] allInfo = sInfo.getTextBytes();
