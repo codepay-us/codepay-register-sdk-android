@@ -65,12 +65,12 @@ class PaymentActivity : Activity() {
             params.msg_id = "111111"
             params.confirm_on_terminal = false
             val voiceData = params.voice_data
-            voiceData.content = "AddpayCashier2 Received a new order"
+            voiceData.content = "CodePay Register Received a new order"
             voiceData.content_locale = "en-US"
             params.voice_data = voiceData
             runOnUiThread {
                 tv_btn_3.text =
-                    tv_btn_3.text.toString() + "\n" + "Send data:" + params.toJSON().toString()
+                    "Send data --> " + params.toJSON().toString()
             }
             MainActivity.mClient.payment.purchase(params, object :
                 ECRHubResponseCallBack {

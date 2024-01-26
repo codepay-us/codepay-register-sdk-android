@@ -111,13 +111,13 @@ class RefundActivity : Activity() {
             params.voice_data = voiceData
             runOnUiThread {
                 tv_btn_3.text =
-                    "Send data" + params.toJSON().toString()
+                    "Send data --> " + params.toJSON().toString()
             }
             MainActivity.mClient.payment.cancel(params, object :
                 ECRHubResponseCallBack {
                 override fun onError(errorCode: String?, errorMsg: String?) {
                     runOnUiThread {
-                        tv_btn_3.text = tv_btn_3.text.toString() + "\n" + "交易失败" + errorMsg
+                        tv_btn_3.text = tv_btn_3.text.toString() + "\n" + "Failure:" + errorMsg
                     }
                 }
 

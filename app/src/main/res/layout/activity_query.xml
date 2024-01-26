@@ -30,7 +30,7 @@
         android:layout_marginTop="10dp"
         android:background="#FFFFFF"
         android:padding="10dp"
-        android:text="Close" />
+        android:text="Back" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="wrap_content"
