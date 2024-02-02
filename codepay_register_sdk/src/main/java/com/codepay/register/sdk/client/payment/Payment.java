@@ -53,7 +53,6 @@ public class Payment {
         data.getBiz_data().setPay_scenario(params.pay_scenario);
         data.setRequest_id(params.msg_id);
         data.setTopic(params.getTopic());
-
         data.setApp_id(params.app_id);
         if (null != webSocketClient && webSocketClient.isOpen()) {
             webSocketClient.send(JSON.toJSON(data).toString());
