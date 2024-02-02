@@ -146,29 +146,29 @@ Disconnect the POS application from the POS terminal.
   2. Example:
 
 
-        import com.codepay.register.sdk.client.payment.PaymentRequestParams
-        import com.codepay.register.sdk.client.payment.PaymentResponseParams
-        import com.codepay.register.sdk.listener.ECRHubResponseCallBack
-      
-        // Build sale request
-        val params = PaymentRequestParams()
-        params.app_id = "your payment app_id"
-        params.merchant_order_no = "12345678"
-        params.order_amount = "1.1"
-        params.msg_id = "111111"
-        params.pay_scenario = "SWIPE_CARD"
-        params.confirm_on_terminal = false
-      
-        mClient.payment.sale(params, object :
-        ECRHubResponseCallBack {
-        override fun onError(errorCode: String?, errorMsg: String?) {
-        //sale fail
-        }
-      
-            override fun onSuccess(data: PaymentResponseParams?) {
-                //sale success
-            }
-        })
+          import com.codepay.register.sdk.client.payment.PaymentRequestParams
+          import com.codepay.register.sdk.client.payment.PaymentResponseParams
+          import com.codepay.register.sdk.listener.ECRHubResponseCallBack
+        
+          // Build sale request
+          val params = PaymentRequestParams()
+          params.app_id = "your payment app_id"
+          params.merchant_order_no = "12345678"
+          params.order_amount = "1.1"
+          params.msg_id = "111111"
+          params.pay_scenario = "SWIPE_CARD"
+          params.confirm_on_terminal = false
+        
+          mClient.payment.sale(params, object :
+          ECRHubResponseCallBack {
+          override fun onError(errorCode: String?, errorMsg: String?) {
+          //sale fail
+          }
+        
+              override fun onSuccess(data: PaymentResponseParams?) {
+                  //sale success
+              }
+          })
 
 ###### 3.2 CashBack
 
