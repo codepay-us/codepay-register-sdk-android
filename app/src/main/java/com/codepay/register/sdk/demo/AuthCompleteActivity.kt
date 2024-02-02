@@ -71,9 +71,9 @@ class AuthCompleteActivity : Activity() {
             params.voice_data = voiceData
             runOnUiThread {
                 tv_btn_3.text =
-                    "Send data --> " + params.toJSON().toString()
+                    "Send Complete data --> " + params.toJSON().toString()
             }
-            MainActivity.mClient.payment.complete(params, object :
+            MainActivity.mClient.payment.completion(params, object :
                 ECRHubResponseCallBack {
                 override fun onError(errorCode: String?, errorMsg: String?) {
                     runOnUiThread {

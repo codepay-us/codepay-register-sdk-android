@@ -66,9 +66,9 @@ class AuthActivity : Activity() {
             params.voice_data = voiceData
             runOnUiThread {
                 tv_btn_3.text =
-                    "Send data --> " + params.toJSON().toString()
+                    "Send Auth data --> " + params.toJSON().toString()
             }
-            MainActivity.mClient.payment.authorization(params, object :
+            MainActivity.mClient.payment.auth(params, object :
                 ECRHubResponseCallBack {
                 override fun onError(errorCode: String?, errorMsg: String?) {
                     runOnUiThread {

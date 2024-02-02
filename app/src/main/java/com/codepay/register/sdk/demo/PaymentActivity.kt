@@ -71,7 +71,7 @@ class PaymentActivity : Activity() {
             params.voice_data = voiceData
             runOnUiThread {
                 tv_btn_3.text =
-                    "Send data --> " + params.toJSON().toString()
+                    "Send Sale data --> " + params.toJSON().toString()
             }
             MainActivity.mClient.payment.sale(params, object :
                 ECRHubResponseCallBack {

@@ -25,15 +25,15 @@ class QueryActivity : Activity() {
             val params =
                 PaymentRequestParams()
             if (merchantOrderNo.isEmpty()){
-                params.orig_merchant_order_no = sharedPreferences.getString("merchant_order_no","").toString()
+                params.merchant_order_no = sharedPreferences.getString("merchant_order_no","").toString()
             } else {
-                params.orig_merchant_order_no = merchantOrderNo
+                params.merchant_order_no = merchantOrderNo
             }
             params.app_id = "wz6012822ca2f1as78"
             params.msg_id = "11322"
             runOnUiThread {
                 tv_btn_3.text =
-                    "Send data --> " + params.toJSON().toString()
+                    "Send Query data --> " + params.toJSON().toString()
             }
             MainActivity.mClient.payment.query(params, object :
                 ECRHubResponseCallBack {

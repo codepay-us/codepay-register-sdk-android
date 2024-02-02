@@ -29,7 +29,7 @@
         android:layout_marginTop="10dp"
         android:background="#FFFFFF"
         android:padding="10dp"
-        android:text="CashBack" />
+        android:text="Sale with Cashback" />
 
     <TextView
         android:id="@+id/tv_btn_2"
