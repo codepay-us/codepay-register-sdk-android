@@ -245,7 +245,9 @@ public class PaymentRequestParams {
         json.put("app_id", this.app_id);
         if (null != merchant_order_no) {
             json.put("merchant_order_no", this.merchant_order_no);
-            json.put("on_screen_tip", false);
+        }
+        if (null != on_screen_tip) {
+            json.put("on_screen_tip", this.pay_scenario);
         }
         if (null != pay_scenario) {
             json.put("pay_scenario", this.pay_scenario);
@@ -265,7 +267,9 @@ public class PaymentRequestParams {
         if (null != cash_amount) {
             json.put("cash_amount", this.cash_amount);
         }
-        json.put("trans_type", this.trans_type);
+        if (null != trans_type) {
+            json.put("trans_type", this.trans_type);
+        }
         json.put("pay_method_category", this.pay_method_id);
         if (null != description) {
             json.put("description", this.description);

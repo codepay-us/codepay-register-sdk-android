@@ -62,6 +62,7 @@ class PaymentActivity : Activity() {
             params.merchant_order_no = merchantOrderNo
             params.order_amount = amount
             params.msg_id = "111111"
+            params.on_screen_tip = false
             params.confirm_on_terminal = false
             params.pay_scenario = "SWIPE_CARD"
             val voiceData = params.voice_data
