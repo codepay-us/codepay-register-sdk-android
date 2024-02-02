@@ -7,14 +7,12 @@ import com.alibaba.fastjson.JSON
 import com.codepay.register.sdk.client.payment.PaymentRequestParams
 import com.codepay.register.sdk.client.payment.PaymentResponseParams
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack
-import com.codepay.register.sdk.util.Constants
-import kotlinx.android.synthetic.main.activity_refund.*
+import kotlinx.android.synthetic.main.activity_auth_complete.*
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
+import java.util.*
 
-class RefundActivity : Activity() {
-
+class AuthCompleteActivity : Activity() {
+    var merchantOrderNo: String? = null
     fun getCurDateStr(format: String?): String? {
         val c = Calendar.getInstance()
         return date2Str(c, format)
@@ -42,68 +40,30 @@ class RefundActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_refund)
+        setContentView(R.layout.activity_auth_complete)
         val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
         tv_btn_2.setOnClickListener {
             finish()
         }
         tv_btn_1.setOnClickListener {
             val amount = edit_input_amount.text.toString()
+            val orderNo = edit_input_merchant_order_no.text.toString()
             if (amount.isEmpty()) {
                 Toast.makeText(this, "Please input amount", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
-            val merchantOrderNo = edit_input_merchant_order_no.text.toString()
             val params = PaymentRequestParams()
-            params.trans_type = Constants.TRANS_TYPE_REFUND
             params.app_id = "wz6012822ca2f1as78"
-            if (merchantOrderNo.isEmpty()){
+            merchantOrderNo = "123" + getCurDateStr("yyyyMMddHHmmss")
+            params.merchant_order_no = merchantOrderNo
+            if (orderNo.isEmpty()){
                 params.orig_merchant_order_no = sharedPreferences.getString("merchant_order_no","").toString()
             } else {
-                params.orig_merchant_order_no = merchantOrderNo
-
+                params.orig_merchant_order_no = orderNo
             }
-            params.merchant_order_no = "123" + getCurDateStr("yyyyMMddHHmmss")
             params.order_amount = amount
             params.msg_id = "111111"
-            params.pay_scenario = "SWIPE_CARD"
-            val voiceData = params.voice_data
-            voiceData.content = "CodePay Register Received a new order"
-            voiceData.content_locale = "en-US"
-            params.voice_data = voiceData
-            runOnUiThread {
-                tv_btn_3.text =
-                    "Send data" + params.toJSON().toString()
-            }
-            MainActivity.mClient.payment.refund(params, object :
-                ECRHubResponseCallBack {
-                override fun onError(errorCode: String?, errorMsg: String?) {
-                    runOnUiThread {
-                        tv_btn_3.text = tv_btn_3.text.toString() + "\n" + "交易失败" + errorMsg
-                    }
-                }
-
-                override fun onSuccess(data: PaymentResponseParams?) {
-                    runOnUiThread {
-                        tv_btn_3.text =
-                            tv_btn_3.text.toString() + "\n" + "Result:" + JSON.toJSON(data)
-                    }
-                }
-            })
-        }
-
-        tv_btn_4.setOnClickListener {
-            val merchantOrderNo = edit_input_merchant_order_no.text.toString()
-            val params = PaymentRequestParams()
-            params.trans_type = Constants.TRANS_TYPE_VOID
-            params.app_id = "wz6012822ca2f1as78"
-            if (merchantOrderNo.isEmpty()){
-                params.orig_merchant_order_no = sharedPreferences.getString("merchant_order_no","").toString()
-            } else {
-                params.orig_merchant_order_no = merchantOrderNo
-            }
-            params.merchant_order_no = "123" + getCurDateStr("yyyyMMddHHmmss")
-            params.msg_id = "111111"
+            params.confirm_on_terminal = false
             params.pay_scenario = "SWIPE_CARD"
             val voiceData = params.voice_data
             voiceData.content = "CodePay Register Received a new order"
@@ -113,7 +73,7 @@ class RefundActivity : Activity() {
                 tv_btn_3.text =
                     "Send data --> " + params.toJSON().toString()
             }
-            MainActivity.mClient.payment.cancel(params, object :
+            MainActivity.mClient.payment.complete(params, object :
                 ECRHubResponseCallBack {
                 override fun onError(errorCode: String?, errorMsg: String?) {
                     runOnUiThread {
@@ -122,9 +82,12 @@ class RefundActivity : Activity() {
                 }
 
                 override fun onSuccess(data: PaymentResponseParams?) {
+                    val editor = sharedPreferences.edit()
+                    editor.putString("merchant_order_no", params.merchant_order_no)
+                    editor.apply()
                     runOnUiThread {
                         tv_btn_3.text =
-                            tv_btn_3.text.toString() + "\n" + "Result:" + JSON.toJSON(data)
+                            tv_btn_3.text.toString() + "\n" + "Result:" + JSON.toJSON(data).toString()
                     }
                 }
             })

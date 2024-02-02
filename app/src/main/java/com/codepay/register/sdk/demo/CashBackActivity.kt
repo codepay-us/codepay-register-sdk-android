@@ -7,16 +7,11 @@ import com.alibaba.fastjson.JSON
 import com.codepay.register.sdk.client.payment.PaymentRequestParams
 import com.codepay.register.sdk.client.payment.PaymentResponseParams
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack
-import com.codepay.register.sdk.util.Constants
-import kotlinx.android.synthetic.main.activity_payment.edit_input_amount
-import kotlinx.android.synthetic.main.activity_payment.tv_btn_1
-import kotlinx.android.synthetic.main.activity_payment.tv_btn_2
-import kotlinx.android.synthetic.main.activity_payment.tv_btn_3
+import kotlinx.android.synthetic.main.activity_cashback.*
 import java.text.SimpleDateFormat
-import java.util.Calendar
-import java.util.Date
+import java.util.*
 
-class PaymentActivity : Activity() {
+class CashBackActivity : Activity() {
     var merchantOrderNo: String? = null
     fun getCurDateStr(format: String?): String? {
         val c = Calendar.getInstance()
@@ -45,15 +40,16 @@ class PaymentActivity : Activity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_payment)
+        setContentView(R.layout.activity_cashback)
         val sharedPreferences = getSharedPreferences(packageName, MODE_PRIVATE)
         tv_btn_2.setOnClickListener {
             finish()
         }
         tv_btn_1.setOnClickListener {
             val amount = edit_input_amount.text.toString()
-            if (amount.isEmpty()) {
-                Toast.makeText(this, "Please input amount", Toast.LENGTH_LONG).show()
+            val cashback = edit_input_cashback_amount.text.toString()
+            if (amount.isEmpty() || cashback.isEmpty()) {
+                Toast.makeText(this, "Please input amount or cashback amount", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
             val params = PaymentRequestParams()
@@ -61,6 +57,7 @@ class PaymentActivity : Activity() {
             merchantOrderNo = "123" + getCurDateStr("yyyyMMddHHmmss")
             params.merchant_order_no = merchantOrderNo
             params.order_amount = amount
+            params.cash_amount = cashback
             params.msg_id = "111111"
             params.confirm_on_terminal = false
             params.pay_scenario = "SWIPE_CARD"

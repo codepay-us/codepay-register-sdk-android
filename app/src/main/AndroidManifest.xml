@@ -39,5 +39,14 @@
         <activity
             android:name="com.codepay.register.sdk.demo.RefundActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name="com.codepay.register.sdk.demo.CashBackActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.codepay.register.sdk.demo.AuthActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.codepay.register.sdk.demo.AuthCompleteActivity"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>

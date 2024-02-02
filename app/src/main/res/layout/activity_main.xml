@@ -78,6 +78,39 @@
             android:text="Refund/Void" />
 
         <TextView
+            android:id="@+id/tv_btn_auth"
+            android:layout_width="390dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Auth" />
+
+        <TextView
+            android:id="@+id/tv_btn_complete"
+            android:layout_width="390dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="AuthComplete" />
+
+        <TextView
+            android:id="@+id/tv_btn_cashback"
+            android:layout_width="390dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="CashBack" />
+
+        <TextView
             android:id="@+id/tv_btn_8"
             android:layout_width="390dp"
             android:layout_height="wrap_content"

@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.View.OnClickListener
+import android.widget.TextView
 import android.widget.Toast
 import com.codepay.register.sdk.client.ECRHubClient
 import com.codepay.register.sdk.client.ECRHubConfig
@@ -53,6 +54,9 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
         tv_btn_5.setOnClickListener(this)
         tv_btn_6.setOnClickListener(this)
         tv_btn_7.setOnClickListener(this)
+        tv_btn_auth.setOnClickListener(this)
+        tv_btn_complete.setOnClickListener(this)
+        tv_btn_cashback.setOnClickListener(this)
         tv_btn_8.setOnClickListener(this)
         tv_btn_9.setOnClickListener(this)
         tv_btn_10.setOnClickListener(this)
@@ -114,6 +118,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
             }
 
             R.id.tv_btn_2 -> {
+                findViewById<TextView>(R.id.tv_btn_2).isEnabled = false
                 // Get the connectivity manager
                 val connectivityManager =
                     getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -150,6 +155,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                         ).show()
                     }
                 }
+                findViewById<TextView>(R.id.tv_btn_2).isEnabled = true
             }
 
 
@@ -224,6 +230,36 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                     return
                 }
                 startActivity(Intent(applicationContext, RefundActivity::class.java))
+            }
+
+            R.id.tv_btn_auth -> {
+                if (!isConnected) {
+                    runOnUiThread {
+                        Toast.makeText(this, "Server is not connect", Toast.LENGTH_LONG).show()
+                    }
+                    return
+                }
+                startActivity(Intent(applicationContext, AuthActivity::class.java))
+            }
+
+            R.id.tv_btn_complete-> {
+                if (!isConnected) {
+                    runOnUiThread {
+                        Toast.makeText(this, "Server is not connect", Toast.LENGTH_LONG).show()
+                    }
+                    return
+                }
+                startActivity(Intent(applicationContext, AuthCompleteActivity::class.java))
+            }
+
+            R.id.tv_btn_cashback -> {
+                if (!isConnected) {
+                    runOnUiThread {
+                        Toast.makeText(this, "Server is not connect", Toast.LENGTH_LONG).show()
+                    }
+                    return
+                }
+                startActivity(Intent(applicationContext, CashBackActivity::class.java))
             }
 
             R.id.tv_btn_8 -> {

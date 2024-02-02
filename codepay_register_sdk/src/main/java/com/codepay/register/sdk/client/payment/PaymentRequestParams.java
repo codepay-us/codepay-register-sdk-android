@@ -33,6 +33,10 @@ public class PaymentRequestParams {
      */
     String tip_amount;
     /**
+     * CashBack amount
+     */
+    String cash_amount;
+    /**
      * trans type
      */
     String trans_type;
@@ -227,6 +231,14 @@ public class PaymentRequestParams {
         this.trans_type = trans_type;
     }
 
+    public String getCash_amount() {
+        return cash_amount;
+    }
+
+    public void setCash_amount(String cash_amount) {
+        this.cash_amount = cash_amount;
+    }
+
     public JSONObject toJSON() {
         JSONObject json = new JSONObject();
         json.put("topic", this.topic);
@@ -245,6 +257,9 @@ public class PaymentRequestParams {
         }
         if (null != tip_amount) {
             json.put("tip_amount", this.tip_amount);
+        }
+        if (null != cash_amount) {
+            json.put("cash_amount", this.cash_amount);
         }
         json.put("trans_type", this.trans_type);
         json.put("pay_method_category", this.pay_method_id);

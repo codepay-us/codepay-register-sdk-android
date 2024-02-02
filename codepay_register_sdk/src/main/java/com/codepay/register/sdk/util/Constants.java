@@ -41,7 +41,7 @@ public class Constants {
     /**
      * trans type purchase
      */
-    public static final String TRANS_TYPE_PURCHASE = "1";
+    public static final String TRANS_TYPE_SALE = "1";
 
     /**
      * trans type void
@@ -78,6 +78,10 @@ public class Constants {
      */
     public static final String TRANS_TYPE_PRE_AUTH_COMPLETE_REFUND = "8";
 
+    /**
+     * trans type cashback
+     */
+    public static final String TRANS_TYPE_CASH_BACK = "11";
     /**
      * BankCard Payment
      */
