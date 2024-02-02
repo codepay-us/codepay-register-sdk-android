@@ -59,7 +59,7 @@ public class PaymentRequestParams {
      */
     String attach;
 
-    String msg_id;
+    String request_id;
 
     String pay_scenario;
 
@@ -119,12 +119,12 @@ public class PaymentRequestParams {
         return print_data;
     }
 
-    public void setMsg_id(String msg_id) {
-        this.msg_id = msg_id;
+    public void setrequest_id(String request_id) {
+        this.request_id = request_id;
     }
 
-    public String getMsg_id() {
-        return msg_id;
+    public String getrequest_id() {
+        return request_id;
     }
 
     public void setTopic(String topic) {
@@ -243,6 +243,7 @@ public class PaymentRequestParams {
         JSONObject json = new JSONObject();
         json.put("topic", this.topic);
         json.put("app_id", this.app_id);
+        json.put("request_id", this.request_id);
         if (null != merchant_order_no) {
             json.put("merchant_order_no", this.merchant_order_no);
         }
@@ -278,9 +279,6 @@ public class PaymentRequestParams {
         }
         if (null != attach) {
             json.put("attach", this.attach);
-        }
-        if (null != msg_id) {
-            json.put("msg_id", this.msg_id);
         }
         return json;
     }

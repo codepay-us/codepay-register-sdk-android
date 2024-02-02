@@ -22,6 +22,7 @@ import com.codepay.register.sdk.listener.ECRHubConnectListener
 import com.codepay.register.sdk.listener.ECRHubPairListener
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack
 import com.codepay.register.sdk.util.ECRHubMessageData
+import com.codepay.register.sdk.util.NetUtils
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubPairListener {
@@ -121,6 +122,10 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                 val capabilities = connectivityManager.getNetworkCapabilities(network)
                 if (capabilities != null && capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
                     mPairedList = mPairServer!!.pairedDeviceList
+                    for(device in mPairedList) {
+                        Log.e("mPairedList",device.terminal_sn)
+                        Log.e("mPairedList",device.ws_address)
+                    }
                     if (mPairedList.isEmpty()) {
                         runOnUiThread {
                             Toast.makeText(this, "Paired list is empty", Toast.LENGTH_LONG).show()
@@ -134,7 +139,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                         return
                     }
                     // Perform the connection operation
-                    var ip = "ws://" + mPairedList[0].ip_address + ":" + mPairedList[0].port
+                    val ip = "ws://" + mPairedList[0].ip_address + ":" + mPairedList[0].port
                     ECRHubClient.getInstance().connect(ip)
                     runOnUiThread {
                         tv_text_1.text = "connect $ip"

@@ -67,7 +67,6 @@ class AuthCompleteActivity : Activity() {
                 params.orig_merchant_order_no = orderNo
             }
             params.order_amount = amount
-            params.msg_id = "111111"
             params.confirm_on_terminal = false
             params.pay_scenario = "SWIPE_CARD"
             val voiceData = params.voice_data

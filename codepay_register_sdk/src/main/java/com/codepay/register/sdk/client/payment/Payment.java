@@ -51,7 +51,7 @@ public class Payment {
             data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
         }
         data.getBiz_data().setPay_scenario(params.pay_scenario);
-        data.setRequest_id(params.msg_id);
+        data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
         if (null != webSocketClient && webSocketClient.isOpen()) {
@@ -74,7 +74,7 @@ public class Payment {
         }
         data.getBiz_data().setOrig_merchant_order_no(params.merchant_order_no);
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
-        data.setRequest_id(params.msg_id);
+        data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
         if (null != webSocketClient && webSocketClient.isOpen()) {
@@ -97,7 +97,7 @@ public class Payment {
         }
         data.getBiz_data().setOrig_merchant_order_no(params.merchant_order_no);
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
-        data.setRequest_id(params.msg_id);
+        data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
         if (null != webSocketClient && webSocketClient.isOpen()) {
@@ -126,7 +126,7 @@ public class Payment {
         if (null != params.getConfirm_on_terminal()) {
             data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
         }
-        data.setRequest_id(params.msg_id);
+        data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
         if (null != webSocketClient && webSocketClient.isOpen()) {
@@ -151,7 +151,7 @@ public class Payment {
         if (null != params.getConfirm_on_terminal()) {
             data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
         }
-        data.setRequest_id(params.msg_id);
+        data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
         if (null != webSocketClient && webSocketClient.isOpen()) {
@@ -180,7 +180,7 @@ public class Payment {
             data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
         }
         data.getBiz_data().setPay_scenario(params.pay_scenario);
-        data.setRequest_id(params.msg_id);
+        data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
         if (null != webSocketClient && webSocketClient.isOpen()) {
@@ -206,7 +206,7 @@ public class Payment {
         if (null != params.getConfirm_on_terminal()) {
             data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
         }
-        data.setRequest_id(params.msg_id);
+        data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
         if (null != webSocketClient && webSocketClient.isOpen()) {

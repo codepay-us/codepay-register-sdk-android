@@ -155,7 +155,7 @@ Disconnect the POS application from the POS terminal.
           params.app_id = "your payment app_id"
           params.merchant_order_no = "12345678"
           params.order_amount = "1.1"
-          params.msg_id = "111111"
+          params.request_id = "111111"
           params.pay_scenario = "SWIPE_CARD"
           params.confirm_on_terminal = false
         
@@ -186,7 +186,7 @@ Disconnect the POS application from the POS terminal.
         params.merchant_order_no = "12345678"
         params.order_amount = "1.1"
         params.cashback_amount = "1.1"
-        params.msg_id = "111111"
+        params.request_id = "111111"
         params.pay_scenario = "SWIPE_CARD"
         params.confirm_on_terminal = false
         
@@ -216,7 +216,7 @@ Disconnect the POS application from the POS terminal.
         params.app_id = "your payment app_id"
         params.orig_merchant_order_no = "123322222"
         params.merchant_order_no = "12345678"
-        params.msg_id = "111111"
+        params.request_id = "111111"
         params.confirm_on_terminal = false
         
         mClient.payment.cancel(params, object :
@@ -246,7 +246,7 @@ Disconnect the POS application from the POS terminal.
         params.orig_merchant_order_no = "123322222"
         params.order_amount = "1.1"
         params.merchant_order_no = "12345678"
-        params.msg_id = "111111"
+        params.request_id = "111111"
         params.confirm_on_terminal = false
         
         mClient.payment.refund(params, object : 
@@ -276,7 +276,7 @@ Disconnect the POS application from the POS terminal.
         params.order_amount = "1.1"
         params.merchant_order_no = "12345678"
         params.pay_scenario = "SWIPE_CARD"
-        params.msg_id = "111111"
+        params.request_id = "111111"
         params.confirm_on_terminal = false
         
         mClient.payment.auth(params, object :
@@ -305,7 +305,7 @@ Disconnect the POS application from the POS terminal.
         params.app_id = "your payment app_id"
         params.order_amount = "1.1"
         params.merchant_order_no = "12345678"
-        params.msg_id = "111111"
+        params.request_id = "111111"
         params.orig_merchant_order_no = "123322222"
         params.confirm_on_terminal = false
         
@@ -334,7 +334,7 @@ Disconnect the POS application from the POS terminal.
         val params = PaymentRequestParams()
         params.app_id = "your payment app_id"
         params.orig_merchant_order_no = "12345678"
-        params.msg_id = "111111"
+        params.request_id = "111111"
         
         mClient.payment.query(params, object :
         ECRHubResponseCallBack {
@@ -357,7 +357,7 @@ Disconnect the POS application from the POS terminal.
         val params = PaymentRequestParams()
         params.app_id = "your payment app_id"
         params.merchant_order_no = "12345678"
-        params.msg_id = "111111"
+        params.request_id = "111111"
         
         mClient.payment.close(params, object :
         ECRHubResponseCallBack {
