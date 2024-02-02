@@ -5,7 +5,7 @@
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/tv_btn_1"
+        android:id="@+id/tv_btn_start"
         android:layout_width="390dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -13,10 +13,10 @@
         android:background="#FFFFFF"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Start Server Connection" />
+        android:text="Start device discover service" />
 
     <TextView
-        android:id="@+id/tv_btn_2"
+        android:id="@+id/tv_btn_connect"
         android:layout_width="390dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -27,7 +27,7 @@
         android:text="Connect" />
 
     <TextView
-        android:id="@+id/tv_btn_3"
+        android:id="@+id/tv_btn_disconnect"
         android:layout_width="390dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -45,7 +45,7 @@
         android:visibility="gone">
 
         <TextView
-            android:id="@+id/tv_btn_5"
+            android:id="@+id/tv_btn_unpair"
             android:layout_width="390dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -56,7 +56,7 @@
             android:text="UnPair" />
 
         <TextView
-            android:id="@+id/tv_btn_6"
+            android:id="@+id/tv_btn_sale"
             android:layout_width="390dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -67,7 +67,7 @@
             android:text="Sale" />
 
         <TextView
-            android:id="@+id/tv_btn_7"
+            android:id="@+id/tv_btn_refund"
             android:layout_width="390dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -111,7 +111,7 @@
             android:text="CashBack" />
 
         <TextView
-            android:id="@+id/tv_btn_8"
+            android:id="@+id/tv_btn_query"
             android:layout_width="390dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -122,7 +122,7 @@
             android:text="Query" />
 
         <TextView
-            android:id="@+id/tv_btn_9"
+            android:id="@+id/tv_btn_close"
             android:layout_width="390dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -134,7 +134,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/tv_btn_10"
+        android:id="@+id/tv_btn_exit"
         android:layout_width="390dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

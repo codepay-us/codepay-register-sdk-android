@@ -57,8 +57,15 @@ class RefundActivity : Activity() {
             val params = PaymentRequestParams()
             params.trans_type = Constants.TRANS_TYPE_REFUND
             params.app_id = "wz6012822ca2f1as78"
-            if (merchantOrderNo.isEmpty()){
-                params.orig_merchant_order_no = sharedPreferences.getString("merchant_order_no","").toString()
+            if (merchantOrderNo.isEmpty()) {
+                if (sharedPreferences.getString("merchant_order_no", "").toString().isEmpty()) {
+                    Toast.makeText(this, "Please input orig merchant order no", Toast.LENGTH_LONG)
+                        .show()
+                    return@setOnClickListener
+                } else {
+                    params.orig_merchant_order_no =
+                        sharedPreferences.getString("merchant_order_no", "").toString()
+                }
             } else {
                 params.orig_merchant_order_no = merchantOrderNo
 
@@ -98,8 +105,15 @@ class RefundActivity : Activity() {
             val params = PaymentRequestParams()
             params.trans_type = Constants.TRANS_TYPE_VOID
             params.app_id = "wz6012822ca2f1as78"
-            if (merchantOrderNo.isEmpty()){
-                params.orig_merchant_order_no = sharedPreferences.getString("merchant_order_no","").toString()
+            if (merchantOrderNo.isEmpty()) {
+                if (sharedPreferences.getString("merchant_order_no", "").toString().isEmpty()) {
+                    Toast.makeText(this, "Please input orig merchant order no", Toast.LENGTH_LONG)
+                        .show()
+                    return@setOnClickListener
+                } else {
+                    params.orig_merchant_order_no =
+                        sharedPreferences.getString("merchant_order_no", "").toString()
+                }
             } else {
                 params.orig_merchant_order_no = merchantOrderNo
             }

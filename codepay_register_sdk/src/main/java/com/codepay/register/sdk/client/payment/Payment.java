@@ -44,9 +44,11 @@ public class Payment {
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.getBiz_data().setTrans_type("" + params.trans_type);
         data.getBiz_data().setOrder_amount(params.order_amount);
-        data.getBiz_data().setOn_screen_tip(params.on_screen_tip);
+        if (null != params.getOn_screen_tip()) {
+            data.getBiz_data().setOn_screen_tip(params.on_screen_tip);
+        }
         data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
-        data.getBiz_data().setPay_scenario("SWIPE_CARD");
+        data.getBiz_data().setPay_scenario(params.pay_scenario);
         data.setRequest_id(params.msg_id);
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
@@ -69,10 +71,7 @@ public class Payment {
             data.getVoice_data().setContent_locale(params.getVoice_data().getContent_locale());
         }
         data.getBiz_data().setOrig_merchant_order_no(params.merchant_order_no);
-//        data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
-        data.getBiz_data().setTrans_type("" + params.trans_type);
-        data.getBiz_data().setOrder_amount(params.order_amount);
-        data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
+        data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.setRequest_id(params.msg_id);
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
@@ -95,6 +94,7 @@ public class Payment {
             data.getVoice_data().setContent_locale(params.getVoice_data().getContent_locale());
         }
         data.getBiz_data().setOrig_merchant_order_no(params.merchant_order_no);
+        data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.setRequest_id(params.msg_id);
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
@@ -115,7 +115,6 @@ public class Payment {
             data.getVoice_data().setContent_locale(params.getVoice_data().getContent_locale());
         }
         data.getBiz_data().setOrig_merchant_order_no(params.orig_merchant_order_no);
-        data.getBiz_data().setPay_method_category(params.getPay_method_id());
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.getBiz_data().setTrans_type("" + params.trans_type);
         data.getBiz_data().setOrder_amount(params.order_amount);

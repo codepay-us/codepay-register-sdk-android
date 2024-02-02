@@ -116,8 +116,6 @@ public class PaymentResponseParams {
         /**
          * 支付方式类目
          */
-        private String pay_method_category;
-
         private String pay_scenario;
 
         /**
@@ -154,7 +152,7 @@ public class PaymentResponseParams {
 
         private String order_amount;
 
-        private String cashback_amount;
+        private String cash_amount;
 
         private String tip_amount;
 
@@ -216,12 +214,12 @@ public class PaymentResponseParams {
             this.is_auto_settlement = is_auto_settlement;
         }
 
-        public void setCashback_amount(String cashback_amount) {
-            this.cashback_amount = cashback_amount;
+        public void setcash_amount(String cash_amount) {
+            this.cash_amount = cash_amount;
         }
 
-        public String getCashback_amount() {
-            return cashback_amount;
+        public String getcash_amount() {
+            return cash_amount;
         }
 
         public void setLimit_length(boolean limit_length) {
@@ -308,10 +306,6 @@ public class PaymentResponseParams {
             this.orig_merchant_order_no = orig_merchant_order_no;
         }
 
-        public void setPay_method_category(String pay_method_category) {
-            this.pay_method_category = pay_method_category;
-        }
-
         public void setPay_method_id(String pay_method_id) {
             this.pay_method_id = pay_method_id;
         }
@@ -338,10 +332,6 @@ public class PaymentResponseParams {
 
         public String getOrig_merchant_order_no() {
             return orig_merchant_order_no;
-        }
-
-        public String getPay_method_category() {
-            return pay_method_category;
         }
 
         public String getPay_method_id() {

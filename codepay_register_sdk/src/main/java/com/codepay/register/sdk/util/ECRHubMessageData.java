@@ -303,8 +303,6 @@ public class ECRHubMessageData {
         /**
          * 支付方式类目
          */
-        private String pay_method_category;
-
         private String pay_scenario;
 
         /**
@@ -506,10 +504,6 @@ public class ECRHubMessageData {
             this.orig_merchant_order_no = orig_merchant_order_no;
         }
 
-        public void setPay_method_category(String pay_method_category) {
-            this.pay_method_category = pay_method_category;
-        }
-
         public void setPay_method_id(String pay_method_id) {
             this.pay_method_id = pay_method_id;
         }
@@ -536,10 +530,6 @@ public class ECRHubMessageData {
 
         public String getOrig_merchant_order_no() {
             return orig_merchant_order_no;
-        }
-
-        public String getPay_method_category() {
-            return pay_method_category;
         }
 
         public String getPay_method_id() {
@@ -579,9 +569,6 @@ public class ECRHubMessageData {
          * 获取Cashier识别应用间调用的支付方式
          */
         public String getCashierInvokePayType(String type) {
-            if (null == type) {
-                type = getPay_method_category();
-            }
             switch (type) {
                 case ECR_HUB_BANKCARD_PAY_TYPE:
                     return "CARD";

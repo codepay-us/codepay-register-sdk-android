@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.net.NetworkInfo
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -24,10 +23,6 @@ import com.codepay.register.sdk.listener.ECRHubPairListener
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack
 import com.codepay.register.sdk.util.ECRHubMessageData
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.activity_main.tv_btn_1
-import kotlinx.android.synthetic.main.activity_main.tv_btn_2
-import kotlinx.android.synthetic.main.activity_main.tv_btn_3
-import kotlinx.android.synthetic.main.activity_payment.*
 
 class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubPairListener {
     companion object {
@@ -48,18 +43,18 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
         mClient.init(config, this)
         mPairServer = ECRHubWebSocketDiscoveryService(this)
         mPairedList = mPairServer!!.pairedDeviceList
-        tv_btn_1.setOnClickListener(this)
-        tv_btn_2.setOnClickListener(this)
-        tv_btn_3.setOnClickListener(this)
-        tv_btn_5.setOnClickListener(this)
-        tv_btn_6.setOnClickListener(this)
-        tv_btn_7.setOnClickListener(this)
+        tv_btn_start.setOnClickListener(this)
+        tv_btn_connect.setOnClickListener(this)
+        tv_btn_disconnect.setOnClickListener(this)
+        tv_btn_unpair.setOnClickListener(this)
+        tv_btn_sale.setOnClickListener(this)
+        tv_btn_refund.setOnClickListener(this)
         tv_btn_auth.setOnClickListener(this)
         tv_btn_complete.setOnClickListener(this)
         tv_btn_cashback.setOnClickListener(this)
-        tv_btn_8.setOnClickListener(this)
-        tv_btn_9.setOnClickListener(this)
-        tv_btn_10.setOnClickListener(this)
+        tv_btn_query.setOnClickListener(this)
+        tv_btn_close.setOnClickListener(this)
+        tv_btn_exit.setOnClickListener(this)
     }
 
     override fun onConnect() {
@@ -92,7 +87,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
     @SuppressLint("SetTextI18n")
     override fun onClick(v: View) {
         when (v.id) {
-            R.id.tv_btn_1 -> {
+            R.id.tv_btn_start -> {
                 // Get the connectivity manager
                 val connectivityManager =
                     getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -117,8 +112,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
 
             }
 
-            R.id.tv_btn_2 -> {
-                findViewById<TextView>(R.id.tv_btn_2).isEnabled = false
+            R.id.tv_btn_connect -> {
                 // Get the connectivity manager
                 val connectivityManager =
                     getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
@@ -155,11 +149,10 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                         ).show()
                     }
                 }
-                findViewById<TextView>(R.id.tv_btn_2).isEnabled = true
             }
 
 
-            R.id.tv_btn_3 -> {
+            R.id.tv_btn_disconnect -> {
                 if (!isConnected) {
                     runOnUiThread {
                         Toast.makeText(this, "Server is not connect", Toast.LENGTH_LONG).show()
@@ -172,7 +165,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                 }
             }
 
-            R.id.tv_btn_5 -> {
+            R.id.tv_btn_unpair -> {
                 if (!isConnected) {
                     runOnUiThread {
                         Toast.makeText(this, "Server is not connect", Toast.LENGTH_LONG).show()
@@ -203,7 +196,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                 })
             }
 
-            R.id.tv_btn_10 -> {
+            R.id.tv_btn_exit -> {
                 runOnUiThread {
                     Toast.makeText(this, "The APP is exiting...", Toast.LENGTH_LONG).show()
                 }
@@ -212,7 +205,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                 finish()
             }
 
-            R.id.tv_btn_6 -> {
+            R.id.tv_btn_sale -> {
                 if (!isConnected) {
                     runOnUiThread {
                         Toast.makeText(this, "Server is not connect", Toast.LENGTH_LONG).show()
@@ -222,7 +215,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                 startActivity(Intent(applicationContext, PaymentActivity::class.java))
             }
 
-            R.id.tv_btn_7 -> {
+            R.id.tv_btn_refund -> {
                 if (!isConnected) {
                     runOnUiThread {
                         Toast.makeText(this, "Server is not connect", Toast.LENGTH_LONG).show()
@@ -262,7 +255,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                 startActivity(Intent(applicationContext, CashBackActivity::class.java))
             }
 
-            R.id.tv_btn_8 -> {
+            R.id.tv_btn_query -> {
                 if (!isConnected) {
                     runOnUiThread {
                         Toast.makeText(this, "Server is not connect", Toast.LENGTH_LONG).show()
@@ -272,7 +265,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                 startActivity(Intent(applicationContext, QueryActivity::class.java))
             }
 
-            R.id.tv_btn_9 -> {
+            R.id.tv_btn_close -> {
                 if (!isConnected) {
                     runOnUiThread {
                         Toast.makeText(this, "Server is not connect", Toast.LENGTH_LONG).show()

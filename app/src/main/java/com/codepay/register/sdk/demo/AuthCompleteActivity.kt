@@ -57,7 +57,12 @@ class AuthCompleteActivity : Activity() {
             merchantOrderNo = "123" + getCurDateStr("yyyyMMddHHmmss")
             params.merchant_order_no = merchantOrderNo
             if (orderNo.isEmpty()){
-                params.orig_merchant_order_no = sharedPreferences.getString("merchant_order_no","").toString()
+                if (sharedPreferences.getString("merchant_order_no","").toString().isEmpty()){
+                    Toast.makeText(this, "Please input orig merchant order no", Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }else{
+                    params.orig_merchant_order_no = sharedPreferences.getString("merchant_order_no","").toString()
+                }
             } else {
                 params.orig_merchant_order_no = orderNo
             }

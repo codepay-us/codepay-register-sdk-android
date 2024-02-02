@@ -26,7 +26,12 @@ class CloseActivity : Activity() {
             val params =
                 PaymentRequestParams()
             if (merchantOrderNo.isEmpty()){
-                params.merchant_order_no = sharedPreferences.getString("merchant_order_no","").toString()
+                if (sharedPreferences.getString("merchant_order_no","").toString().isEmpty()){
+                    Toast.makeText(this, "Please input merchant order no", Toast.LENGTH_LONG).show()
+                    return@setOnClickListener
+                }else{
+                    params.orig_merchant_order_no = sharedPreferences.getString("merchant_order_no","").toString()
+                }
             } else {
                 params.merchant_order_no = merchantOrderNo
             }
