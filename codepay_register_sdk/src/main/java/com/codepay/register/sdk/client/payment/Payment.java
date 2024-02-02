@@ -47,10 +47,13 @@ public class Payment {
         if (null != params.getOn_screen_tip()) {
             data.getBiz_data().setOn_screen_tip(params.on_screen_tip);
         }
-        data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
+        if (null != params.getConfirm_on_terminal()) {
+            data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
+        }
         data.getBiz_data().setPay_scenario(params.pay_scenario);
         data.setRequest_id(params.msg_id);
         data.setTopic(params.getTopic());
+
         data.setApp_id(params.app_id);
         if (null != webSocketClient && webSocketClient.isOpen()) {
             webSocketClient.send(JSON.toJSON(data).toString());
@@ -118,8 +121,12 @@ public class Payment {
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.getBiz_data().setTrans_type("" + params.trans_type);
         data.getBiz_data().setOrder_amount(params.order_amount);
-        data.getBiz_data().setOn_screen_tip(params.on_screen_tip);
-        data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
+        if (null != params.getOn_screen_tip()) {
+            data.getBiz_data().setOn_screen_tip(params.on_screen_tip);
+        }
+        if (null != params.getConfirm_on_terminal()) {
+            data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
+        }
         data.setRequest_id(params.msg_id);
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
@@ -142,7 +149,9 @@ public class Payment {
         data.getBiz_data().setOrig_merchant_order_no(params.orig_merchant_order_no);
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.getBiz_data().setTrans_type("" + params.trans_type);
-        data.getBiz_data().setConfirm_on_terminal(false);
+        if (null != params.getConfirm_on_terminal()) {
+            data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
+        }
         data.setRequest_id(params.msg_id);
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
@@ -165,8 +174,12 @@ public class Payment {
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.getBiz_data().setTrans_type("" + params.trans_type);
         data.getBiz_data().setOrder_amount(params.order_amount);
-        data.getBiz_data().setOn_screen_tip(params.on_screen_tip);
-        data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
+        if (null != params.getOn_screen_tip()) {
+            data.getBiz_data().setOn_screen_tip(params.on_screen_tip);
+        }
+        if (null != params.getConfirm_on_terminal()) {
+            data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
+        }
         data.getBiz_data().setPay_scenario(params.pay_scenario);
         data.setRequest_id(params.msg_id);
         data.setTopic(params.getTopic());
@@ -191,7 +204,9 @@ public class Payment {
         data.getBiz_data().setOrig_merchant_order_no(params.orig_merchant_order_no);
         data.getBiz_data().setTrans_type("" + params.trans_type);
         data.getBiz_data().setOrder_amount(params.order_amount);
-        data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
+        if (null != params.getConfirm_on_terminal()) {
+            data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
+        }
         data.setRequest_id(params.msg_id);
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);

@@ -13,7 +13,7 @@ import java.util.Enumeration;
 import java.util.regex.Pattern;
 
 /**
- * 网络相关的工具类
+ * Network-related tools
  */
 
 public class NetUtils {
