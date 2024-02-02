@@ -66,6 +66,7 @@ class RefundActivity : Activity() {
             params.merchant_order_no = "123" + getCurDateStr("yyyyMMddHHmmss")
             params.order_amount = amount
             params.msg_id = "111111"
+            params.confirm_on_terminal = false
             params.pay_scenario = "SWIPE_CARD"
             val voiceData = params.voice_data
             voiceData.content = "CodePay Register Received a new order"
@@ -104,6 +105,7 @@ class RefundActivity : Activity() {
             }
             params.merchant_order_no = "123" + getCurDateStr("yyyyMMddHHmmss")
             params.msg_id = "111111"
+            params.confirm_on_terminal = false
             params.pay_scenario = "SWIPE_CARD"
             val voiceData = params.voice_data
             voiceData.content = "CodePay Register Received a new order"

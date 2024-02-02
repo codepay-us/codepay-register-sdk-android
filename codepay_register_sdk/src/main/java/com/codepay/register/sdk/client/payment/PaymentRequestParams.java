@@ -245,9 +245,13 @@ public class PaymentRequestParams {
         json.put("app_id", this.app_id);
         if (null != merchant_order_no) {
             json.put("merchant_order_no", this.merchant_order_no);
-            json.put("confirm_on_terminal", false);
-            json.put("pay_scenario", "SWIPE_CARD");
             json.put("on_screen_tip", false);
+        }
+        if (null != pay_scenario) {
+            json.put("pay_scenario", this.pay_scenario);
+        }
+        if (null != confirm_on_terminal) {
+            json.put("confirm_on_terminal", this.confirm_on_terminal);
         }
         if (null != orig_merchant_order_no) {
             json.put("orig_merchant_order_no", this.orig_merchant_order_no);
@@ -269,9 +273,6 @@ public class PaymentRequestParams {
         if (null != notify_url) {
             json.put("notify_url", this.notify_url);
         }
-//        if (null != notify_url) {
-//            json.put("notify_url", this.notify_url);
-//        }
         if (null != attach) {
             json.put("attach", this.attach);
         }
