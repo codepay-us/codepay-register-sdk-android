@@ -44,7 +44,8 @@ public class Payment {
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.getBiz_data().setTrans_type("" + params.trans_type);
         data.getBiz_data().setOrder_amount(params.order_amount);
-        data.getBiz_data().setConfirm_on_terminal(false);
+        data.getBiz_data().setOn_screen_tip(params.on_screen_tip);
+        data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
         data.getBiz_data().setPay_scenario("SWIPE_CARD");
         data.setRequest_id(params.msg_id);
         data.setTopic(params.getTopic());
@@ -120,7 +121,8 @@ public class Payment {
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.getBiz_data().setTrans_type("" + params.trans_type);
         data.getBiz_data().setOrder_amount(params.order_amount);
-        data.getBiz_data().setConfirm_on_terminal(false);
+        data.getBiz_data().setOn_screen_tip(params.on_screen_tip);
+        data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
         data.setRequest_id(params.msg_id);
         data.setTopic(params.getTopic());
         data.setApp_id(params.getApp_id());
@@ -168,7 +170,8 @@ public class Payment {
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.getBiz_data().setTrans_type("" + params.trans_type);
         data.getBiz_data().setOrder_amount(params.order_amount);
-        data.getBiz_data().setConfirm_on_terminal(false);
+        data.getBiz_data().setOn_screen_tip(params.on_screen_tip);
+        data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
         data.getBiz_data().setPay_scenario("SWIPE_CARD");
         data.setRequest_id(params.msg_id);
         data.setTopic(params.getTopic());

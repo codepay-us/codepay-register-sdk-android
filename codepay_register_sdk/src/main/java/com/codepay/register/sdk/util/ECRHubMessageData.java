@@ -273,6 +273,8 @@ public class ECRHubMessageData {
          * 是否需要终端确认
          */
         private boolean confirm_on_terminal;
+
+        private boolean on_screen_tip;
         /**
          * 多订单处理模式
          */
@@ -607,6 +609,13 @@ public class ECRHubMessageData {
             this.order_queue_mode = order_queue_mode;
         }
 
+        public boolean isOn_screen_tip() {
+            return on_screen_tip;
+        }
+
+        public void setOn_screen_tip(boolean on_screen_tip) {
+            this.on_screen_tip = on_screen_tip;
+        }
     }
 
     public class NotifyData {
