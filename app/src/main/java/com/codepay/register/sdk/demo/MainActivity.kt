@@ -110,7 +110,6 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                         ).show()
                     }
                 }
-
             }
 
             R.id.tv_btn_connect -> {

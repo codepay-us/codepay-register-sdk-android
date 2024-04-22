@@ -7,7 +7,6 @@ import com.alibaba.fastjson.JSON
 import com.codepay.register.sdk.client.payment.PaymentRequestParams
 import com.codepay.register.sdk.client.payment.PaymentResponseParams
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack
-import com.codepay.register.sdk.util.Constants
 import kotlinx.android.synthetic.main.activity_payment.edit_input_amount
 import kotlinx.android.synthetic.main.activity_payment.tv_btn_1
 import kotlinx.android.synthetic.main.activity_payment.tv_btn_2
@@ -70,7 +69,7 @@ class PaymentActivity : Activity() {
             params.voice_data = voiceData
             runOnUiThread {
                 tv_btn_3.text =
-                    "Send Sale data --> " + params.toJSON().toString()
+                    "Send Sale data --> ${params.toJSON()}"
             }
             MainActivity.mClient.payment.sale(params, object :
                 ECRHubResponseCallBack {

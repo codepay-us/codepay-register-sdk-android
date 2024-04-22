@@ -351,6 +351,8 @@ public class ECRHubMessageData {
 
         private boolean is_auto_settlement;
 
+        private boolean support_print;
+
         private String card_type;
 
         public void setCard_type(String card_type) {
@@ -602,6 +604,14 @@ public class ECRHubMessageData {
 
         public void setOn_screen_tip(boolean on_screen_tip) {
             this.on_screen_tip = on_screen_tip;
+        }
+
+        public boolean isSupport_print() {
+            return support_print;
+        }
+
+        public void setSupport_print(boolean support_print) {
+            this.support_print = support_print;
         }
     }
 
