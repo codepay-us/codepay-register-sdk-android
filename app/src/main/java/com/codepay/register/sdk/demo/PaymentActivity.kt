@@ -62,6 +62,7 @@ class PaymentActivity : Activity() {
             params.order_amount = amount
             params.on_screen_tip = false
             params.confirm_on_terminal = false
+            params.support_print = true
             params.pay_scenario = "SWIPE_CARD"
             val voiceData = params.voice_data
             voiceData.content = "CodePay Register Received a new order"

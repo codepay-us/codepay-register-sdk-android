@@ -51,7 +51,9 @@ public class Payment {
             data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
         }
         data.getBiz_data().setPay_scenario(params.pay_scenario);
-        data.getBiz_data().setSupport_print(params.support_print);
+        if (null != params.getSupport_print()) {
+            data.getBiz_data().setSupport_print(params.support_print);
+        }
         data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
