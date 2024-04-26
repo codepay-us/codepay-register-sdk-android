@@ -109,7 +109,7 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback {
             deviceName = Build.MODEL;
         }
         device.setName(deviceName);
-        device.setWs_address(NetUtils.getMacAddress(context));
+        device.setWs_address(NetUtils.getWlanMacAddress(context));
         device.setPort("" + PORT);
         device.setIp_address(Objects.requireNonNull(NetUtils.getLocalIPAddress()).getHostAddress());
         ECRHubClient.getInstance().requestUnPair(device, callBack);
@@ -120,7 +120,7 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback {
     public void onServerStart() {
         isServerStart = true;
         final JSONObject clientInfo = new JSONObject();
-        clientInfo.put("mac_address", NetUtils.getMacAddress(context));
+        clientInfo.put("mac_address", NetUtils.getWlanMacAddress(context));
         ServiceInfo mServiceInfo = ServiceInfo.create(REMOTE_CLIENT_TYPE, deviceName + "_" + System.currentTimeMillis(), PORT, 0, 0, clientInfo.toJSONString());
         try {
             mJmdns.registerService(mServiceInfo);

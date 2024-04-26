@@ -5,6 +5,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.util.Log;
 
 import java.net.InetAddress;
 import java.net.NetworkInterface;
@@ -121,6 +122,37 @@ public class NetUtils {
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
         String macAddress = wifiInfo.getMacAddress();
         return macAddress;
+    }
+
+    public static String getWlanMacAddress(Context context) {
+        try {
+            Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
+            while (networkInterfaces.hasMoreElements()) {
+                NetworkInterface networkInterface = networkInterfaces.nextElement();
+                if (networkInterface.getName().equals("wlan0")) {
+                    StringBuilder mac = new StringBuilder();
+                    byte[] hardwareAddress = networkInterface.getHardwareAddress();
+                    String hex = Integer.toHexString(hardwareAddress[0] & 0xff);
+                    if (hex.length() == 1) {
+                        mac.append('0');
+                    }
+                    mac.append(hex);
+                    for (int i = 1; i < hardwareAddress.length; ++i) {
+                        mac.append(":");
+                        hex = Integer.toHexString(hardwareAddress[i] & 0xff);
+                        if (hex.length() == 1) {
+                            mac.append('0');
+                        }
+                        mac.append(hex);
+                    }
+                    String macAddress = mac.toString();
+                    return macAddress;
+                }
+            }
+        } catch (SocketException ex) {
+            Log.e("getWlanMacAddress", null, ex);
+        }
+        return null;
     }
 
     /**
