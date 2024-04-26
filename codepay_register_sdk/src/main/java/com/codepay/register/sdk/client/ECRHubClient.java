@@ -104,6 +104,20 @@ public class ECRHubClient {
                 if (null != connectListener) {
                     connectListener.onDisconnect();
                 }
+                if (remote) {
+                    Log.e(TAG,"reconnect");
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            try {
+                                Thread.sleep(1000);
+                                reconnect();
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    }).start();
+                }
             }
         };
         if (config.getConnectionTimeout() != 0) {
