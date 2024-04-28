@@ -94,25 +94,27 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback {
 
     public void unPair(ECRHubDevice device, ECRHubResponseCallBack callBack) {
         String deviceList = SharePreferenceUtil.getString(Constants.ECR_HUB_PAIR_LIST_KEY, "");
-        if (!deviceList.isEmpty()) {
-            JSONArray array = JSON.parseArray(deviceList);
-            for (int i = 0; i < array.size(); i++) {
-                ECRHubDevice deviceData = JSON.parseObject(array.getJSONObject(i).toString(), ECRHubDevice.class);
-                if (deviceData.getTerminal_sn().equals(device.getTerminal_sn())) {
-                    array.remove(i);
-                    break;
+        if (null != connection) {
+            if (!deviceList.isEmpty()) {
+                JSONArray array = JSON.parseArray(deviceList);
+                for (int i = 0; i < array.size(); i++) {
+                    ECRHubDevice deviceData = JSON.parseObject(array.getJSONObject(i).toString(), ECRHubDevice.class);
+                    if (deviceData.getTerminal_sn().equals(device.getTerminal_sn())) {
+                        array.remove(i);
+                        break;
+                    }
                 }
+                SharePreferenceUtil.put(Constants.ECR_HUB_PAIR_LIST_KEY, array.toString());
             }
-            SharePreferenceUtil.put(Constants.ECR_HUB_PAIR_LIST_KEY, array.toString());
+            if (deviceName.isEmpty()) {
+                deviceName = Build.MODEL;
+            }
+            device.setName(deviceName);
+            device.setWs_address(NetUtils.getWlanMacAddress());
+            device.setPort("" + PORT);
+            device.setIp_address(Objects.requireNonNull(NetUtils.getLocalIPAddress()).getHostAddress());
+            ECRHubClient.getInstance().requestUnPair(device, callBack);
         }
-        if (deviceName.isEmpty()) {
-            deviceName = Build.MODEL;
-        }
-        device.setName(deviceName);
-        device.setWs_address(NetUtils.getWlanMacAddress());
-        device.setPort("" + PORT);
-        device.setIp_address(Objects.requireNonNull(NetUtils.getLocalIPAddress()).getHostAddress());
-        ECRHubClient.getInstance().requestUnPair(device, callBack);
     }
 
 

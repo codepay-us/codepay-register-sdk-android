@@ -122,8 +122,8 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                 if (capabilities != null && capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
                     mPairedList = mPairServer!!.pairedDeviceList
                     for (device in mPairedList) {
-                        Log.e("mPairedList", device.terminal_sn)
-                        Log.e("mPairedList", device.ws_address)
+                        Log.e("terminal_sn", device.terminal_sn)
+                        Log.e("ws_address", device.ws_address)
                     }
                     if (mPairedList.isEmpty()) {
                         runOnUiThread {
@@ -170,6 +170,8 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
             }
 
             R.id.tv_btn_unpair -> {
+                mPairedList = mPairServer!!.pairedDeviceList
+                println("mPairedList: $mPairedList")
                 if (!isConnected) {
                     runOnUiThread {
                         Toast.makeText(this, "Server is not connect", Toast.LENGTH_LONG).show()
@@ -312,11 +314,13 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
     }
 
     override fun onDeviceUnpair(data: ECRHubMessageData?) {
+        mPairedList = mPairServer!!.pairedDeviceList
         runOnUiThread {
             val builder = AlertDialog.Builder(this)
             builder.setTitle("Unpair Device")
             builder.setMessage("Register unpair the " + data?.device_data?.device_name + " device")
             builder.setCancelable(false)
+            println("mPairedList: $mPairedList")
             builder.setPositiveButton(
                 "confirm"
             ) { p0, _ ->
