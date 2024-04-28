@@ -301,4 +301,43 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
             builder.show()
         }
     }
+
+    override fun onDeviceUnpair(data: ECRHubMessageData?) {
+        runOnUiThread {
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle("Unpair Device")
+            builder.setMessage("Register unpair the " + data?.device_data?.device_name + " device")
+            builder.setCancelable(false)
+            builder.setPositiveButton(
+                "confirm"
+            ) { p0, _ ->
+                mPairServer?.unPair(mPairedList[0], object : ECRHubResponseCallBack {
+                    override fun onError(errorCode: String?, errorMsg: String?) {
+                        runOnUiThread {
+                            Toast.makeText(
+                                this@MainActivity,
+                                "unPair failure:$errorMsg",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+
+                    override fun onSuccess(data: PaymentResponseParams?) {
+                        mClient.disConnect()
+                        runOnUiThread {
+                            ll_layout1.visibility = View.GONE
+                            Toast.makeText(this@MainActivity, "Unpair Success!", Toast.LENGTH_LONG)
+                                .show()
+                        }
+                    }
+
+                })
+                p0?.dismiss()
+            }
+            builder.setNegativeButton("Cancel") { p0, _ ->
+                mPairServer?.cancelPair(data)
+                p0?.dismiss()
+            }
+            builder.show()
+        }    }
 }

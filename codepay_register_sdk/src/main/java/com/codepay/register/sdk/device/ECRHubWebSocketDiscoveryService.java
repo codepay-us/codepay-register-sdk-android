@@ -298,6 +298,7 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback {
         if (data.getTopic().equals(Constants.ECR_HUB_TOPIC_UNPAIR)) {
             data.setResponse_code("000");
             connection.send(JSON.toJSON(data).toString());
+            pairListener.onDeviceUnpair(data);
         } else {
             pairListener.onDevicePair(data, "ws://" + data.getDevice_data().getIp_address() + ":" + data.getDevice_data().getPort());
         }

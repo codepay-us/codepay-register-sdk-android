@@ -13,4 +13,10 @@ public interface ECRHubPairListener {
      * @return
      */
     void onDevicePair(ECRHubMessageData data,String ip);
+
+
+    /**
+     * unpair
+     */
+    void onDeviceUnpair(ECRHubMessageData data);
 }
