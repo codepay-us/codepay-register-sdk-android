@@ -124,7 +124,7 @@ public class NetUtils {
         return macAddress;
     }
 
-    public static String getWlanMacAddress(Context context) {
+    public static String getWlanMacAddress() {
         try {
             Enumeration<NetworkInterface> networkInterfaces = NetworkInterface.getNetworkInterfaces();
             while (networkInterfaces.hasMoreElements()) {
@@ -145,8 +145,7 @@ public class NetUtils {
                         }
                         mac.append(hex);
                     }
-                    String macAddress = mac.toString();
-                    return macAddress;
+                    return mac.toString();
                 }
             }
         } catch (SocketException ex) {

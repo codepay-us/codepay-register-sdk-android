@@ -334,10 +334,6 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                 })
                 p0?.dismiss()
             }
-            builder.setNegativeButton("Cancel") { p0, _ ->
-                mPairServer?.cancelPair(data)
-                p0?.dismiss()
-            }
             builder.show()
         }    }
 }
