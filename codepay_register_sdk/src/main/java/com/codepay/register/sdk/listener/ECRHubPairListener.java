@@ -12,7 +12,7 @@ public interface ECRHubPairListener {
      * @param ip
      * @return
      */
-    void onDevicePair(ECRHubMessageData data,String ip);
+    void onDevicePair(ECRHubMessageData data, String ip);
 
 
     /**

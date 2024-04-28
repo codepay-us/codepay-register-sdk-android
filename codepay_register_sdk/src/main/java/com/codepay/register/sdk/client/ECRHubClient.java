@@ -105,7 +105,7 @@ public class ECRHubClient {
                     connectListener.onDisconnect();
                 }
                 if (remote) {
-                    Log.e(TAG,"reconnect");
+                    Log.e(TAG, "reconnect");
                     new Thread(new Runnable() {
                         @Override
                         public void run() {

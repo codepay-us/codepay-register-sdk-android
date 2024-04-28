@@ -121,9 +121,9 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                 val capabilities = connectivityManager.getNetworkCapabilities(network)
                 if (capabilities != null && capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI)) {
                     mPairedList = mPairServer!!.pairedDeviceList
-                    for(device in mPairedList) {
-                        Log.e("mPairedList",device.terminal_sn)
-                        Log.e("mPairedList",device.ws_address)
+                    for (device in mPairedList) {
+                        Log.e("mPairedList", device.terminal_sn)
+                        Log.e("mPairedList", device.ws_address)
                     }
                     if (mPairedList.isEmpty()) {
                         runOnUiThread {
@@ -176,28 +176,37 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                     }
                     return
                 }
-                mPairServer?.unPair(mPairedList[0], object : ECRHubResponseCallBack {
-                    override fun onError(errorCode: String?, errorMsg: String?) {
-                        runOnUiThread {
-                            Toast.makeText(
-                                this@MainActivity,
-                                "unPair failure:$errorMsg",
-                                Toast.LENGTH_LONG
-                            ).show()
+                if (mPairedList.isNotEmpty()) {
+                    mPairServer?.unPair(mPairedList[0], object : ECRHubResponseCallBack {
+                        override fun onError(errorCode: String?, errorMsg: String?) {
+                            runOnUiThread {
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "unPair failure:$errorMsg",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
                         }
-                    }
 
-                    override fun onSuccess(data: PaymentResponseParams?) {
-                        mClient.disConnect()
-                        runOnUiThread {
-                            ll_layout1.visibility = View.GONE
-//                            tv_text_1.text = ""
-                            Toast.makeText(this@MainActivity, "Unpair Success!", Toast.LENGTH_LONG)
-                                .show()
+                        override fun onSuccess(data: PaymentResponseParams?) {
+                            mClient.disConnect()
+                            runOnUiThread {
+                                ll_layout1.visibility = View.GONE
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "Unpair Success!",
+                                    Toast.LENGTH_LONG
+                                )
+                                    .show()
+                            }
                         }
-                    }
 
-                })
+                    })
+                } else {
+                    runOnUiThread {
+                        Toast.makeText(this, "Paired list is empty", Toast.LENGTH_LONG).show()
+                    }
+                }
             }
 
             R.id.tv_btn_exit -> {
@@ -239,7 +248,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                 startActivity(Intent(applicationContext, AuthActivity::class.java))
             }
 
-            R.id.tv_btn_complete-> {
+            R.id.tv_btn_complete -> {
                 if (!isConnected) {
                     runOnUiThread {
                         Toast.makeText(this, "Server is not connect", Toast.LENGTH_LONG).show()
@@ -311,29 +320,37 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
             builder.setPositiveButton(
                 "confirm"
             ) { p0, _ ->
-                mPairServer?.unPair(mPairedList[0], object : ECRHubResponseCallBack {
-                    override fun onError(errorCode: String?, errorMsg: String?) {
-                        runOnUiThread {
-                            Toast.makeText(
-                                this@MainActivity,
-                                "unPair failure:$errorMsg",
-                                Toast.LENGTH_LONG
-                            ).show()
+                if (mPairedList.isNotEmpty()) {
+                    mPairServer?.unPair(mPairedList[0], object : ECRHubResponseCallBack {
+                        override fun onError(errorCode: String?, errorMsg: String?) {
+                            runOnUiThread {
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "unPair failure:$errorMsg",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
                         }
-                    }
 
-                    override fun onSuccess(data: PaymentResponseParams?) {
-                        mClient.disConnect()
-                        runOnUiThread {
-                            ll_layout1.visibility = View.GONE
-                            Toast.makeText(this@MainActivity, "Unpair Success!", Toast.LENGTH_LONG)
-                                .show()
+                        override fun onSuccess(data: PaymentResponseParams?) {
+                            mClient.disConnect()
+                            runOnUiThread {
+                                ll_layout1.visibility = View.GONE
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "Unpair Success!",
+                                    Toast.LENGTH_LONG
+                                )
+                                    .show()
+                            }
                         }
-                    }
-
-                })
-                p0?.dismiss()
+                    })
+                    p0?.dismiss()
+                } else {
+                    return@setPositiveButton
+                }
             }
             builder.show()
-        }    }
+        }
+    }
 }
