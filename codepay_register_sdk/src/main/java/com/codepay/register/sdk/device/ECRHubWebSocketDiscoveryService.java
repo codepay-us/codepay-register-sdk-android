@@ -123,9 +123,10 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback {
         isServerStart = true;
         final JSONObject clientInfo = new JSONObject();
         clientInfo.put("mac_address", NetUtils.getWlanMacAddress());
-        clientInfo.put("ip_address", Objects.requireNonNull(NetUtils.getLocalIPAddress()).getHostAddress() + ":" + PORT);
+        clientInfo.put("ip_address", Objects.requireNonNull(NetUtils.getLocalIPAddress()).getHostAddress()+":"+PORT);
+        clientInfo.put("name", deviceName);
         System.out.println(clientInfo);
-        ServiceInfo mServiceInfo = ServiceInfo.create(REMOTE_CLIENT_TYPE, deviceName + "_" + System.currentTimeMillis(), PORT, 0,  0, clientInfo.toJSONString());
+        ServiceInfo mServiceInfo = ServiceInfo.create(REMOTE_CLIENT_TYPE, deviceName + "_" + System.currentTimeMillis(), PORT, 0, 0, clientInfo.toJSONString());
         try {
             mJmdns.registerService(mServiceInfo);
             mJmdns.addServiceListener(REMOTE_SERVER_TYPE, new ServiceListener() {
