@@ -67,7 +67,7 @@ public class PaymentRequestParams {
 
     Boolean on_screen_tip;
 
-    Boolean support_print;
+    Integer print_receipt;
 
     private String card_type;
 
@@ -241,12 +241,12 @@ public class PaymentRequestParams {
         this.cash_amount = cash_amount;
     }
 
-    public Boolean getSupport_print() {
-        return support_print;
+    public Integer getPrint_receipt () {
+        return print_receipt;
     }
 
-    public void setSupport_print(Boolean support_print) {
-        this.support_print = support_print;
+    public void setPrint_receipt(Integer print_receipt) {
+        this.print_receipt = print_receipt;
     }
 
     public JSONObject toJSON() {
@@ -287,8 +287,8 @@ public class PaymentRequestParams {
         if (null != notify_url) {
             json.put("notify_url", this.notify_url);
         }
-        if (null != support_print) {
-            json.put("support_print", this.support_print);
+        if (null != print_receipt) {
+            json.put("print_receipt", this.print_receipt);
         }
         if (null != attach) {
             json.put("attach", this.attach);

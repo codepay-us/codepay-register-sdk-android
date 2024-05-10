@@ -8,7 +8,9 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.os.StrictMode
 import android.util.Log
+import android.view.Choreographer
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.TextView
@@ -39,6 +41,8 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
         val config = ECRHubConfig()
         mClient = ECRHubClient.getInstance()
         mClient.init(config, this)
@@ -56,6 +60,8 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
         tv_btn_query.setOnClickListener(this)
         tv_btn_close.setOnClickListener(this)
         tv_btn_exit.setOnClickListener(this)
+        addFrameCallback()
+        enabledStrictMode()
     }
 
     override fun onConnect() {
@@ -176,9 +182,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                     runOnUiThread {
                         Toast.makeText(this, "Server is not connect", Toast.LENGTH_LONG).show()
                     }
-                    return
-                }
-                if (mPairedList.isNotEmpty()) {
+                } else {
                     mPairServer?.unPair(mPairedList[0], object : ECRHubResponseCallBack {
                         override fun onError(errorCode: String?, errorMsg: String?) {
                             runOnUiThread {
@@ -204,16 +208,19 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                         }
 
                     })
-                } else {
-                    runOnUiThread {
-                        Toast.makeText(this, "Paired list is empty", Toast.LENGTH_LONG).show()
-                    }
                 }
+//                if (mPairedList.isNotEmpty()) {
+
+//                } else {
+//                    runOnUiThread {
+//                        Toast.makeText(this, "Paired list is empty", Toast.LENGTH_LONG).show()
+//                    }
+//                }
             }
 
             R.id.tv_btn_exit -> {
                 runOnUiThread {
-                    Toast.makeText(this, "The APP is exiting...", Toast.LENGTH_LONG).show()
+                    tv_text_1.text = "The APP is exiting..."
                 }
                 mPairServer?.stop()
                 mClient.disConnect()
@@ -311,6 +318,46 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
             }
             builder.show()
         }
+    }
+
+    private fun enabledStrictMode() {
+        //开启Thread策略模式
+        StrictMode.setThreadPolicy(
+            StrictMode.ThreadPolicy.Builder().detectNetwork() //监测主线程使用网络io
+                .detectAll()
+                .penaltyLog() //写入日志
+                .penaltyDialog() //监测到上述状况时弹出对话框
+                .build()
+        )
+        //开启VM策略模式
+        StrictMode.setVmPolicy(
+            StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects() //监测sqlite泄露
+                .detectLeakedClosableObjects() //监测没有关闭IO对象
+                .detectActivityLeaks()
+                .penaltyLog() //写入日志
+                .build()
+        )
+    }
+
+
+    private fun addFrameCallback(){
+        Choreographer.getInstance().postFrameCallback(object : Choreographer.FrameCallback {
+            private var lastFrameTimeNanos: Long = 0
+            override fun doFrame(frameTimeNanos: Long) {
+                if (lastFrameTimeNanos != 0L) {
+                    val frameIntervalNanos = frameTimeNanos - lastFrameTimeNanos
+                    val frameIntervalMs = frameIntervalNanos / 1000000.0
+                    if (frameIntervalMs > 16.7) {
+                        // 如果帧间隔大于 16.7 毫秒（对应每秒 60 帧），则认为掉帧
+                        Log.e("Frame", "Dropped frame, interval: $frameIntervalMs ms")
+                    }
+                }
+                lastFrameTimeNanos = frameTimeNanos
+                // 注册下一帧回调
+                Choreographer.getInstance().postFrameCallback(this)
+            }
+        })
+
     }
 
     override fun onDeviceUnpair(data: ECRHubMessageData?) {

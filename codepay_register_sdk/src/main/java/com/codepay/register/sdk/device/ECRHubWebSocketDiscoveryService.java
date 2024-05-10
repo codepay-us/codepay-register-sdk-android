@@ -283,7 +283,7 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback {
                 data.setResponse_code("000");
                 connection.send(JSON.toJSON(data).toString());
                 addPairedDevice(data);
-                System.out.println("confirmPair: " + JSON.toJSON(data));
+                System.out.println("getPairedDeviceList: "+getPairedDeviceList());
             }
         }
     }
