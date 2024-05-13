@@ -60,8 +60,6 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
         tv_btn_query.setOnClickListener(this)
         tv_btn_close.setOnClickListener(this)
         tv_btn_exit.setOnClickListener(this)
-        addFrameCallback()
-        enabledStrictMode()
     }
 
     override fun onConnect() {
@@ -318,46 +316,6 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
             }
             builder.show()
         }
-    }
-
-    private fun enabledStrictMode() {
-        //开启Thread策略模式
-        StrictMode.setThreadPolicy(
-            StrictMode.ThreadPolicy.Builder().detectNetwork() //监测主线程使用网络io
-                .detectAll()
-                .penaltyLog() //写入日志
-                .penaltyDialog() //监测到上述状况时弹出对话框
-                .build()
-        )
-        //开启VM策略模式
-        StrictMode.setVmPolicy(
-            StrictMode.VmPolicy.Builder().detectLeakedSqlLiteObjects() //监测sqlite泄露
-                .detectLeakedClosableObjects() //监测没有关闭IO对象
-                .detectActivityLeaks()
-                .penaltyLog() //写入日志
-                .build()
-        )
-    }
-
-
-    private fun addFrameCallback(){
-        Choreographer.getInstance().postFrameCallback(object : Choreographer.FrameCallback {
-            private var lastFrameTimeNanos: Long = 0
-            override fun doFrame(frameTimeNanos: Long) {
-                if (lastFrameTimeNanos != 0L) {
-                    val frameIntervalNanos = frameTimeNanos - lastFrameTimeNanos
-                    val frameIntervalMs = frameIntervalNanos / 1000000.0
-                    if (frameIntervalMs > 16.7) {
-                        // 如果帧间隔大于 16.7 毫秒（对应每秒 60 帧），则认为掉帧
-                        Log.e("Frame", "Dropped frame, interval: $frameIntervalMs ms")
-                    }
-                }
-                lastFrameTimeNanos = frameTimeNanos
-                // 注册下一帧回调
-                Choreographer.getInstance().postFrameCallback(this)
-            }
-        })
-
     }
 
     override fun onDeviceUnpair(data: ECRHubMessageData?) {
