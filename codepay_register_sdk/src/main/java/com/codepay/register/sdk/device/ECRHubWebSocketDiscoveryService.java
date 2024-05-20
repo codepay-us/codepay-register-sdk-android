@@ -81,6 +81,7 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback {
 
     public void stop() {
         try {
+            isServerStart = false;
             if (null != mJmdns) {
                 mJmdns.close();
                 mJmdns.unregisterAllServices();
@@ -99,7 +100,7 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback {
                 JSONArray array = JSON.parseArray(deviceList);
                 for (int i = 0; i < array.size(); i++) {
                     ECRHubDevice deviceData = JSON.parseObject(array.getJSONObject(i).toString(), ECRHubDevice.class);
-                    if (deviceData.getTerminal_sn().equals(device.getTerminal_sn())) {
+                    if (deviceData.getName().equals(device.getName())) {
                         array.remove(i);
                         break;
                     }
@@ -264,7 +265,11 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback {
         ECRHubDevice device = new ECRHubDevice();
         device.setPort(data.getDevice_data().getPort());
         device.setIp_address(data.getDevice_data().getIp_address());
-        device.setTerminal_sn(data.getDevice_data().getAlias_name());
+        if (null != data.getDevice_data().getAlias_name() && !"".equals(data.getDevice_data().getAlias_name())) {
+            device.setTerminal_sn(data.getDevice_data().getAlias_name());
+        } else {
+            device.setTerminal_sn(data.getDevice_data().getDevice_name());
+        }
         device.setWs_address(data.getDevice_data().getMac_address());
         device.setName(data.getDevice_data().getDevice_name());
         String deviceList = SharePreferenceUtil.getString(Constants.ECR_HUB_PAIR_LIST_KEY, "");
@@ -295,7 +300,7 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback {
                 data.setResponse_code("000");
                 connection.send(JSON.toJSON(data).toString());
                 addPairedDevice(data);
-                System.out.println("getPairedDeviceList: "+getPairedDeviceList());
+                System.out.println("getPairedDeviceList: " + getPairedDeviceList());
             }
         }
     }
