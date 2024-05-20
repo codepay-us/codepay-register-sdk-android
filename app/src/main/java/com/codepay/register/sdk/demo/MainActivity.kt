@@ -8,7 +8,9 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.os.StrictMode
 import android.util.Log
+import android.view.Choreographer
 import android.view.View
 import android.view.View.OnClickListener
 import android.widget.TextView
@@ -39,6 +41,8 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+
         val config = ECRHubConfig()
         mClient = ECRHubClient.getInstance()
         mClient.init(config, this)
@@ -176,9 +180,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                     runOnUiThread {
                         Toast.makeText(this, "Server is not connect", Toast.LENGTH_LONG).show()
                     }
-                    return
-                }
-                if (mPairedList.isNotEmpty()) {
+                } else {
                     mPairServer?.unPair(mPairedList[0], object : ECRHubResponseCallBack {
                         override fun onError(errorCode: String?, errorMsg: String?) {
                             runOnUiThread {
@@ -204,16 +206,19 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                         }
 
                     })
-                } else {
-                    runOnUiThread {
-                        Toast.makeText(this, "Paired list is empty", Toast.LENGTH_LONG).show()
-                    }
                 }
+//                if (mPairedList.isNotEmpty()) {
+
+//                } else {
+//                    runOnUiThread {
+//                        Toast.makeText(this, "Paired list is empty", Toast.LENGTH_LONG).show()
+//                    }
+//                }
             }
 
             R.id.tv_btn_exit -> {
                 runOnUiThread {
-                    Toast.makeText(this, "The APP is exiting...", Toast.LENGTH_LONG).show()
+                    tv_text_1.text = "The APP is exiting..."
                 }
                 mPairServer?.stop()
                 mClient.disConnect()

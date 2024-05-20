@@ -351,7 +351,7 @@ public class ECRHubMessageData {
 
         private boolean is_auto_settlement;
 
-        private boolean support_print;
+        private Integer print_receipt;
 
         private String card_type;
 
@@ -590,6 +590,14 @@ public class ECRHubMessageData {
             return confirm_on_terminal;
         }
 
+        public Integer getPrint_receipt() {
+            return print_receipt;
+        }
+
+        public void setPrint_receipt(Integer print_receipt) {
+            this.print_receipt = print_receipt;
+        }
+
         public void setExpires(int expires) {
             this.expires = expires;
         }
@@ -606,13 +614,7 @@ public class ECRHubMessageData {
             this.on_screen_tip = on_screen_tip;
         }
 
-        public boolean isSupport_print() {
-            return support_print;
-        }
 
-        public void setSupport_print(boolean support_print) {
-            this.support_print = support_print;
-        }
     }
 
     public class NotifyData {
