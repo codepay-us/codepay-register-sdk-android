@@ -110,10 +110,23 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback {
                 deviceName = Build.MODEL;
             }
             device.setName(deviceName);
-            device.setWs_address(NetUtils.getWlanMacAddress());
+            device.setWs_address(NetUtils.getWlanMacAddress(context));
             device.setPort("" + PORT);
             device.setIp_address(Objects.requireNonNull(NetUtils.getLocalIPAddress()).getHostAddress());
             ECRHubClient.getInstance().requestUnPair(device, callBack);
+        }
+    }
+
+    private void registerService() throws IOException {
+        if (null != mJmdns) {
+            mJmdns.unregisterAllServices();
+            final JSONObject clientInfo = new JSONObject();
+            clientInfo.put("mac_address", NetUtils.getWlanMacAddress(context));
+            clientInfo.put("ip_address", Objects.requireNonNull(NetUtils.getLocalIPAddress()).getHostAddress() + ":" + PORT);
+            clientInfo.put("name", deviceName);
+            System.out.println(clientInfo);
+            ServiceInfo mServiceInfo = ServiceInfo.create(REMOTE_CLIENT_TYPE, deviceName + "_" + System.currentTimeMillis(), PORT, 0, 0, clientInfo.toJSONString());
+            mJmdns.registerService(mServiceInfo);
         }
     }
 
@@ -121,14 +134,8 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback {
     @Override
     public void onServerStart() {
         isServerStart = true;
-        final JSONObject clientInfo = new JSONObject();
-        clientInfo.put("mac_address", NetUtils.getWlanMacAddress());
-        clientInfo.put("ip_address", Objects.requireNonNull(NetUtils.getLocalIPAddress()).getHostAddress()+":"+PORT);
-        clientInfo.put("name", deviceName);
-        System.out.println(clientInfo);
-        ServiceInfo mServiceInfo = ServiceInfo.create(REMOTE_CLIENT_TYPE, deviceName + "_" + System.currentTimeMillis(), PORT, 0, 0, clientInfo.toJSONString());
         try {
-            mJmdns.registerService(mServiceInfo);
+            registerService();
             mJmdns.addServiceListener(REMOTE_SERVER_TYPE, new ServiceListener() {
                 @Override
                 public void serviceAdded(ServiceEvent event) {
@@ -143,6 +150,11 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback {
                 @Override
                 public void serviceResolved(ServiceEvent event) {
                     Log.e("DiscoveryService", "serviceResolved");
+                    try {
+                        registerService();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                     JSONObject info = toJsonObject(event.getInfo());
                     List<ECRHubDevice> list = getPairedDeviceList();
                     JSONArray array = new JSONArray();
