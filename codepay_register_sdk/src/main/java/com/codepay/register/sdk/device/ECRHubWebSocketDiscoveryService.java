@@ -278,7 +278,7 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback {
             boolean isHas = false;
             for (int i = 0; i < array.size(); i++) {
                 ECRHubDevice deviceData = JSON.parseObject(array.getJSONObject(i).toString(), ECRHubDevice.class);
-                if (deviceData.getTerminal_sn().equals(data.getDevice_data().getAlias_name())) {
+                if (deviceData.getWs_address().equals(data.getDevice_data().getMac_address()) || deviceData.getIp_address().equals(data.getDevice_data().getIp_address()) || deviceData.getName().equals(data.getDevice_data().getDevice_name())) {
                     isHas = true;
                     break;
                 }
