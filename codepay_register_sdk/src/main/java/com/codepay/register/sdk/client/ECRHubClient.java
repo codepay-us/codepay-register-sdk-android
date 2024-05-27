@@ -19,6 +19,7 @@ import org.java_websocket.enums.ReadyState;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
+import java.util.Objects;
 
 /**
  * @author pupan
@@ -148,6 +149,11 @@ public class ECRHubClient {
     }
 
     public void connect(String ip) {
+        if(!Objects.equals(ip, ipAddress)) {
+            if(isConnected()) {
+                disConnect();
+            }
+        }
         ipAddress = ip;
         connect();
     }
@@ -157,5 +163,6 @@ public class ECRHubClient {
             return;
         }
         webSocketClient.close();
+        webSocketClient = null;
     }
 }
