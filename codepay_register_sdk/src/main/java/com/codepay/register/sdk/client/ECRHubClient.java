@@ -139,6 +139,9 @@ public class ECRHubClient {
             initSocketClient();
         }
         if (webSocketClient.isOpen()) {
+            if (null != connectListener) {
+                connectListener.onConnect();
+            }
             return;
         }
         if (webSocketClient.getReadyState().equals(ReadyState.NOT_YET_CONNECTED)) {
@@ -149,8 +152,8 @@ public class ECRHubClient {
     }
 
     public void connect(String ip) {
-        if(!Objects.equals(ip, ipAddress)) {
-            if(isConnected()) {
+        if (!Objects.equals(ip, ipAddress)) {
+            if (isConnected()) {
                 disConnect();
             }
         }
