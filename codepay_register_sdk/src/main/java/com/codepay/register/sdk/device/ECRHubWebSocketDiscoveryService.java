@@ -30,7 +30,7 @@ import javax.jmdns.ServiceEvent;
 import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 
-public class ECRHubWebSocketDiscoveryService implements OnServerCallback {
+public class ECRHubWebSocketDiscoveryService implements OnServerCallback, ServiceListener {
     private final static String REMOTE_CLIENT_TYPE = "_ecr-hub-client._tcp.local.";
 
     public final static String REMOTE_SERVER_TYPE = "_ecr-hub-server._tcp.local.";
@@ -136,92 +136,20 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback {
     public void onServerStart() {
         isServerStart = true;
         try {
-            registerService();
-            mJmdns.addServiceListener(REMOTE_SERVER_TYPE, new ServiceListener() {
-                @Override
-                public void serviceAdded(ServiceEvent event) {
-                    Log.e("DiscoveryService", "serviceAdded");
-                }
-
-                @Override
-                public void serviceRemoved(ServiceEvent event) {
-                    Log.e("DiscoveryService", "serviceRemoved");
-                }
-
-                @Override
-                public void serviceResolved(ServiceEvent event) {
-                    Log.e("DiscoveryService", "serviceResolved");
-                    try {
-                        registerService();
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                    JSONObject info = toJsonObject(event.getInfo());
-                    List<ECRHubDevice> list = getPairedDeviceList();
-                    JSONArray array = new JSONArray();
-                    boolean isChange = false;
-                    for (int i = 0; i < list.size(); i++) {
-                        ECRHubDevice device = list.get(i);
-                        if (info.containsKey("name") && device.getWs_address().equals(info.getString("name"))) {
-                            if (!info.getString("ip_address").equals(device.getIp_address()) || !info.getString("port").equals(device.getPort())) {
-                                isChange = true;
-                                device.setPort(info.getString("port"));
-                                device.setIp_address(info.getString("ip_address"));
-                            }
-                        }
-                        array.add(JSON.toJSON(device));
-                    }
-                    if (!array.isEmpty()) {
-                        SharePreferenceUtil.put(Constants.ECR_HUB_PAIR_LIST_KEY, array.toString());
-                    }
-                    if (isChange) {
-                        ECRHubClient.getInstance().disConnect();
-                        ECRHubClient.getInstance().connect("ws://" + info.getString("ip_address") + ":" + info.getString("port"));
-                    }
-                }
-
-                /**
-                 * 解析获取到的客户端的信息
-                 *
-                 * @param sInfo 客户端信息
-                 * @return json格式信息
-                 */
-                private JSONObject toJsonObject(ServiceInfo sInfo) {
-                    JSONObject jsonObj = null;
-                    try {
-                        jsonObj = new JSONObject();
-                        String ipv4 = "";
-                        if (sInfo.getInet4Addresses().length > 0) {
-                            ipv4 = sInfo.getInet4Addresses()[0].getHostAddress();
-                        }
-                        if (sInfo.getName().contains("_")) {
-                            jsonObj.put("name", sInfo.getName().split("_")[0]);
-                        } else {
-                            jsonObj.put("name", sInfo.getName());
-                        }
-                        jsonObj.put("ip_address", ipv4);
-                        jsonObj.put("port", sInfo.getPort());
-                        byte[] allInfo = sInfo.getTextBytes();
-                        int allLen = allInfo.length;
-                        byte fLen;
-                        for (int index = 0; index < allLen; index += fLen) {
-                            fLen = allInfo[index++];
-                            byte[] fData = new byte[fLen];
-                            System.arraycopy(allInfo, index, fData, 0, fLen);
-                            String fInfo = new String(fData, StandardCharsets.UTF_8);
-                            JSONObject jsonInfo = JSONObject.parseObject(fInfo);
-                            if (!jsonInfo.isEmpty()) {
-                                for (String key : jsonInfo.keySet()) {
-                                    jsonObj.put(key, jsonInfo.getString(key));
-                                }
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    return jsonObj;
-                }
-            });
+            if (null != mJmdns) {
+                mJmdns.unregisterAllServices();
+                mJmdns = null;
+            }
+            InetAddress ip = NetUtils.getLocalIPAddress();
+            mJmdns = JmDNS.create(ip, "ECRHubServerName");
+            final JSONObject clientInfo = new JSONObject();
+            clientInfo.put("mac_address", NetUtils.getMacAddress(context));
+            clientInfo.put("ip_address", Objects.requireNonNull(NetUtils.getLocalIPAddress()).getHostAddress() + ":" + PORT);
+            clientInfo.put("name", deviceName);
+            System.out.println(clientInfo);
+            ServiceInfo mServiceInfo = ServiceInfo.create(REMOTE_CLIENT_TYPE, deviceName + "_" + System.currentTimeMillis(), PORT, 0, 0, clientInfo.toJSONString());
+            mJmdns.registerService(mServiceInfo);
+            mJmdns.addServiceListener(REMOTE_SERVER_TYPE, this);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -325,5 +253,89 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback {
         } else {
             pairListener.onDevicePair(data, "ws://" + data.getDevice_data().getIp_address() + ":" + data.getDevice_data().getPort());
         }
+    }
+
+    @Override
+    public void serviceAdded(ServiceEvent event) {
+        Log.e("DiscoveryService", "serviceAdded");
+    }
+
+    @Override
+    public void serviceRemoved(ServiceEvent event) {
+        Log.e("DiscoveryService", "serviceRemoved");
+    }
+
+    @Override
+    public void serviceResolved(ServiceEvent event) {
+        Log.e("DiscoveryService", "serviceResolved");
+        try {
+            registerService();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        JSONObject info = toJsonObject(event.getInfo());
+        List<ECRHubDevice> list = getPairedDeviceList();
+        JSONArray array = new JSONArray();
+        boolean isChange = false;
+        for (int i = 0; i < list.size(); i++) {
+            ECRHubDevice device = list.get(i);
+            if (info.containsKey("name") && device.getWs_address().equals(info.getString("name"))) {
+                if (!info.getString("ip_address").equals(device.getIp_address()) || !info.getString("port").equals(device.getPort())) {
+                    isChange = true;
+                    device.setPort(info.getString("port"));
+                    device.setIp_address(info.getString("ip_address"));
+                }
+            }
+            array.add(JSON.toJSON(device));
+        }
+        if (!array.isEmpty()) {
+            SharePreferenceUtil.put(Constants.ECR_HUB_PAIR_LIST_KEY, array.toString());
+        }
+        if (isChange && ECRHubClient.getInstance().isConnected()) {
+            ECRHubClient.getInstance().disConnect();
+            ECRHubClient.getInstance().connect("ws://" + info.getString("ip_address") + ":" + info.getString("port"));
+        }
+    }
+
+    /**
+     * 解析获取到的客户端的信息
+     *
+     * @param sInfo 客户端信息
+     * @return json格式信息
+     */
+    private JSONObject toJsonObject(ServiceInfo sInfo) {
+        JSONObject jsonObj = null;
+        try {
+            jsonObj = new JSONObject();
+            String ipv4 = "";
+            if (sInfo.getInet4Addresses().length > 0) {
+                ipv4 = sInfo.getInet4Addresses()[0].getHostAddress();
+            }
+            if (sInfo.getName().contains("_")) {
+                jsonObj.put("name", sInfo.getName().split("_")[0]);
+            } else {
+                jsonObj.put("name", sInfo.getName());
+            }
+            jsonObj.put("ip_address", ipv4);
+            jsonObj.put("port", sInfo.getPort());
+            byte[] allInfo = sInfo.getTextBytes();
+            int allLen = allInfo.length;
+            byte fLen;
+            for (int index = 0; index < allLen; index += fLen) {
+                fLen = allInfo[index++];
+                byte[] fData = new byte[fLen];
+                System.arraycopy(allInfo, index, fData, 0, fLen);
+                String fInfo = new String(fData, StandardCharsets.UTF_8);
+                JSONObject jsonInfo = JSONObject.parseObject(fInfo);
+                if (!jsonInfo.isEmpty()) {
+                    for (String key : jsonInfo.keySet()) {
+                        jsonObj.put(key, jsonInfo.getString(key));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonObj;
     }
 }
