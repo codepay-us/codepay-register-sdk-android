@@ -95,18 +95,18 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback, Servic
 
     public void unPair(ECRHubDevice device, ECRHubResponseCallBack callBack) {
         String deviceList = SharePreferenceUtil.getString(Constants.ECR_HUB_PAIR_LIST_KEY, "");
-        if (null != connection) {
-            if (!deviceList.isEmpty()) {
-                JSONArray array = JSON.parseArray(deviceList);
-                for (int i = 0; i < array.size(); i++) {
-                    ECRHubDevice deviceData = JSON.parseObject(array.getJSONObject(i).toString(), ECRHubDevice.class);
-                    if (deviceData.getName().equals(device.getName())) {
-                        array.remove(i);
-                        break;
-                    }
+        if (!deviceList.isEmpty()) {
+            JSONArray array = JSON.parseArray(deviceList);
+            for (int i = 0; i < array.size(); i++) {
+                ECRHubDevice deviceData = JSON.parseObject(array.getJSONObject(i).toString(), ECRHubDevice.class);
+                if (deviceData.getName().equals(device.getName())) {
+                    array.remove(i);
+                    break;
                 }
-                SharePreferenceUtil.put(Constants.ECR_HUB_PAIR_LIST_KEY, array.toString());
             }
+            SharePreferenceUtil.put(Constants.ECR_HUB_PAIR_LIST_KEY, array.toString());
+        }
+        if (ECRHubClient.getInstance().isConnected()) {
             if (deviceName.isEmpty()) {
                 deviceName = Build.MODEL;
             }
@@ -115,6 +115,31 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback, Servic
             device.setPort("" + PORT);
             device.setIp_address(Objects.requireNonNull(NetUtils.getLocalIPAddress()).getHostAddress());
             ECRHubClient.getInstance().requestUnPair(device, callBack);
+        }
+    }
+
+    public void deletePairList(ECRHubMessageData data) {
+        String deviceList = SharePreferenceUtil.getString(Constants.ECR_HUB_PAIR_LIST_KEY, "");
+        ECRHubDevice device = new ECRHubDevice();
+        device.setPort(data.getDevice_data().getPort());
+        device.setIp_address(data.getDevice_data().getIp_address());
+        if (null != data.getDevice_data().getAlias_name() && !"".equals(data.getDevice_data().getAlias_name())) {
+            device.setTerminal_sn(data.getDevice_data().getAlias_name());
+        } else {
+            device.setTerminal_sn(data.getDevice_data().getDevice_name());
+        }
+        device.setWs_address(data.getDevice_data().getMac_address());
+        device.setName(data.getDevice_data().getDevice_name());
+        if (!deviceList.isEmpty()) {
+            JSONArray array = JSON.parseArray(deviceList);
+            for (int i = 0; i < array.size(); i++) {
+                ECRHubDevice deviceData = JSON.parseObject(array.getJSONObject(i).toString(), ECRHubDevice.class);
+                if (deviceData.getName().equals(device.getName())) {
+                    array.remove(i);
+                    break;
+                }
+            }
+            SharePreferenceUtil.put(Constants.ECR_HUB_PAIR_LIST_KEY, array.toString());
         }
     }
 
@@ -249,6 +274,7 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback, Servic
         if (data.getTopic().equals(Constants.ECR_HUB_TOPIC_UNPAIR)) {
             data.setResponse_code("000");
             connection.send(JSON.toJSON(data).toString());
+            deletePairList(data);
             pairListener.onDeviceUnpair(data);
         } else {
             pairListener.onDevicePair(data, "ws://" + data.getDevice_data().getIp_address() + ":" + data.getDevice_data().getPort());
