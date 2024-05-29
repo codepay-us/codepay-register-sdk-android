@@ -45,7 +45,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
 
         val config = ECRHubConfig()
         mClient = ECRHubClient.getInstance()
-        mClient.init(config, this)
+        mClient.init(config, this, this)
         mPairServer = ECRHubWebSocketDiscoveryService(this)
         mPairedList = mPairServer!!.pairedDeviceList
         tv_btn_start.setOnClickListener(this)

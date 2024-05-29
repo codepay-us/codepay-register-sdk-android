@@ -4,6 +4,7 @@ import static com.codepay.register.sdk.util.Constants.ECR_HUB_TOPIC_PAIR;
 import static com.codepay.register.sdk.util.Constants.ECR_HUB_TOPIC_UNPAIR;
 import static com.codepay.register.sdk.util.Constants.HEART_BEAT_TOPIC;
 
+import android.content.Context;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
@@ -13,6 +14,7 @@ import com.codepay.register.sdk.device.ECRHubDevice;
 import com.codepay.register.sdk.listener.ECRHubConnectListener;
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack;
 import com.codepay.register.sdk.util.ECRHubMessageData;
+import com.codepay.register.sdk.util.NetUtils;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.enums.ReadyState;
@@ -29,6 +31,8 @@ public class ECRHubClient {
     private static final String TAG = "ECRHubClient";
     //server config
     private ECRHubConfig config;
+    // context
+    private Context context;
     // listener
     private ECRHubConnectListener connectListener;
     // server ip
@@ -46,7 +50,8 @@ public class ECRHubClient {
         return instance;
     }
 
-    public void init(ECRHubConfig config, ECRHubConnectListener listener) {
+    public void init(ECRHubConfig config, ECRHubConnectListener listener, Context context) {
+        this.context = context;
         this.config = config;
         this.connectListener = listener;
     }
@@ -69,7 +74,12 @@ public class ECRHubClient {
      * 初始化websocket连接
      */
     private void initSocketClient() {
-        URI uri = URI.create(ipAddress);
+        URI uri;
+        if (null != context) {
+            uri = URI.create(ipAddress + "/" + "mac_address=" + NetUtils.getMacAddress(context));
+        } else {
+            uri = URI.create(ipAddress);
+        }
         webSocketClient = new WebSocketClient(uri) {
             @Override
             public void onMessage(String message) {
@@ -107,15 +117,12 @@ public class ECRHubClient {
                 }
                 if (remote) {
                     Log.e(TAG, "reconnect");
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            try {
-                                Thread.sleep(1000);
-                                reconnect();
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
+                    new Thread(() -> {
+                        try {
+                            Thread.sleep(1000);
+                            reconnect();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
                         }
                     }).start();
                 }
