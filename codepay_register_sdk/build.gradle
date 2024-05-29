@@ -41,7 +41,7 @@ dependencies {
     api "com.squareup.okhttp3:okhttp:4.9.2"
     api 'androidx.appcompat:appcompat:1.0.0'
     api "com.squareup.okhttp3:logging-interceptor:4.9.2"
-    api group: 'org.jmdns', name: 'jmdns', version: '3.5.8'
+    api group: 'org.jmdns', name: 'jmdns', version: '3.5.9'
     //retrofit2
     implementation 'org.java-websocket:Java-WebSocket:1.4.0'
     api 'com.squareup.retrofit2:retrofit:2.7.1'

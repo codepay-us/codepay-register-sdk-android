@@ -117,7 +117,7 @@ public class ECRHubClient {
                 if (null != connectListener) {
                     connectListener.onDisconnect();
                 }
-                if (code != 1000) {
+                if (code != 1000||remote) {
                     Log.e(TAG, "reconnect");
                     new Thread(() -> {
                         try {
