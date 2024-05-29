@@ -20,6 +20,7 @@ import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.enums.ReadyState;
 import org.java_websocket.handshake.ServerHandshake;
 
+import java.net.NoRouteToHostException;
 import java.net.URI;
 import java.util.Objects;
 
@@ -104,6 +105,7 @@ public class ECRHubClient {
             @Override
             public void onError(Exception ex) {
                 Log.e(TAG, "websocket connect error：" + ex);
+                disConnect();
                 if (null != connectListener) {
                     connectListener.onError(ex.getLocalizedMessage(), ex.getMessage());
                 }
@@ -115,7 +117,7 @@ public class ECRHubClient {
                 if (null != connectListener) {
                     connectListener.onDisconnect();
                 }
-                if (remote) {
+                if (code != 1000) {
                     Log.e(TAG, "reconnect");
                     new Thread(() -> {
                         try {
@@ -130,6 +132,8 @@ public class ECRHubClient {
         };
         if (config.getConnectionTimeout() != 0) {
             webSocketClient.setConnectionLostTimeout(config.getConnectionTimeout());
+        } else {
+            webSocketClient.setConnectionLostTimeout(5);
         }
         payment = new Payment((webSocketClient));
     }
