@@ -88,8 +88,12 @@ public class ECRHubClient {
                 if (data.getTopic().equals(ECR_HUB_TOPIC_PAIR) || data.getTopic().equals(ECR_HUB_TOPIC_UNPAIR)) {
                     pairCallBack.onSuccess(data);
                 } else if (!data.getTopic().equals(HEART_BEAT_TOPIC)) {
-                    if (null != payment && null != payment.getResponseCallBack()) {
-                        payment.getResponseCallBack().onSuccess(data);
+                    String transType = data.getBiz_data().getTrans_type();
+                    if (null == transType || "".equals(transType)) {
+                        transType = data.getTopic();
+                    }
+                    if (null != payment && null != payment.getResponseCallBack(transType)) {
+                        payment.getResponseCallBack(transType).onSuccess(data);
                     }
                 }
             }
@@ -117,7 +121,7 @@ public class ECRHubClient {
                 if (null != connectListener) {
                     connectListener.onDisconnect();
                 }
-                if (code != 1000||remote) {
+                if (code != 1000 || remote) {
                     Log.e(TAG, "reconnect");
                     new Thread(() -> {
                         try {

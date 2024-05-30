@@ -9,22 +9,34 @@ import com.codepay.register.sdk.listener.ECRHubResponseCallBack;
 import com.codepay.register.sdk.util.Constants;
 import com.codepay.register.sdk.util.ECRHubMessageData;
 
+import org.java_websocket.WebSocket;
 import org.java_websocket.client.WebSocketClient;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Payment {
     WebSocketClient webSocketClient;
-    private ECRHubResponseCallBack responseCallBack;
+    Map<String, ECRHubResponseCallBack> callBackHashMap = new HashMap<>();
 
     public Payment(WebSocketClient webSocketClient) {
         this.webSocketClient = webSocketClient;
     }
 
-    public ECRHubResponseCallBack getResponseCallBack() {
-        return responseCallBack;
+
+    public ECRHubResponseCallBack getResponseCallBack(String transType) {
+        return callBackHashMap.get(transType);
+    }
+
+    private void addCallBack(String transType, ECRHubResponseCallBack callBack) {
+        if (callBackHashMap.containsKey(transType)) {
+            callBackHashMap.remove(transType);
+        }
+        callBackHashMap.put(transType, callBack);
     }
 
     public void sale(PaymentRequestParams params, ECRHubResponseCallBack callBack) {
-        responseCallBack = callBack;
+        addCallBack(Constants.TRANS_TYPE_SALE, callBack);
         if (null == params.getTopic()) {
             params.setTopic(PAYMENT_TOPIC);
         }
@@ -67,7 +79,7 @@ public class Payment {
     }
 
     public void close(PaymentRequestParams params, ECRHubResponseCallBack callBack) {
-        responseCallBack = callBack;
+        addCallBack(CLOSE_TOPIC, callBack);
         if (null == params.getTopic()) {
             params.setTopic(CLOSE_TOPIC);
         }
@@ -90,7 +102,7 @@ public class Payment {
     }
 
     public void query(PaymentRequestParams params, ECRHubResponseCallBack callBack) {
-        responseCallBack = callBack;
+        addCallBack(QUERY_TOPIC, callBack);
         if (null == params.getTopic()) {
             params.setTopic(QUERY_TOPIC);
         }
@@ -113,7 +125,7 @@ public class Payment {
     }
 
     public void refund(PaymentRequestParams params, ECRHubResponseCallBack callBack) {
-        responseCallBack = callBack;
+        addCallBack(Constants.TRANS_TYPE_REFUND, callBack);
         if (null == params.getTopic()) {
             params.setTopic(PAYMENT_TOPIC);
         }
@@ -147,7 +159,7 @@ public class Payment {
     }
 
     public void cancel(PaymentRequestParams params, ECRHubResponseCallBack callBack) {
-        responseCallBack = callBack;
+        addCallBack(Constants.TRANS_TYPE_VOID, callBack);
         if (null == params.getTopic()) {
             params.setTopic(PAYMENT_TOPIC);
         }
@@ -177,7 +189,7 @@ public class Payment {
     }
 
     public void auth(PaymentRequestParams params, ECRHubResponseCallBack callBack) {
-        responseCallBack = callBack;
+        addCallBack(Constants.TRANS_TYPE_PRE_AUTH, callBack);
         if (null == params.getTopic()) {
             params.setTopic(PAYMENT_TOPIC);
         }
@@ -211,7 +223,7 @@ public class Payment {
     }
 
     public void completion(PaymentRequestParams params, ECRHubResponseCallBack callBack) {
-        responseCallBack = callBack;
+        addCallBack(Constants.TRANS_TYPE_PRE_AUTH_COMPLETE, callBack);
         if (null == params.getTopic()) {
             params.setTopic(PAYMENT_TOPIC);
         }
