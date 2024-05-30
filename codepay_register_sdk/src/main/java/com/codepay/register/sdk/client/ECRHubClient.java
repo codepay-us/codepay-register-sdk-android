@@ -118,10 +118,10 @@ public class ECRHubClient {
             @Override
             public void onClose(int code, String reason, boolean remote) {
                 Log.e(TAG, "websocket disconect：·code:" + code + "·reason:" + reason + "·remote:" + remote);
-                if (null != connectListener) {
-                    connectListener.onDisconnect();
-                }
                 if (code != 1000 || remote) {
+                    if (null != connectListener) {
+                        connectListener.onDisconnect();
+                    }
                     Log.e(TAG, "reconnect");
                     new Thread(() -> {
                         try {
