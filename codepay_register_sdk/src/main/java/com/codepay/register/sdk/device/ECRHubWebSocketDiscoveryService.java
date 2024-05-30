@@ -85,6 +85,7 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback, Servic
             if (null != mJmdns) {
                 mJmdns.close();
                 mJmdns.unregisterAllServices();
+                mJmdns.removeServiceListener(REMOTE_SERVER_TYPE, this);
                 mJmdns = null;
             }
             socketServer.stop();
