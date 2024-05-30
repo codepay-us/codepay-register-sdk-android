@@ -87,5 +87,40 @@ class CashBackActivity : Activity() {
                 }
             })
         }
+        tv_btn_close.setOnClickListener {
+            val merchantOrderNo = sharedPreferences.getString("merchant_order_no", "").toString()
+            val params =
+                PaymentRequestParams()
+            if (merchantOrderNo.isEmpty()) {
+                Toast.makeText(this, "Transaction does not exist", Toast.LENGTH_LONG).show()
+                return@setOnClickListener
+            } else {
+                params.merchant_order_no = merchantOrderNo
+            }
+            params.app_id = "wz6012822ca2f1as78"
+            runOnUiThread {
+                tv_btn_3.text =
+                    "Send Close data --> " + params.toJSON().toString()
+            }
+            MainActivity.mClient.payment.close(params, object :
+                ECRHubResponseCallBack {
+                override fun onError(errorCode: String?, errorMsg: String?) {
+                    runOnUiThread {
+                        tv_btn_3.text = tv_btn_3.text.toString() + "\n" + "Failure:" + errorMsg
+                    }
+                }
+
+                override fun onSuccess(data: PaymentResponseParams?) {
+                    val editor = sharedPreferences.edit()
+                    editor.remove("merchant_order_no")
+                    editor.apply()
+                    runOnUiThread {
+                        tv_btn_3.text =
+                            tv_btn_3.text.toString() + "\n" + "result:" + JSON.toJSON(data)
+                    }
+                }
+
+            })
+        }
     }
 }

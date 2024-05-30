@@ -130,6 +130,7 @@
             android:background="#FFFFFF"
             android:gravity="center"
             android:padding="10dp"
+            android:visibility="gone"
             android:text="Close" />
     </LinearLayout>
 

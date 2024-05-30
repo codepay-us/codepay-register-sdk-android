@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">RegisterECRDemo</string>
+    <string name="Save">Save</string>
+    <string name="Sale">Sale</string>
+    <string name="Refund">Refund</string>
+    <string name="Void">Void</string>
+    <string name="Auth">Auth</string>
+    <string name="Complete">Complete</string>
+    <string name="Query">Query</string>
+    <string name="Close">Close Order</string>
+    <string name="back">Back</string>
+    <string name="Admin">Admin verify</string>
+    <string name="referenceRefund">UnReference refund</string>
+    <string name="bank_card">Pay</string>
+    <string name="description">Please enter description</string>
+    <string name="expirationTime">Expiration time is 300 seconds</string>
+    <string name="Cashback">CashBack Amount</string>
+    <string name="Tips">Tips Amount</string>
+    <string name="OrderAmount">Please input order amount</string>
+    <string name="cardholder">CardHolder</string>
+    <string name="merchant">Merchant</string>
+    <string name="no_print">No print</string>
+    <string name="print">Print:</string>
+    <string name="confirm_on_terminal">Confirm on terminal</string>
+    <string name="screen_tip">Screen tip</string>
+    <string name="all">All</string>
+    <string name="orig_merchant_order_no">Please input orig merchant order no</string>
 </resources>
