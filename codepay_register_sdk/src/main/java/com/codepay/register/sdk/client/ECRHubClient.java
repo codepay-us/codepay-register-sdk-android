@@ -167,10 +167,10 @@ public class ECRHubClient {
     }
 
     public void connect(String ip) {
-        if (!Objects.equals(ip, ipAddress)) {
-            if (isConnected()) {
-                disConnect();
-            }
+        if (isConnected()) {
+            disConnect();
+        } else {
+            webSocketClient = null;
         }
         ipAddress = ip;
         connect();
