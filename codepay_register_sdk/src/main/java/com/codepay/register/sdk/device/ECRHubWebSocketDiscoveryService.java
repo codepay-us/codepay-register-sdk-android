@@ -31,6 +31,8 @@ import javax.jmdns.ServiceInfo;
 import javax.jmdns.ServiceListener;
 
 public class ECRHubWebSocketDiscoveryService implements OnServerCallback, ServiceListener {
+
+    private static final String TAG = "ECRHubWebSocketDiscoveryService";
     private final static String REMOTE_CLIENT_TYPE = "_ecr-hub-client._tcp.local.";
 
     public final static String REMOTE_SERVER_TYPE = "_ecr-hub-server._tcp.local.";
@@ -286,31 +288,30 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback, Servic
 
     @Override
     public void serviceAdded(ServiceEvent event) {
-        Log.e("DiscoveryService", "serviceAdded");
+        Log.e(TAG.toString(), "serviceAdded");
     }
 
     @Override
     public void serviceRemoved(ServiceEvent event) {
-        Log.e("DiscoveryService", "serviceRemoved");
+        Log.e(TAG.toString(), "serviceRemoved");
     }
 
     @Override
     public void serviceResolved(ServiceEvent event) {
-        Log.e("DiscoveryService", "serviceResolved");
+        Log.e(TAG.toString(), "serviceResolved");
         try {
             registerService();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         JSONObject info = toJsonObject(event.getInfo());
+        Log.e(TAG.toString(), "serviceResolved:" + info.toString());
         List<ECRHubDevice> list = getPairedDeviceList();
         JSONArray array = new JSONArray();
-        boolean isChange = false;
         for (int i = 0; i < list.size(); i++) {
             ECRHubDevice device = list.get(i);
             if (info.containsKey("name") && device.getWs_address().equals(info.getString("name"))) {
                 if (!info.getString("ip_address").equals(device.getIp_address()) || !info.getString("port").equals(device.getPort())) {
-                    isChange = true;
                     device.setPort(info.getString("port"));
                     device.setIp_address(info.getString("ip_address"));
                 }
@@ -319,10 +320,6 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback, Servic
         }
         if (!array.isEmpty()) {
             SharePreferenceUtil.put(Constants.ECR_HUB_PAIR_LIST_KEY, array.toString());
-        }
-        if (isChange && ECRHubClient.getInstance().isConnected()) {
-            ECRHubClient.getInstance().disConnect();
-            ECRHubClient.getInstance().connect("ws://" + info.getString("ip_address") + ":" + info.getString("port"));
         }
     }
 
