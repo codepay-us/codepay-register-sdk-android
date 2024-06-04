@@ -248,7 +248,7 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback, Servic
         }
     }
 
-    public void confirmPair(ECRHubMessageData data) {
+    public boolean confirmPair(ECRHubMessageData data) {
         if (null != connection) {
             if (data.getTopic().equals(Constants.ECR_HUB_TOPIC_PAIR)) {
                 data.setResponse_code("000");
@@ -256,7 +256,9 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback, Servic
                 addPairedDevice(data);
                 System.out.println("getPairedDeviceList: " + getPairedDeviceList());
             }
+            return true;
         }
+        return false;
     }
 
     public void cancelPair(ECRHubMessageData data) {
