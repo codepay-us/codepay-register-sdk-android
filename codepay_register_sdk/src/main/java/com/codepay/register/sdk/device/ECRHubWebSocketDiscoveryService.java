@@ -249,7 +249,7 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback, Servic
     }
 
     public boolean confirmPair(ECRHubMessageData data) {
-        if (null != connection) {
+        if (null != connection && connection.isOpen()) {
             if (data.getTopic().equals(Constants.ECR_HUB_TOPIC_PAIR)) {
                 data.setResponse_code("000");
                 connection.send(JSON.toJSON(data).toString());
@@ -262,7 +262,7 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback, Servic
     }
 
     public void cancelPair(ECRHubMessageData data) {
-        if (null != connection) {
+        if (null != connection && connection.isOpen()) {
             if (data.getTopic().equals(Constants.ECR_HUB_TOPIC_PAIR)) {
                 data.setResponse_code("001");
                 connection.send(JSON.toJSON(data).toString());
