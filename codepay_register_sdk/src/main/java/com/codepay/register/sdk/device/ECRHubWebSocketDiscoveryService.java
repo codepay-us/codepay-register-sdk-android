@@ -228,6 +228,9 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback, Servic
         }
         device.setWs_address(data.getDevice_data().getMac_address());
         device.setName(data.getDevice_data().getDevice_name());
+        if (null == device.getName() || "".equals(device.getName())) {
+            return;
+        }
         String deviceList = SharePreferenceUtil.getString(Constants.ECR_HUB_PAIR_LIST_KEY, "");
         if (!deviceList.isEmpty()) {
             array = JSON.parseArray(deviceList);
@@ -312,8 +315,12 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback, Servic
             ECRHubDevice device = list.get(i);
             if (info.containsKey("name") && device.getWs_address().equals(info.getString("name"))) {
                 if (!info.getString("ip_address").equals(device.getIp_address()) || !info.getString("port").equals(device.getPort())) {
-                    device.setPort(info.getString("port"));
-                    device.setIp_address(info.getString("ip_address"));
+                    if (!"".equals(info.getString("port"))) {
+                        device.setPort(info.getString("port"));
+                    }
+                    if (!"".equals(info.getString("ip_address"))) {
+                        device.setIp_address(info.getString("ip_address"));
+                    }
                 }
             }
             array.add(JSON.toJSON(device));
