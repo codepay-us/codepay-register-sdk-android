@@ -9,20 +9,26 @@ import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
 import com.codepay.register.sdk.client.payment.Payment;
+import com.codepay.register.sdk.client.payment.UsbPayment;
+import com.codepay.register.sdk.client.payment.WlanPayment;
 import com.codepay.register.sdk.client.payment.PaymentResponseParams;
 import com.codepay.register.sdk.device.ECRHubDevice;
 import com.codepay.register.sdk.listener.ECRHubConnectListener;
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack;
+import com.codepay.register.sdk.util.Constants;
 import com.codepay.register.sdk.util.ECRHubMessageData;
 import com.codepay.register.sdk.util.NetUtils;
+import com.wiseecr.host.sdk.InitEcrHostSdkListener;
+import com.wiseecr.host.sdk.WiseEcrHostSdk;
+import com.wiseecr.host.sdk.cdc.EcrCdcHost;
+import com.wiseecr.host.sdk.cdc.EcrCdcListener;
+import com.wiseecr.host.sdk.common.ConnectionStatus;
 
 import org.java_websocket.client.WebSocketClient;
 import org.java_websocket.enums.ReadyState;
 import org.java_websocket.handshake.ServerHandshake;
 
-import java.net.NoRouteToHostException;
 import java.net.URI;
-import java.util.Objects;
 
 /**
  * @author pupan
@@ -42,7 +48,11 @@ public class ECRHubClient {
     public Payment payment;
     ECRHubResponseCallBack pairCallBack;
 
+    private EcrCdcHost ecrCdcHost;
+
     private static ECRHubClient instance;
+
+    private Constants.ECRHubType type = Constants.ECRHubType.WLAN;
 
     public static ECRHubClient getInstance() {
         if (null == instance) {
@@ -51,10 +61,11 @@ public class ECRHubClient {
         return instance;
     }
 
-    public void init(ECRHubConfig config, ECRHubConnectListener listener, Context context) {
+    public void init(ECRHubConfig config, ECRHubConnectListener listener, Context context, Constants.ECRHubType type) {
         this.context = context;
         this.config = config;
         this.connectListener = listener;
+        this.type = type;
     }
 
     public void requestUnPair(ECRHubDevice deviceData, ECRHubResponseCallBack callBack) {
@@ -139,17 +150,74 @@ public class ECRHubClient {
         } else {
             webSocketClient.setConnectionLostTimeout(5);
         }
-        payment = new Payment((webSocketClient));
+        payment = new WlanPayment((webSocketClient));
+    }
+
+    private void initUsbConnect() {
+        WiseEcrHostSdk.getInstance().initEcrHostSdk(context, new InitEcrHostSdkListener() {
+            @Override
+            public void onInitEcrHostSdkSuccess() {
+                ecrCdcHost = WiseEcrHostSdk.getInstance().getEcrCdcHost();
+                payment = new UsbPayment(ecrCdcHost);
+                ecrCdcHost.initForRawData(new EcrCdcListener() {
+                    @Override
+                    public void onStatusChanged(int i) {
+
+                    }
+
+                    @Override
+                    public void onRawDataReceived(byte[] bytes) {
+
+                    }
+
+                    @Override
+                    public void onPacketDataReceived(String s) {
+
+                    }
+
+                    @Override
+                    public void onError(int i) {
+
+                    }
+                });
+                int ret = ecrCdcHost.open();
+                if (ret == 0) {
+                    if (null != connectListener) {
+                        connectListener.onConnect();
+                    }
+                } else {
+                    if (null != connectListener) {
+                        connectListener.onError(ret + "", "");
+                    }
+                }
+            }
+
+            @Override
+            public void onInitEcrHostSdkFail(int errCode) {
+                if (null != connectListener) {
+                    connectListener.onError(errCode + "", "");
+                }
+            }
+        });
     }
 
     public boolean isConnected() {
-        return null != webSocketClient && webSocketClient.isOpen();
+        if (type == Constants.ECRHubType.WLAN) {
+            return null != webSocketClient && webSocketClient.isOpen();
+        } else {
+            if (null == ecrCdcHost) {
+                return false;
+            } else {
+                int status = ecrCdcHost.getConnectionStatus();
+                return status == ConnectionStatus.STATUS_PORT_CONNECTED;
+            }
+        }
     }
 
     /**
      * connect
      */
-    public void connect() {
+    private void connectWlanServer() {
         if (null == webSocketClient) {
             initSocketClient();
         }
@@ -166,21 +234,70 @@ public class ECRHubClient {
         }
     }
 
-    public void connect(String ip) {
-        if (isConnected()) {
-            disConnect();
+    private void openUsbServer() {
+        if (null == ecrCdcHost) {
+            initUsbConnect();
         } else {
-            webSocketClient = null;
+            int type = ecrCdcHost.getConnectionStatus();
+            if (type == ConnectionStatus.STATUS_PORT_CONNECTED) {
+                if (null != connectListener) {
+                    connectListener.onConnect();
+                }
+            } else if (type == ConnectionStatus.STATUS_PORT_DISCONNECTED || type == ConnectionStatus.STATUS_CABLE_PLUGGED) {
+                int ret = ecrCdcHost.open();
+                if (ret == 0) {
+                    if (null != connectListener) {
+                        connectListener.onConnect();
+                    }
+                } else {
+                    if (null != connectListener) {
+                        connectListener.onError(ret + "", "");
+                    }
+                }
+            } else {
+                if (null != connectListener) {
+                    connectListener.onError("-1", "");
+                }
+            }
         }
-        ipAddress = ip;
-        connect();
+    }
+
+    public void connect(String ip) {
+        if (type == Constants.ECRHubType.WLAN) {
+            if (isConnected()) {
+                disConnect();
+            } else {
+                webSocketClient = null;
+            }
+            ipAddress = ip;
+            connectWlanServer();
+        } else {
+            openUsbServer();
+        }
+    }
+
+    public void connect() {
+        if (type == Constants.ECRHubType.WLAN) {
+            if (isConnected()) {
+                disConnect();
+            } else {
+                webSocketClient = null;
+            }
+            connectWlanServer();
+        } else {
+            openUsbServer();
+        }
     }
 
     public void disConnect() {
-        if (null == webSocketClient || !webSocketClient.isOpen()) {
-            return;
+        if (type == Constants.ECRHubType.WLAN) {
+            if (null == webSocketClient || !webSocketClient.isOpen()) {
+                return;
+            }
+            webSocketClient.close();
+            webSocketClient = null;
+        } else {
+            ecrCdcHost.close();
         }
-        webSocketClient.close();
-        webSocketClient = null;
     }
 }

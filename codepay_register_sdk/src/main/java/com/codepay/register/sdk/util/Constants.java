@@ -98,4 +98,8 @@ public class Constants {
      * ecr hub pair list key
      */
     public final static String ECR_HUB_PAIR_LIST_KEY = "ecr_hub_pair_list_key";
+
+    public enum ECRHubType {
+        USB, WLAN
+    }
 }

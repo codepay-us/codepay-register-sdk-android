@@ -8,12 +8,9 @@ import android.content.Intent
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
-import android.os.StrictMode
 import android.util.Log
-import android.view.Choreographer
 import android.view.View
 import android.view.View.OnClickListener
-import android.widget.TextView
 import android.widget.Toast
 import com.codepay.register.sdk.client.ECRHubClient
 import com.codepay.register.sdk.client.ECRHubConfig
@@ -23,8 +20,8 @@ import com.codepay.register.sdk.device.ECRHubWebSocketDiscoveryService
 import com.codepay.register.sdk.listener.ECRHubConnectListener
 import com.codepay.register.sdk.listener.ECRHubPairListener
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack
+import com.codepay.register.sdk.util.Constants
 import com.codepay.register.sdk.util.ECRHubMessageData
-import com.codepay.register.sdk.util.NetUtils
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubPairListener {
@@ -45,7 +42,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
 
         val config = ECRHubConfig()
         mClient = ECRHubClient.getInstance()
-        mClient.init(config, this, this)
+        mClient.init(config, this, this,Constants.ECRHubType.WLAN)
         mPairServer = ECRHubWebSocketDiscoveryService(this)
         mPairedList = mPairServer!!.pairedDeviceList
         tv_btn_start.setOnClickListener(this)
