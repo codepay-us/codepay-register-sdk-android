@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.widget.Toast
 import com.alibaba.fastjson.JSON
+import com.codepay.register.sdk.client.ECRHubClient
 import com.codepay.register.sdk.client.payment.PaymentRequestParams
 import com.codepay.register.sdk.client.payment.PaymentResponseParams
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack
@@ -14,6 +15,10 @@ import java.util.Calendar
 import java.util.Date
 
 class RefundActivity : Activity() {
+    companion object {
+        lateinit var mClient: ECRHubClient
+    }
+
 
     fun getCurDateStr(format: String?): String? {
         val c = Calendar.getInstance()
@@ -82,7 +87,7 @@ class RefundActivity : Activity() {
                 tv_btn_3.text =
                     "Send Refund data" + params.toJSON().toString()
             }
-            MainActivity.mClient.payment.refund(params, object :
+            mClient.payment.refund(params, object :
                 ECRHubResponseCallBack {
                 override fun onError(errorCode: String?, errorMsg: String?) {
                     runOnUiThread {
@@ -126,7 +131,7 @@ class RefundActivity : Activity() {
                 tv_btn_3.text =
                     "Send Void data --> " + params.toJSON().toString()
             }
-            MainActivity.mClient.payment.cancel(params, object :
+            mClient.payment.cancel(params, object :
                 ECRHubResponseCallBack {
                 override fun onError(errorCode: String?, errorMsg: String?) {
                     runOnUiThread {
@@ -158,7 +163,7 @@ class RefundActivity : Activity() {
                 tv_btn_3.text =
                     "Send Close data --> " + params.toJSON().toString()
             }
-            MainActivity.mClient.payment.close(params, object :
+            mClient.payment.close(params, object :
                 ECRHubResponseCallBack {
                 override fun onError(errorCode: String?, errorMsg: String?) {
                     runOnUiThread {

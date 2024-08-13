@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.widget.Toast
 import com.alibaba.fastjson.JSON
+import com.codepay.register.sdk.client.ECRHubClient
 import com.codepay.register.sdk.client.payment.PaymentRequestParams
 import com.codepay.register.sdk.client.payment.PaymentResponseParams
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack
@@ -13,6 +14,10 @@ import kotlinx.android.synthetic.main.activity_query.tv_btn_2
 import kotlinx.android.synthetic.main.activity_query.tv_btn_3
 
 class QueryActivity : Activity() {
+
+    companion object {
+        lateinit var mClient: ECRHubClient
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_query)
@@ -41,7 +46,7 @@ class QueryActivity : Activity() {
                 tv_btn_3.text =
                     "Send Query data --> " + params.toJSON().toString()
             }
-            MainActivity.mClient.payment.query(params, object :
+            mClient.payment.query(params, object :
                 ECRHubResponseCallBack {
                 override fun onError(errorCode: String?, errorMsg: String?) {
                     runOnUiThread {

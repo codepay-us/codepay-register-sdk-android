@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.widget.Toast
 import com.alibaba.fastjson.JSON
+import com.codepay.register.sdk.client.ECRHubClient
 import com.codepay.register.sdk.client.payment.PaymentRequestParams
 import com.codepay.register.sdk.client.payment.PaymentResponseParams
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack
@@ -12,6 +13,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class AuthCompleteActivity : Activity() {
+    companion object {
+        lateinit var mClient: ECRHubClient
+    }
+
     var merchantOrderNo: String? = null
     fun getCurDateStr(format: String?): String? {
         val c = Calendar.getInstance()
@@ -56,12 +61,14 @@ class AuthCompleteActivity : Activity() {
             params.app_id = "wz6012822ca2f1as78"
             merchantOrderNo = "123" + getCurDateStr("yyyyMMddHHmmss")
             params.merchant_order_no = merchantOrderNo
-            if (orderNo.isEmpty()){
-                if (sharedPreferences.getString("merchant_order_no","").toString().isEmpty()){
-                    Toast.makeText(this, "Please input orig merchant order no", Toast.LENGTH_LONG).show()
+            if (orderNo.isEmpty()) {
+                if (sharedPreferences.getString("merchant_order_no", "").toString().isEmpty()) {
+                    Toast.makeText(this, "Please input orig merchant order no", Toast.LENGTH_LONG)
+                        .show()
                     return@setOnClickListener
-                }else{
-                    params.orig_merchant_order_no = sharedPreferences.getString("merchant_order_no","").toString()
+                } else {
+                    params.orig_merchant_order_no =
+                        sharedPreferences.getString("merchant_order_no", "").toString()
                 }
             } else {
                 params.orig_merchant_order_no = orderNo
@@ -77,7 +84,7 @@ class AuthCompleteActivity : Activity() {
                 tv_btn_3.text =
                     "Send Complete data --> " + params.toJSON().toString()
             }
-            MainActivity.mClient.payment.completion(params, object :
+            mClient.payment.completion(params, object :
                 ECRHubResponseCallBack {
                 override fun onError(errorCode: String?, errorMsg: String?) {
                     runOnUiThread {
@@ -91,7 +98,8 @@ class AuthCompleteActivity : Activity() {
                     editor.apply()
                     runOnUiThread {
                         tv_btn_3.text =
-                            tv_btn_3.text.toString() + "\n" + "Result:" + JSON.toJSON(data).toString()
+                            tv_btn_3.text.toString() + "\n" + "Result:" + JSON.toJSON(data)
+                                .toString()
                     }
                 }
             })
@@ -111,7 +119,7 @@ class AuthCompleteActivity : Activity() {
                 tv_btn_3.text =
                     "Send Close data --> " + params.toJSON().toString()
             }
-            MainActivity.mClient.payment.close(params, object :
+            mClient.payment.close(params, object :
                 ECRHubResponseCallBack {
                 override fun onError(errorCode: String?, errorMsg: String?) {
                     runOnUiThread {

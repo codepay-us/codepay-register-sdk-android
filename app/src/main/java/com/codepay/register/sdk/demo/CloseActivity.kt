@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.widget.Toast
 import com.alibaba.fastjson.JSON
+import com.codepay.register.sdk.client.ECRHubClient
 import com.codepay.register.sdk.client.payment.PaymentRequestParams
 import com.codepay.register.sdk.client.payment.PaymentResponseParams
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack
@@ -11,9 +12,11 @@ import kotlinx.android.synthetic.main.activity_close.edit_input_merchant_order_n
 import kotlinx.android.synthetic.main.activity_close.tv_btn_1
 import kotlinx.android.synthetic.main.activity_close.tv_btn_2
 import kotlinx.android.synthetic.main.activity_close.tv_btn_3
-import kotlinx.android.synthetic.main.activity_payment.*
 
 class CloseActivity : Activity() {
+    companion object {
+        lateinit var mClient: ECRHubClient
+    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_close)
@@ -40,7 +43,7 @@ class CloseActivity : Activity() {
                 tv_btn_3.text =
                     "Send Close data --> " + params.toJSON().toString()
             }
-            MainActivity.mClient.payment.close(params, object :
+            mClient.payment.close(params, object :
                 ECRHubResponseCallBack {
                 override fun onError(errorCode: String?, errorMsg: String?) {
                     runOnUiThread {

@@ -298,6 +298,9 @@ public class ECRHubClient {
             webSocketClient = null;
         } else {
             ecrCdcHost.close();
+            if (null != connectListener) {
+                connectListener.onDisconnect();
+            }
         }
     }
 }

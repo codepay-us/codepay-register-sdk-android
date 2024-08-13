@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.widget.Toast
 import com.alibaba.fastjson.JSON
+import com.codepay.register.sdk.client.ECRHubClient
 import com.codepay.register.sdk.client.payment.PaymentRequestParams
 import com.codepay.register.sdk.client.payment.PaymentResponseParams
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack
@@ -12,6 +13,10 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 class AuthActivity : Activity() {
+    companion object {
+        lateinit var mClient: ECRHubClient
+    }
+
     var merchantOrderNo: String? = null
     fun getCurDateStr(format: String?): String? {
         val c = Calendar.getInstance()
@@ -67,7 +72,7 @@ class AuthActivity : Activity() {
                 tv_btn_3.text =
                     "Send Auth data --> " + params.toJSON().toString()
             }
-            MainActivity.mClient.payment.auth(params, object :
+            mClient.payment.auth(params, object :
                 ECRHubResponseCallBack {
                 override fun onError(errorCode: String?, errorMsg: String?) {
                     runOnUiThread {
@@ -81,7 +86,8 @@ class AuthActivity : Activity() {
                     editor.apply()
                     runOnUiThread {
                         tv_btn_3.text =
-                            tv_btn_3.text.toString() + "\n" + "Result:" + JSON.toJSON(data).toString()
+                            tv_btn_3.text.toString() + "\n" + "Result:" + JSON.toJSON(data)
+                                .toString()
                     }
                 }
             })
@@ -101,7 +107,7 @@ class AuthActivity : Activity() {
                 tv_btn_3.text =
                     "Send Close data --> " + params.toJSON().toString()
             }
-            MainActivity.mClient.payment.close(params, object :
+            mClient.payment.close(params, object :
                 ECRHubResponseCallBack {
                 override fun onError(errorCode: String?, errorMsg: String?) {
                     runOnUiThread {
@@ -118,7 +124,6 @@ class AuthActivity : Activity() {
                             tv_btn_3.text.toString() + "\n" + "result:" + JSON.toJSON(data)
                     }
                 }
-
             })
         }
     }

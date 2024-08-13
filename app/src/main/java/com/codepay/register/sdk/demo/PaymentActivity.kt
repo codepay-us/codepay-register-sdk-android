@@ -4,6 +4,7 @@ import android.app.Activity
 import android.os.Bundle
 import android.widget.Toast
 import com.alibaba.fastjson.JSON
+import com.codepay.register.sdk.client.ECRHubClient
 import com.codepay.register.sdk.client.payment.PaymentRequestParams
 import com.codepay.register.sdk.client.payment.PaymentResponseParams
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack
@@ -14,6 +15,9 @@ import java.util.Calendar
 import java.util.Date
 
 class PaymentActivity : Activity() {
+    companion object {
+        lateinit var mClient: ECRHubClient
+    }
     var merchantOrderNo: String? = null
     fun getCurDateStr(format: String?): String? {
         val c = Calendar.getInstance()
@@ -70,7 +74,7 @@ class PaymentActivity : Activity() {
                 tv_btn_3.text =
                     "Send Sale data --> ${params.toJSON()}"
             }
-            MainActivity.mClient.payment.sale(params, object :
+            mClient.payment.sale(params, object :
                 ECRHubResponseCallBack {
                 override fun onError(errorCode: String?, errorMsg: String?) {
                     runOnUiThread {
@@ -104,7 +108,7 @@ class PaymentActivity : Activity() {
                 tv_btn_3.text =
                     "Send Close data --> " + params.toJSON().toString()
             }
-            MainActivity.mClient.payment.close(params, object :
+            mClient.payment.close(params, object :
                 ECRHubResponseCallBack {
                 override fun onError(errorCode: String?, errorMsg: String?) {
                     runOnUiThread {
