@@ -4,6 +4,8 @@ import static com.codepay.register.sdk.util.Constants.CLOSE_TOPIC;
 import static com.codepay.register.sdk.util.Constants.PAYMENT_TOPIC;
 import static com.codepay.register.sdk.util.Constants.QUERY_TOPIC;
 
+import android.util.Log;
+
 import com.alibaba.fastjson.JSON;
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack;
 import com.codepay.register.sdk.util.Constants;
@@ -76,8 +78,11 @@ public class UsbPayment extends Payment {
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
         if (null != ecrCdcHost && ecrCdcHost.getConnectionStatus() == ConnectionStatus.STATUS_PORT_CONNECTED) {
+            Log.e("UsbPayment","发送数据"+data.toString());
             byte[] request = JSON.toJSON(data).toString().getBytes(StandardCharsets.UTF_8);
-            ecrCdcHost.sendRawData(request, request.length);
+            Log.e("UsbPayment","发送数据"+new String(request));
+           int ret =  ecrCdcHost.sendRawData(request, request.length);
+            Log.e("UsbPayment","发送数据结果"+ret);
         }
     }
 

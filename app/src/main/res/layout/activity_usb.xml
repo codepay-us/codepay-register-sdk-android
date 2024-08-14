@@ -101,7 +101,7 @@
             android:text="Query" />
 
         <TextView
-            android:id="@+id/tv_btn_close"
+            android:id="@+id/tv_btn_close_order"
             android:layout_width="390dp"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

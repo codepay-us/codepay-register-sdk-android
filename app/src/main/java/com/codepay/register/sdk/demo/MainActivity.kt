@@ -9,9 +9,9 @@ import kotlinx.android.synthetic.main.activity_main.tv_btn_wlan_mode
 
 class MainActivity : Activity() {
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        super.onCreate(savedInstanceState, persistentState)
         tv_btn_wlan_mode.setOnClickListener {
             startActivity(Intent(applicationContext, WLanActivity::class.java))
         }

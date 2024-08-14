@@ -16,6 +16,7 @@ import kotlinx.android.synthetic.main.activity_usb.ll_layout1
 import kotlinx.android.synthetic.main.activity_usb.tv_btn_auth
 import kotlinx.android.synthetic.main.activity_usb.tv_btn_cashback
 import kotlinx.android.synthetic.main.activity_usb.tv_btn_close
+import kotlinx.android.synthetic.main.activity_usb.tv_btn_close_order
 import kotlinx.android.synthetic.main.activity_usb.tv_btn_complete
 import kotlinx.android.synthetic.main.activity_usb.tv_btn_query
 import kotlinx.android.synthetic.main.activity_usb.tv_btn_refund
@@ -28,8 +29,8 @@ class UsbActivity : Activity(), ECRHubConnectListener, View.OnClickListener {
 
     private var isConnected: Boolean = false
 
-    override fun onCreate(savedInstanceState: Bundle?, persistentState: PersistableBundle?) {
-        super.onCreate(savedInstanceState, persistentState)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_usb)
         val config = ECRHubConfig()
         mClient = ECRHubClient.getInstance()
@@ -42,7 +43,7 @@ class UsbActivity : Activity(), ECRHubConnectListener, View.OnClickListener {
         tv_btn_complete.setOnClickListener(this)
         tv_btn_cashback.setOnClickListener(this)
         tv_btn_query.setOnClickListener(this)
-        tv_btn_close.setOnClickListener(this)
+        tv_btn_close_order.setOnClickListener(this)
     }
 
     override fun onConnect() {
@@ -61,7 +62,7 @@ class UsbActivity : Activity(), ECRHubConnectListener, View.OnClickListener {
             ll_layout1.visibility = View.GONE
             tv_btn_open.visibility = View.VISIBLE
             tv_btn_close.visibility = View.GONE
-            Toast.makeText(this, "Connect Success!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Disconnect Success!", Toast.LENGTH_LONG).show()
         }
         isConnected = true
     }
@@ -71,7 +72,7 @@ class UsbActivity : Activity(), ECRHubConnectListener, View.OnClickListener {
             ll_layout1.visibility = View.GONE
             tv_btn_open.visibility = View.VISIBLE
             tv_btn_close.visibility = View.GONE
-            Toast.makeText(this, "Connect Success!", Toast.LENGTH_LONG).show()
+            Toast.makeText(this, "Connect Fail!", Toast.LENGTH_LONG).show()
         }
         isConnected = true
     }
@@ -154,7 +155,7 @@ class UsbActivity : Activity(), ECRHubConnectListener, View.OnClickListener {
                 startActivity(Intent(applicationContext, QueryActivity::class.java))
             }
 
-            R.id.tv_btn_close -> {
+            R.id.tv_btn_close_order -> {
                 if (!isConnected) {
                     runOnUiThread {
                         Toast.makeText(this, "Server is not connect", Toast.LENGTH_LONG).show()
