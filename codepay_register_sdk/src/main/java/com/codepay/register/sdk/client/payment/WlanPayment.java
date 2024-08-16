@@ -27,6 +27,11 @@ public class WlanPayment extends Payment {
         return callBackHashMap.get(transType);
     }
 
+    @Override
+    public void init(ECRHubResponseCallBack callBack) {
+
+    }
+
     private void addCallBack(String transType, ECRHubResponseCallBack callBack) {
         if (callBackHashMap.containsKey(transType)) {
             callBackHashMap.remove(transType);

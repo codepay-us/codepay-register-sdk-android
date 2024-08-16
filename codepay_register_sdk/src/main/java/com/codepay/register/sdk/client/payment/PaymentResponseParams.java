@@ -1,5 +1,7 @@
 package com.codepay.register.sdk.client.payment;
 
+import com.codepay.register.sdk.util.ECRHubMessageData;
+
 public class PaymentResponseParams {
 
     /**
@@ -26,6 +28,19 @@ public class PaymentResponseParams {
 
     private String response_msg;
     private PaymentResponseParams.BizData biz_data;
+
+    private PaymentResponseParams.DeviceData device_data;
+
+    public void setDevice_data(PaymentResponseParams.DeviceData device_data) {
+        this.device_data = device_data;
+    }
+
+    public PaymentResponseParams.DeviceData getDevice_data() {
+        if (null == device_data) {
+            device_data = new PaymentResponseParams.DeviceData();
+        }
+        return device_data;
+    }
 
     public void setResponse_code(String response_code) {
         this.response_code = response_code;
@@ -82,6 +97,71 @@ public class PaymentResponseParams {
     public String getTopic() {
         return topic;
     }
+
+
+    public class DeviceData {
+        /**
+         * device mac address
+         */
+        private String mac_address = "";
+        /**
+         * device name
+         */
+        private String device_name = "";
+        /**
+         * device alias name
+         */
+        private String alias_name = "";
+        /**
+         * server ip address
+         */
+        private String ip_address = "";
+        /**
+         * server port number
+         */
+        private String port = "";
+
+        public void setAlias_name(String alias_name) {
+            this.alias_name = alias_name;
+        }
+
+        public void setDevice_name(String device_name) {
+            this.device_name = device_name;
+        }
+
+        public void setIp_address(String ip_address) {
+            this.ip_address = ip_address;
+        }
+
+        public void setMac_address(String mac_address) {
+            this.mac_address = mac_address;
+        }
+
+        public void setPort(String port) {
+            this.port = port;
+        }
+
+        public String getAlias_name() {
+            return alias_name;
+        }
+
+        public String getDevice_name() {
+            return device_name;
+        }
+
+        public String getIp_address() {
+            return ip_address;
+        }
+
+        public String getMac_address() {
+            return mac_address;
+        }
+
+        public String getPort() {
+            return port;
+        }
+    }
+
 
     public class BizData {
         /**
