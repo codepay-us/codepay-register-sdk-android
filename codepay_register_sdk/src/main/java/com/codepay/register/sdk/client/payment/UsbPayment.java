@@ -1,6 +1,7 @@
 package com.codepay.register.sdk.client.payment;
 
 import static com.codepay.register.sdk.util.Constants.CLOSE_TOPIC;
+import static com.codepay.register.sdk.util.Constants.INIT_TOPIC;
 import static com.codepay.register.sdk.util.Constants.PAYMENT_TOPIC;
 import static com.codepay.register.sdk.util.Constants.QUERY_TOPIC;
 
@@ -29,6 +30,18 @@ public class UsbPayment extends Payment {
 
     public ECRHubResponseCallBack getResponseCallBack(String transType) {
         return callBackHashMap.get(transType);
+    }
+
+    @Override
+    public void init(ECRHubResponseCallBack callBack) {
+        ECRHubMessageData data = new ECRHubMessageData();
+        data.setRequest_id("111111");
+        data.setTopic(INIT_TOPIC);
+        callBackHashMap.put(INIT_TOPIC, callBack);
+        if (null != ecrCdcHost && ecrCdcHost.getConnectionStatus() == ConnectionStatus.STATUS_PORT_CONNECTED) {
+            byte[] request = JSON.toJSON(data).toString().getBytes(StandardCharsets.UTF_8);
+            ecrCdcHost.sendRawData(request, request.length);
+        }
     }
 
     private void addCallBack(String transType, ECRHubResponseCallBack callBack) {
@@ -78,11 +91,11 @@ public class UsbPayment extends Payment {
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
         if (null != ecrCdcHost && ecrCdcHost.getConnectionStatus() == ConnectionStatus.STATUS_PORT_CONNECTED) {
-            Log.e("UsbPayment","发送数据"+data.toString());
+            Log.e("UsbPayment", "发送数据" + data.toString());
             byte[] request = JSON.toJSON(data).toString().getBytes(StandardCharsets.UTF_8);
-            Log.e("UsbPayment","发送数据"+new String(request));
-           int ret =  ecrCdcHost.sendRawData(request, request.length);
-            Log.e("UsbPayment","发送数据结果"+ret);
+            Log.e("UsbPayment", "发送数据" + new String(request));
+            int ret = ecrCdcHost.sendRawData(request, request.length);
+            Log.e("UsbPayment", "发送数据结果" + ret);
         }
     }
 

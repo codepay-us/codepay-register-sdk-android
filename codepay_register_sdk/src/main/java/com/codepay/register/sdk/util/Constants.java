@@ -16,7 +16,7 @@ public class Constants {
     /**
      * init topic
      */
-    public static final String INIT_TOPIC = "ecrhub.pay.init";
+    public static final String INIT_TOPIC = "ecrhub.init";
 
     /**
      * payment topic

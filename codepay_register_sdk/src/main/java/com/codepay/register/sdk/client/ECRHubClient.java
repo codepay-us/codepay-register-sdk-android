@@ -162,16 +162,22 @@ public class ECRHubClient {
                 ecrCdcHost.initForRawData(new EcrCdcListener() {
                     @Override
                     public void onStatusChanged(int i) {
-
+                        if (i == ConnectionStatus.STATUS_CABLE_UNPLUGGED) {
+                            if (null != ecrCdcHost) {
+                                ecrCdcHost.close();
+                            }
+                        } else if (i == ConnectionStatus.STATUS_CABLE_PLUGGED) {
+                            if (null != ecrCdcHost) {
+                                ecrCdcHost.open();
+                            }
+                        }
                     }
 
                     @Override
                     public void onRawDataReceived(byte[] bytes) {
                         Log.e(TAG, "收到消息" + new String(bytes));
                         PaymentResponseParams data = JSON.parseObject(new String(bytes), PaymentResponseParams.class);
-                        if (data.getTopic().equals(ECR_HUB_TOPIC_PAIR) || data.getTopic().equals(ECR_HUB_TOPIC_UNPAIR)) {
-                            pairCallBack.onSuccess(data);
-                        } else if (!data.getTopic().equals(HEART_BEAT_TOPIC)) {
+                        if (!data.getTopic().equals(HEART_BEAT_TOPIC)) {
                             String transType = data.getBiz_data().getTrans_type();
                             if (null == transType || "".equals(transType)) {
                                 transType = data.getTopic();
