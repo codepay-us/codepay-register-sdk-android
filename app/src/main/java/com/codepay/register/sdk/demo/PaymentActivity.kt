@@ -18,7 +18,7 @@ class PaymentActivity : Activity() {
     companion object {
         lateinit var mClient: ECRHubClient
     }
-    var merchantOrderNo: String? = null
+    private var merchantOrderNo: String? = null
     fun getCurDateStr(format: String?): String? {
         val c = Calendar.getInstance()
         return date2Str(c, format)
@@ -36,7 +36,7 @@ class PaymentActivity : Activity() {
         return if (d == null) {
             null
         } else {
-            if (format == null || format.length == 0) {
+            if (format.isNullOrEmpty()) {
                 format = "yyyy-MM-dd HH:mm:ss"
             }
             val sdf = SimpleDateFormat(format)
@@ -63,7 +63,6 @@ class PaymentActivity : Activity() {
             params.merchant_order_no = merchantOrderNo
             params.order_amount = amount
             params.on_screen_tip = false
-//            params.confirm_on_terminal = false
             params.print_receipt = 0
             params.pay_scenario = "SWIPE_CARD"
             val voiceData = params.voice_data
@@ -125,7 +124,6 @@ class PaymentActivity : Activity() {
                             tv_btn_3.text.toString() + "\n" + "result:" + JSON.toJSON(data)
                     }
                 }
-
             })
         }
     }

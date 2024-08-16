@@ -7,9 +7,12 @@ import android.os.PersistableBundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import com.alibaba.fastjson.JSON
 import com.codepay.register.sdk.client.ECRHubClient
 import com.codepay.register.sdk.client.ECRHubConfig
+import com.codepay.register.sdk.client.payment.PaymentResponseParams
 import com.codepay.register.sdk.listener.ECRHubConnectListener
+import com.codepay.register.sdk.listener.ECRHubResponseCallBack
 import com.codepay.register.sdk.util.Constants
 import kotlinx.android.synthetic.main.activity_usb.tv_btn_open
 import kotlinx.android.synthetic.main.activity_usb.ll_layout1
@@ -18,6 +21,7 @@ import kotlinx.android.synthetic.main.activity_usb.tv_btn_cashback
 import kotlinx.android.synthetic.main.activity_usb.tv_btn_close
 import kotlinx.android.synthetic.main.activity_usb.tv_btn_close_order
 import kotlinx.android.synthetic.main.activity_usb.tv_btn_complete
+import kotlinx.android.synthetic.main.activity_usb.tv_btn_init
 import kotlinx.android.synthetic.main.activity_usb.tv_btn_query
 import kotlinx.android.synthetic.main.activity_usb.tv_btn_refund
 import kotlinx.android.synthetic.main.activity_usb.tv_btn_sale
@@ -44,6 +48,7 @@ class UsbActivity : Activity(), ECRHubConnectListener, View.OnClickListener {
         tv_btn_cashback.setOnClickListener(this)
         tv_btn_query.setOnClickListener(this)
         tv_btn_close_order.setOnClickListener(this)
+        tv_btn_init.setOnClickListener(this)
     }
 
     override fun onConnect() {
@@ -79,6 +84,27 @@ class UsbActivity : Activity(), ECRHubConnectListener, View.OnClickListener {
 
     override fun onClick(p0: View) {
         when (p0.id) {
+            R.id.tv_btn_init -> {
+                mClient.payment.init(object : ECRHubResponseCallBack {
+                    override fun onError(errorCode: String?, errorMsg: String?) {
+                        runOnUiThread {
+                            Toast.makeText(applicationContext, "init error", Toast.LENGTH_LONG)
+                                .show()
+                        }
+                    }
+
+                    override fun onSuccess(data: PaymentResponseParams?) {
+                        runOnUiThread {
+                            Toast.makeText(
+                                applicationContext,
+                                "init success:" + JSON.toJSON(data).toString(),
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+                    }
+
+                })
+            }
 
             R.id.tv_btn_open -> {
                 mClient.connect()

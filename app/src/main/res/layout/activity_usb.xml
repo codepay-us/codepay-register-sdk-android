@@ -35,6 +35,18 @@
         android:visibility="gone">
 
         <TextView
+            android:id="@+id/tv_btn_init"
+            android:layout_width="390dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Init" />
+
+
+        <TextView
             android:id="@+id/tv_btn_sale"
             android:layout_width="390dp"
             android:layout_height="wrap_content"
