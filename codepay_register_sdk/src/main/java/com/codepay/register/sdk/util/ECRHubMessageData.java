@@ -349,6 +349,8 @@ public class ECRHubMessageData {
 
         private String pay_channel_terminal_id;
 
+        private String tip_adjustment_amount;
+
         public void setCard_type(String card_type) {
             this.card_type = card_type;
         }
@@ -689,6 +691,14 @@ public class ECRHubMessageData {
 
         public void setPay_channel_terminal_id(String pay_channel_terminal_id) {
             this.pay_channel_terminal_id = pay_channel_terminal_id;
+        }
+
+        public String getTip_adjustment_amount() {
+            return tip_adjustment_amount;
+        }
+
+        public void setTip_adjustment_amount(String tip_adjustment_amount) {
+            this.tip_adjustment_amount = tip_adjustment_amount;
         }
     }
 

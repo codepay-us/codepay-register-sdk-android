@@ -39,6 +39,11 @@ public class Constants {
     public static final String HEART_BEAT_TOPIC = "ecrhub.heartbeat";
 
     /**
+     * batch close topic
+     */
+    public static final String BATCH_CLOSE_TOPIC = "ecrhub.pay.batch.close";
+
+    /**
      * trans type purchase
      */
     public static final String TRANS_TYPE_SALE = "1";

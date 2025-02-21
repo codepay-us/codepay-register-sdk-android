@@ -14,6 +14,7 @@ import android.view.View.OnClickListener
 import android.widget.Toast
 import com.codepay.register.sdk.client.ECRHubClient
 import com.codepay.register.sdk.client.ECRHubConfig
+import com.codepay.register.sdk.client.payment.PaymentRequestParams
 import com.codepay.register.sdk.client.payment.PaymentResponseParams
 import com.codepay.register.sdk.device.ECRHubDevice
 import com.codepay.register.sdk.device.ECRHubWebSocketDiscoveryService
@@ -26,6 +27,7 @@ import kotlinx.android.synthetic.main.activity_wlan.*
 
 class WLanActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubPairListener {
     companion object {
+        @SuppressLint("StaticFieldLeak")
         lateinit var mClient: ECRHubClient
     }
 
@@ -38,7 +40,6 @@ class WLanActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_wlan)
-
 
         val config = ECRHubConfig()
         mClient = ECRHubClient.getInstance()

@@ -92,6 +92,8 @@ public class PaymentRequestParams {
 
     String cashier;
 
+    String tip_adjustment_amount;
+
     private String card_type;
 
     public void setCard_type(String card_type) {
@@ -278,6 +280,14 @@ public class PaymentRequestParams {
         this.cashier = cashier;
     }
 
+    public String getTip_adjustment_amount() {
+        return tip_adjustment_amount;
+    }
+
+    public void setTip_adjustment_amount(String tip_adjustment_amount) {
+        this.tip_adjustment_amount = tip_adjustment_amount;
+    }
+
     public JSONObject toJSON() {
         JSONObject json = new JSONObject();
         json.put("topic", this.topic);
@@ -335,6 +345,12 @@ public class PaymentRequestParams {
         }
         if (null != on_screen_signature) {
             json.put("on_screen_signature", this.on_screen_signature);
+        }
+        if (null != cashier) {
+            json.put("cashier", this.cashier);
+        }
+        if (null != tip_adjustment_amount) {
+            json.put("tip_adjustment_amount", this.tip_adjustment_amount);
         }
         return json;
     }
