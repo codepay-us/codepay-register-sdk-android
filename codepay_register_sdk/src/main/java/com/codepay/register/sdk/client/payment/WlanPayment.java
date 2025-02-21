@@ -51,10 +51,6 @@ public class WlanPayment extends Payment {
             params.setTrans_type(Constants.TRANS_TYPE_CASH_BACK);
         }
         ECRHubMessageData data = new ECRHubMessageData();
-        if (null != params.getVoice_data() && null != params.getVoice_data().getContent()) {
-            data.getVoice_data().setContent(params.getVoice_data().getContent());
-            data.getVoice_data().setContent_locale(params.getVoice_data().getContent_locale());
-        }
         if (null != params.getCash_amount()) {
             data.getBiz_data().setCashback_amount(params.cash_amount);
         }
@@ -72,8 +68,8 @@ public class WlanPayment extends Payment {
         } else {
             data.getBiz_data().setPay_scenario("SWIPE_CARD");
         }
-        if (null != params.getPrint_receipt()) {
-            data.getBiz_data().setPrint_receipt(params.print_receipt);
+        if (null != params.getReceipt_print_mode()) {
+            data.getBiz_data().setReceipt_print_mode(params.receipt_print_mode);
         }
         data.setRequest_id("111111");
         data.setTopic(params.getTopic());
@@ -93,10 +89,6 @@ public class WlanPayment extends Payment {
             params.setMerchant_order_no(params.orig_merchant_order_no);
         }
         ECRHubMessageData data = new ECRHubMessageData();
-        if (null != params.getVoice_data() && null != params.getVoice_data().getContent()) {
-            data.getVoice_data().setContent(params.getVoice_data().getContent());
-            data.getVoice_data().setContent_locale(params.getVoice_data().getContent_locale());
-        }
         data.getBiz_data().setOrig_merchant_order_no(params.merchant_order_no);
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.setRequest_id("111111");
@@ -117,10 +109,6 @@ public class WlanPayment extends Payment {
             params.setMerchant_order_no(params.orig_merchant_order_no);
         }
         ECRHubMessageData data = new ECRHubMessageData();
-        if (null != params.getVoice_data() && null != params.getVoice_data().getContent()) {
-            data.getVoice_data().setContent(params.getVoice_data().getContent());
-            data.getVoice_data().setContent_locale(params.getVoice_data().getContent_locale());
-        }
         data.getBiz_data().setOrig_merchant_order_no(params.merchant_order_no);
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.setRequest_id("111111");
@@ -139,10 +127,6 @@ public class WlanPayment extends Payment {
         }
         params.setTrans_type(Constants.TRANS_TYPE_REFUND);
         ECRHubMessageData data = new ECRHubMessageData();
-        if (null != params.getVoice_data() && null != params.getVoice_data().getContent()) {
-            data.getVoice_data().setContent(params.getVoice_data().getContent());
-            data.getVoice_data().setContent_locale(params.getVoice_data().getContent_locale());
-        }
         data.getBiz_data().setOrig_merchant_order_no(params.orig_merchant_order_no);
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.getBiz_data().setTrans_type("" + params.trans_type);
@@ -174,10 +158,6 @@ public class WlanPayment extends Payment {
         }
         params.setTrans_type(Constants.TRANS_TYPE_VOID);
         ECRHubMessageData data = new ECRHubMessageData();
-        if (null != params.getVoice_data() && null != params.getVoice_data().getContent()) {
-            data.getVoice_data().setContent(params.getVoice_data().getContent());
-            data.getVoice_data().setContent_locale(params.getVoice_data().getContent_locale());
-        }
         data.getBiz_data().setOrig_merchant_order_no(params.orig_merchant_order_no);
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.getBiz_data().setTrans_type("" + params.trans_type);
@@ -205,10 +185,6 @@ public class WlanPayment extends Payment {
         }
         params.setTrans_type(Constants.TRANS_TYPE_PRE_AUTH);
         ECRHubMessageData data = new ECRHubMessageData();
-        if (null != params.getVoice_data() && null != params.getVoice_data().getContent()) {
-            data.getVoice_data().setContent(params.getVoice_data().getContent());
-            data.getVoice_data().setContent_locale(params.getVoice_data().getContent_locale());
-        }
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.getBiz_data().setTrans_type("" + params.trans_type);
         data.getBiz_data().setOrder_amount(params.order_amount);
@@ -240,10 +216,6 @@ public class WlanPayment extends Payment {
         }
         params.setTrans_type(Constants.TRANS_TYPE_PRE_AUTH_COMPLETE);
         ECRHubMessageData data = new ECRHubMessageData();
-        if (null != params.getVoice_data() && null != params.getVoice_data().getContent()) {
-            data.getVoice_data().setContent(params.getVoice_data().getContent());
-            data.getVoice_data().setContent_locale(params.getVoice_data().getContent_locale());
-        }
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.getBiz_data().setOrig_merchant_order_no(params.orig_merchant_order_no);
         data.getBiz_data().setTrans_type("" + params.trans_type);

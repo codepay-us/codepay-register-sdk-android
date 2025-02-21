@@ -41,7 +41,7 @@ class QueryActivity : Activity() {
             } else {
                 params.merchant_order_no = merchantOrderNo
             }
-            params.app_id = "wz6012822ca2f1as78"
+            params.app_id = "wz2b6cef2f18008ee7"
             runOnUiThread {
                 tv_btn_3.text =
                     "Send Query data --> " + params.toJSON().toString()

@@ -12,6 +12,10 @@ public class PaymentRequestParams {
      */
     String app_id;
     /**
+     * trans type
+     */
+    String trans_type;
+    /**
      * Merchant order number.
      */
     String merchant_order_no;
@@ -33,17 +37,32 @@ public class PaymentRequestParams {
      */
     String tip_amount;
     /**
-     * CashBack amount
+     * Whether or not to enter tips on the CodePay Register page, default is false, when "trans_type=1, 3, 4", this parameter can be set.
+     */
+    Boolean on_screen_tip;
+    /**
+     * Cashback amount. Expressed in the quoted currency, for example, One USD stands for one dollar, not one cent.
      */
     String cash_amount;
-    /**
-     * trans type
-     */
-    String trans_type;
     /**
      * Specify a payment method. This field is mandatory only when "pay_scenario" is set to "SCANQR_PAY" or "BSCANQR_PAY".
      */
     String pay_method_id;
+    /**
+     * Payment scene
+     * SWIPE_CARD	Bank card payment
+     * SCANQR_PAY	QR Pay(Customer-presented)
+     * BSCANQR_PAY	QR Pay(Customer-presented)
+     */
+    String pay_scenario;
+    /**
+     * Bank card network, when this parameter is not required, the bank card transaction selects the network based on the type of card being read
+     */
+    String card_network_type;
+    /**
+     * attach info
+     */
+    String attach;
     /**
      * description info
      */
@@ -55,25 +74,25 @@ public class PaymentRequestParams {
      */
     String notify_url;
     /**
-     * attach info
+     * Order expires time, after the expires time is not allowed to be paid, unit: seconds.
      */
-    String attach;
-
-    String request_id;
-
-    String pay_scenario;
+    String expires;
+    /**
+     * When refund or void a transaction, does the store manager role need to authorize this operation on the terminal? default value: false
+     */
+    Boolean required_terminal_authentication;
+    /**
+     * This parameter controls the display logic of electronic
+     */
+    Boolean on_screen_signature;
 
     Boolean confirm_on_terminal;
 
-    Boolean on_screen_tip;
+    Integer receipt_print_mode;
 
-    Integer print_receipt;
+    String cashier;
 
     private String card_type;
-
-    private VoiceData voice_data;
-
-    private PrintData print_data;
 
     public void setCard_type(String card_type) {
         this.card_type = card_type;
@@ -97,36 +116,6 @@ public class PaymentRequestParams {
 
     public String getOrig_merchant_order_no() {
         return orig_merchant_order_no;
-    }
-
-    public void setVoice_data(VoiceData voice_data) {
-        this.voice_data = voice_data;
-    }
-
-    public void setPrint_data(PrintData print_data) {
-        this.print_data = print_data;
-    }
-
-    public VoiceData getVoice_data() {
-        if(null == voice_data){
-            voice_data = new VoiceData();
-        }
-        return voice_data;
-    }
-
-    public PrintData getPrint_data() {
-        if(null == print_data){
-            print_data = new PrintData();
-        }
-        return print_data;
-    }
-
-    public void setrequest_id(String request_id) {
-        this.request_id = request_id;
-    }
-
-    public String getrequest_id() {
-        return request_id;
     }
 
     public void setTopic(String topic) {
@@ -241,19 +230,58 @@ public class PaymentRequestParams {
         this.cash_amount = cash_amount;
     }
 
-    public Integer getPrint_receipt () {
-        return print_receipt;
+    public Integer getReceipt_print_mode() {
+        return receipt_print_mode;
     }
 
-    public void setPrint_receipt(Integer print_receipt) {
-        this.print_receipt = print_receipt;
+    public void setReceipt_print_mode(Integer receipt_print_mode) {
+        this.receipt_print_mode = receipt_print_mode;
+    }
+
+    public String getCard_network_type() {
+        return card_network_type;
+    }
+
+    public void setCard_network_type(String card_network_type) {
+        this.card_network_type = card_network_type;
+    }
+
+    public String getExpires() {
+        return expires;
+    }
+
+    public void setExpires(String expires) {
+        this.expires = expires;
+    }
+
+    public Boolean getRequired_terminal_authentication() {
+        return required_terminal_authentication;
+    }
+
+    public void setRequired_terminal_authentication(Boolean required_terminal_authentication) {
+        this.required_terminal_authentication = required_terminal_authentication;
+    }
+
+    public Boolean getOn_screen_signature() {
+        return on_screen_signature;
+    }
+
+    public void setOn_screen_signature(Boolean on_screen_signature) {
+        this.on_screen_signature = on_screen_signature;
+    }
+
+    public String getCashier() {
+        return cashier;
+    }
+
+    public void setCashier(String cashier) {
+        this.cashier = cashier;
     }
 
     public JSONObject toJSON() {
         JSONObject json = new JSONObject();
         json.put("topic", this.topic);
         json.put("app_id", this.app_id);
-        json.put("request_id", this.request_id);
         if (null != merchant_order_no) {
             json.put("merchant_order_no", this.merchant_order_no);
         }
@@ -287,78 +315,28 @@ public class PaymentRequestParams {
         if (null != notify_url) {
             json.put("notify_url", this.notify_url);
         }
-        if (null != print_receipt) {
-            json.put("print_receipt", this.print_receipt);
+        if (null != receipt_print_mode) {
+            json.put("receipt_print_mode", this.receipt_print_mode);
         }
         if (null != attach) {
             json.put("attach", this.attach);
         }
+        if (null != card_network_type) {
+            json.put("card_network_type", this.card_network_type);
+        }
+        if (null != expires) {
+            json.put("expires", this.expires);
+        }
+        if (null != card_network_type) {
+            json.put("attach", this.card_network_type);
+        }
+        if (null != required_terminal_authentication) {
+            json.put("required_terminal_authentication", this.required_terminal_authentication);
+        }
+        if (null != on_screen_signature) {
+            json.put("on_screen_signature", this.on_screen_signature);
+        }
         return json;
     }
 
-   public class VoiceData {
-        /**
-         * 语音播报内容
-         */
-        private String content;
-        /**
-         * 语音播报语种
-         */
-        private String content_locale;
-        /**
-         * 语音文件地址
-         */
-        private String content_url;
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        public void setContent_locale(String content_locale) {
-            this.content_locale = content_locale;
-        }
-
-        public void setContent_url(String content_url) {
-            this.content_url = content_url;
-        }
-
-        public String getContent() {
-            return content;
-        }
-
-        public String getContent_locale() {
-            return content_locale;
-        }
-
-        public String getContent_url() {
-            return content_url;
-        }
-    }
-
-    public class PrintData {
-        /**
-         * 打印文本内容
-         */
-        String content;
-        /**
-         * 打印内容文本地址
-         */
-        String content_url;
-
-        public void setContent_url(String content_url) {
-            this.content_url = content_url;
-        }
-
-        public void setContent(String content) {
-            this.content = content;
-        }
-
-        public String getContent_url() {
-            return content_url;
-        }
-
-        public String getContent() {
-            return content;
-        }
-    }
 }

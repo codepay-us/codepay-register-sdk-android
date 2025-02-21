@@ -81,11 +81,6 @@ public class ECRHubMessageData {
 
     private String response_msg;
 
-    private NotifyData notify_data;
-
-    private VoiceData voice_data;
-
-    private PrintData print_data;
     private BizData biz_data;
 
     private DeviceData device_data;
@@ -126,21 +121,6 @@ public class ECRHubMessageData {
             device_data = new DeviceData();
         }
         return device_data;
-    }
-
-    public NotifyData getNotify_data() {
-        return notify_data;
-    }
-
-    public PrintData getPrint_data() {
-        return print_data;
-    }
-
-    public VoiceData getVoice_data() {
-        if (null == voice_data) {
-            voice_data = new VoiceData();
-        }
-        return voice_data;
     }
 
     public void setCall_app_mode(String call_app_mode) {
@@ -191,18 +171,6 @@ public class ECRHubMessageData {
 
     public String getTopic() {
         return topic;
-    }
-
-    public void setNotify_data(NotifyData notify_data) {
-        this.notify_data = notify_data;
-    }
-
-    public void setPrint_data(PrintData print_data) {
-        this.print_data = print_data;
-    }
-
-    public void setVoice_data(VoiceData voice_data) {
-        this.voice_data = voice_data;
     }
 
     public class DeviceData {
@@ -351,9 +319,35 @@ public class ECRHubMessageData {
 
         private boolean is_auto_settlement;
 
-        private Integer print_receipt;
+        private Integer receipt_print_mode;
 
         private String card_type;
+
+        private String card_network_type;
+
+        private boolean required_terminal_authentication;
+
+        private boolean on_screen_signature;
+
+        private String trans_end_time;
+
+        private String cashier;
+
+        private String auth_code;
+
+        private String ref_no;
+
+        private String card_no;
+
+        private String entry_mode;
+
+        private String merchant_no;
+
+        private String merchant_name;
+
+        private String pay_channel_merchant_id;
+
+        private String pay_channel_terminal_id;
 
         public void setCard_type(String card_type) {
             this.card_type = card_type;
@@ -415,27 +409,6 @@ public class ECRHubMessageData {
 
         public String getPush_no() {
             return push_no;
-        }
-
-        public NotifyData getNotify_data() {
-            if (null == notify_data) {
-                notify_data = new NotifyData();
-            }
-            return notify_data;
-        }
-
-        public PrintData getPrint_data() {
-            if (null == print_data) {
-                print_data = new PrintData();
-            }
-            return print_data;
-        }
-
-        public VoiceData getVoice_data() {
-            if (null == voice_data) {
-                voice_data = new VoiceData();
-            }
-            return voice_data;
         }
 
         public String getOrder_amount() {
@@ -590,12 +563,12 @@ public class ECRHubMessageData {
             return confirm_on_terminal;
         }
 
-        public Integer getPrint_receipt() {
-            return print_receipt;
+        public Integer getReceipt_print_mode() {
+            return receipt_print_mode;
         }
 
-        public void setPrint_receipt(Integer print_receipt) {
-            this.print_receipt = print_receipt;
+        public void setReceipt_print_mode(Integer receipt_print_mode) {
+            this.receipt_print_mode = receipt_print_mode;
         }
 
         public void setExpires(int expires) {
@@ -614,143 +587,108 @@ public class ECRHubMessageData {
             this.on_screen_tip = on_screen_tip;
         }
 
-
-    }
-
-    public class NotifyData {
-        /**
-         * 是否需要弹出通知栏消息
-         */
-        private boolean app_pop;
-        /**
-         * 通知栏标题
-         */
-        private String title;
-        /**
-         * 通知栏内容
-         */
-        private String body;
-        /**
-         * 通知栏图片地址
-         */
-        private String image_url;
-        /**
-         * 声音
-         */
-        private String sound;
-        /**
-         * 通知栏跳转到指定页面
-         */
-        private JSONObject intent;
-
-        public void setApp_pop(boolean app_pop) {
-            this.app_pop = app_pop;
+        public String getCard_network_type() {
+            return card_network_type;
         }
 
-        public void setBody(String body) {
-            this.body = body;
+        public void setCard_network_type(String card_network_type) {
+            this.card_network_type = card_network_type;
         }
 
-        public void setImage_url(String image_url) {
-            this.image_url = image_url;
+        public boolean isRequired_terminal_authentication() {
+            return required_terminal_authentication;
         }
 
-        public void setIntent(JSONObject intent) {
-            this.intent = intent;
+        public void setRequired_terminal_authentication(boolean required_terminal_authentication) {
+            this.required_terminal_authentication = required_terminal_authentication;
         }
 
-        public void setSound(String sound) {
-            this.sound = sound;
+        public boolean isOn_screen_signature() {
+            return on_screen_signature;
         }
 
-        public void setTitle(String title) {
-            this.title = title;
+        public void setOn_screen_signature(boolean on_screen_signature) {
+            this.on_screen_signature = on_screen_signature;
         }
 
-        public JSONObject getIntent() {
-            return intent;
+        public String getTrans_end_time() {
+            return trans_end_time;
         }
 
-        public String getBody() {
-            return body;
+        public void setTrans_end_time(String trans_end_time) {
+            this.trans_end_time = trans_end_time;
         }
 
-        public String getImage_url() {
-            return image_url;
+        public String getCashier() {
+            return cashier;
         }
 
-        public String getSound() {
-            return sound;
+        public void setCashier(String cashier) {
+            this.cashier = cashier;
         }
 
-        public String getTitle() {
-            return title;
-        }
-    }
-
-    public class VoiceData {
-        /**
-         * 语音播报内容
-         */
-        private String content;
-        /**
-         * 语音播报语种
-         */
-        private String content_locale;
-        /**
-         * 语音文件地址
-         */
-        private String content_url;
-
-        public void setContent(String content) {
-            this.content = content;
+        public String getAuth_code() {
+            return auth_code;
         }
 
-        public void setContent_locale(String content_locale) {
-            this.content_locale = content_locale;
+        public void setAuth_code(String auth_code) {
+            this.auth_code = auth_code;
         }
 
-        public void setContent_url(String content_url) {
-            this.content_url = content_url;
+        public String getRef_no() {
+            return ref_no;
         }
 
-        public String getContent() {
-            return content;
+        public void setRef_no(String ref_no) {
+            this.ref_no = ref_no;
         }
 
-        public String getContent_locale() {
-            return content_locale;
+        public String getCard_no() {
+            return card_no;
         }
 
-        public String getContent_url() {
-            return content_url;
-        }
-    }
-
-    public class PrintData {
-        /**
-         * 打印文本内容
-         */
-        String content;
-        /**
-         * 打印内容文本地址
-         */
-        String content_url;
-
-        public void setContent_url(String content_url) {
-            this.content_url = content_url;
+        public void setCard_no(String card_no) {
+            this.card_no = card_no;
         }
 
-        public void setContent(String content) {
-            this.content = content;
+        public String getEntry_mode() {
+            return entry_mode;
         }
 
-        public String getContent_url() {
-            return content_url;
+        public void setEntry_mode(String entry_mode) {
+            this.entry_mode = entry_mode;
         }
 
-        public String getContent() {
-            return content;
+        public String getMerchant_no() {
+            return merchant_no;
+        }
+
+        public void setMerchant_no(String merchant_no) {
+            this.merchant_no = merchant_no;
+        }
+
+        public String getMerchant_name() {
+            return merchant_name;
+        }
+
+        public void setMerchant_name(String merchant_name) {
+            this.merchant_name = merchant_name;
+        }
+
+        public String getPay_channel_merchant_id() {
+            return pay_channel_merchant_id;
+        }
+
+        public void setPay_channel_merchant_id(String pay_channel_merchant_id) {
+            this.pay_channel_merchant_id = pay_channel_merchant_id;
+        }
+
+        public String getPay_channel_terminal_id() {
+            return pay_channel_terminal_id;
+        }
+
+        public void setPay_channel_terminal_id(String pay_channel_terminal_id) {
+            this.pay_channel_terminal_id = pay_channel_terminal_id;
         }
     }
 

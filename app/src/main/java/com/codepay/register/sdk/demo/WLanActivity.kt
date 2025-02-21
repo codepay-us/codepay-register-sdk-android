@@ -229,7 +229,7 @@ class WLanActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                     }
                     return
                 }
-                PaymentActivity.mClient = UsbActivity.mClient
+                PaymentActivity.mClient = mClient
                 startActivity(Intent(applicationContext, PaymentActivity::class.java))
             }
 
@@ -240,7 +240,7 @@ class WLanActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                     }
                     return
                 }
-                RefundActivity.mClient = UsbActivity.mClient
+                RefundActivity.mClient = mClient
                 startActivity(Intent(applicationContext, RefundActivity::class.java))
             }
 
@@ -251,7 +251,7 @@ class WLanActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                     }
                     return
                 }
-                AuthActivity.mClient = UsbActivity.mClient
+                AuthActivity.mClient = mClient
                 startActivity(Intent(applicationContext, AuthActivity::class.java))
             }
 
@@ -262,7 +262,7 @@ class WLanActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                     }
                     return
                 }
-                AuthCompleteActivity.mClient = UsbActivity.mClient
+                AuthCompleteActivity.mClient = mClient
                 startActivity(Intent(applicationContext, AuthCompleteActivity::class.java))
             }
 
@@ -273,7 +273,7 @@ class WLanActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                     }
                     return
                 }
-                CashBackActivity.mClient = UsbActivity.mClient
+                CashBackActivity.mClient = mClient
                 startActivity(Intent(applicationContext, CashBackActivity::class.java))
             }
 
@@ -284,7 +284,7 @@ class WLanActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                     }
                     return
                 }
-                QueryActivity.mClient = UsbActivity.mClient
+                QueryActivity.mClient = mClient
                 startActivity(Intent(applicationContext, QueryActivity::class.java))
             }
 
@@ -295,7 +295,7 @@ class WLanActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                     }
                     return
                 }
-                CloseActivity.mClient = UsbActivity.mClient
+                CloseActivity.mClient = mClient
                 startActivity(Intent(applicationContext, CloseActivity::class.java))
             }
         }

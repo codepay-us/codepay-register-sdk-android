@@ -199,14 +199,14 @@ public class PaymentResponseParams {
         private String pay_scenario;
 
         /**
+         * 卡网络
+         */
+        private String card_network_type;
+
+        /**
          * 支付方式id
          */
         private String pay_method_id;
-
-        /**
-         * 附加数据
-         */
-        private String attach;
 
         /**
          * 描述信息
@@ -214,14 +214,14 @@ public class PaymentResponseParams {
         private String description;
 
         /**
-         * 回调地址
-         */
-        private String notify_url;
-
-        /**
          * 交易状态
          */
         private String trans_status;
+
+        /**
+         * 交易结束时间
+         */
+        private String trans_end_time;
 
         /**
          * 错误信息
@@ -247,6 +247,24 @@ public class PaymentResponseParams {
         private boolean limit_length;
 
         private boolean is_auto_settlement;
+
+        private boolean on_screen_tip;
+
+        private String auth_code;
+
+        private String ref_no;
+
+        private String card_no;
+
+        private String entry_mode;
+
+        private String merchant_no;
+
+        private String merchant_name;
+
+        private String pay_channel_merchant_id;
+
+        private String pay_channel_terminal_id;
 
         private String card_type;
 
@@ -366,20 +384,12 @@ public class PaymentResponseParams {
             this.trans_status = trans_status;
         }
 
-        public void setAttach(String attach) {
-            this.attach = attach;
-        }
-
         public void setDescription(String description) {
             this.description = description;
         }
 
         public void setMerchant_order_no(String merchant_order_no) {
             this.merchant_order_no = merchant_order_no;
-        }
-
-        public void setNotify_url(String notify_url) {
-            this.notify_url = notify_url;
         }
 
         public void setOrig_merchant_order_no(String orig_merchant_order_no) {
@@ -394,20 +404,12 @@ public class PaymentResponseParams {
             this.trans_no = trans_no;
         }
 
-        public String getAttach() {
-            return attach;
-        }
-
         public String getDescription() {
             return description;
         }
 
         public String getMerchant_order_no() {
             return merchant_order_no;
-        }
-
-        public String getNotify_url() {
-            return notify_url;
         }
 
         public String getOrig_merchant_order_no() {
@@ -444,6 +446,102 @@ public class PaymentResponseParams {
 
         public void setOrder_queue_mode(String order_queue_mode) {
             this.order_queue_mode = order_queue_mode;
+        }
+
+        public String getCard_network_type() {
+            return card_network_type;
+        }
+
+        public void setCard_network_type(String card_network_type) {
+            this.card_network_type = card_network_type;
+        }
+
+        public String getTrans_end_time() {
+            return trans_end_time;
+        }
+
+        public void setTrans_end_time(String trans_end_time) {
+            this.trans_end_time = trans_end_time;
+        }
+
+        public String getCash_amount() {
+            return cash_amount;
+        }
+
+        public void setCash_amount(String cash_amount) {
+            this.cash_amount = cash_amount;
+        }
+
+        public boolean isOn_screen_tip() {
+            return on_screen_tip;
+        }
+
+        public void setOn_screen_tip(boolean on_screen_tip) {
+            this.on_screen_tip = on_screen_tip;
+        }
+
+        public String getAuth_code() {
+            return auth_code;
+        }
+
+        public void setAuth_code(String auth_code) {
+            this.auth_code = auth_code;
+        }
+
+        public String getRef_no() {
+            return ref_no;
+        }
+
+        public void setRef_no(String ref_no) {
+            this.ref_no = ref_no;
+        }
+
+        public String getCard_no() {
+            return card_no;
+        }
+
+        public void setCard_no(String card_no) {
+            this.card_no = card_no;
+        }
+
+        public String getEntry_mode() {
+            return entry_mode;
+        }
+
+        public void setEntry_mode(String entry_mode) {
+            this.entry_mode = entry_mode;
+        }
+
+        public String getMerchant_no() {
+            return merchant_no;
+        }
+
+        public void setMerchant_no(String merchant_no) {
+            this.merchant_no = merchant_no;
+        }
+
+        public String getMerchant_name() {
+            return merchant_name;
+        }
+
+        public void setMerchant_name(String merchant_name) {
+            this.merchant_name = merchant_name;
+        }
+
+        public String getPay_channel_merchant_id() {
+            return pay_channel_merchant_id;
+        }
+
+        public void setPay_channel_merchant_id(String pay_channel_merchant_id) {
+            this.pay_channel_merchant_id = pay_channel_merchant_id;
+        }
+
+        public String getPay_channel_terminal_id() {
+            return pay_channel_terminal_id;
+        }
+
+        public void setPay_channel_terminal_id(String pay_channel_terminal_id) {
+            this.pay_channel_terminal_id = pay_channel_terminal_id;
         }
     }
 }

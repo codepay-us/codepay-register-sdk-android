@@ -58,7 +58,7 @@ class AuthCompleteActivity : Activity() {
                 return@setOnClickListener
             }
             val params = PaymentRequestParams()
-            params.app_id = "wz6012822ca2f1as78"
+            params.app_id = "wz2b6cef2f18008ee7"
             merchantOrderNo = "123" + getCurDateStr("yyyyMMddHHmmss")
             params.merchant_order_no = merchantOrderNo
             if (orderNo.isEmpty()) {
@@ -76,10 +76,6 @@ class AuthCompleteActivity : Activity() {
             params.order_amount = amount
             params.confirm_on_terminal = false
             params.pay_scenario = "SWIPE_CARD"
-            val voiceData = params.voice_data
-            voiceData.content = "CodePay Register Received a new order"
-            voiceData.content_locale = "en-US"
-            params.voice_data = voiceData
             runOnUiThread {
                 tv_btn_3.text =
                     "Send Complete data --> " + params.toJSON().toString()
@@ -114,7 +110,7 @@ class AuthCompleteActivity : Activity() {
             } else {
                 params.merchant_order_no = merchantOrderNo
             }
-            params.app_id = "wz6012822ca2f1as78"
+            params.app_id = "wz2b6cef2f18008ee7"
             runOnUiThread {
                 tv_btn_3.text =
                     "Send Close data --> " + params.toJSON().toString()

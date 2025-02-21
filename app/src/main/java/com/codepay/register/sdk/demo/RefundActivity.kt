@@ -61,7 +61,7 @@ class RefundActivity : Activity() {
             val merchantOrderNo = edit_input_merchant_order_no.text.toString()
             val params = PaymentRequestParams()
             params.trans_type = Constants.TRANS_TYPE_REFUND
-            params.app_id = "wz6012822ca2f1as78"
+            params.app_id = "wz2b6cef2f18008ee7"
             if (merchantOrderNo.isEmpty()) {
                 if (sharedPreferences.getString("merchant_order_no", "").toString().isEmpty()) {
                     Toast.makeText(this, "Please input orig merchant order no", Toast.LENGTH_LONG)
@@ -79,10 +79,6 @@ class RefundActivity : Activity() {
             params.order_amount = amount
             params.on_screen_tip = false
             params.confirm_on_terminal = false
-            val voiceData = params.voice_data
-            voiceData.content = "CodePay Register Received a new order"
-            voiceData.content_locale = "en-US"
-            params.voice_data = voiceData
             runOnUiThread {
                 tv_btn_3.text =
                     "Send Refund data" + params.toJSON().toString()
@@ -108,7 +104,7 @@ class RefundActivity : Activity() {
             val merchantOrderNo = edit_input_merchant_order_no.text.toString()
             val params = PaymentRequestParams()
             params.trans_type = Constants.TRANS_TYPE_VOID
-            params.app_id = "wz6012822ca2f1as78"
+            params.app_id = "wz2b6cef2f18008ee7"
             if (merchantOrderNo.isEmpty()) {
                 if (sharedPreferences.getString("merchant_order_no", "").toString().isEmpty()) {
                     Toast.makeText(this, "Please input orig merchant order no", Toast.LENGTH_LONG)
@@ -123,10 +119,6 @@ class RefundActivity : Activity() {
             }
             params.merchant_order_no = "123" + getCurDateStr("yyyyMMddHHmmss")
             params.confirm_on_terminal = false
-            val voiceData = params.voice_data
-            voiceData.content = "CodePay Register Received a new order"
-            voiceData.content_locale = "en-US"
-            params.voice_data = voiceData
             runOnUiThread {
                 tv_btn_3.text =
                     "Send Void data --> " + params.toJSON().toString()
@@ -158,7 +150,7 @@ class RefundActivity : Activity() {
             } else {
                 params.merchant_order_no = merchantOrderNo
             }
-            params.app_id = "wz6012822ca2f1as78"
+            params.app_id = "wz2b6cef2f18008ee7"
             runOnUiThread {
                 tv_btn_3.text =
                     "Send Close data --> " + params.toJSON().toString()
