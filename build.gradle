@@ -33,9 +33,6 @@ allprojects {
         maven {
             url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
         }
-        flatDir {
-            dirs project(':codepay_register_sdk').file('libs')
-        }
     }
 }
 

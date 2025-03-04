@@ -37,7 +37,6 @@ android {
 }
 
 dependencies {
-    implementation(name:'WiseSdk_EcrHost_1.01_00a_24072601',ext:'aar')
     // OkHttp
     api "com.squareup.okhttp3:okhttp:4.9.2"
     api 'androidx.appcompat:appcompat:1.0.0'
