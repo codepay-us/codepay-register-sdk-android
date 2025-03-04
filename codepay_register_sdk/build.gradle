@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
 
 android {
     compileSdkVersion 29
@@ -31,8 +32,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = 1.8
-        targetCompatibility = 1.8
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
     }
 }
 
@@ -47,3 +48,18 @@ dependencies {
     api 'com.squareup.retrofit2:retrofit:2.7.1'
     api 'org.ligboy.retrofit2:converter-fastjson-android:2.1.0'
 }
+
+publishing {
+    publications {
+        release(MavenPublication) {
+            groupId = 'com.github.codepay-us'
+            artifactId = 'codepay-register-sdk-android'
+            version = '1.0'
+
+            afterEvaluate {
+                from components.findByName('release')
+            }
+        }
+    }
+}
+
