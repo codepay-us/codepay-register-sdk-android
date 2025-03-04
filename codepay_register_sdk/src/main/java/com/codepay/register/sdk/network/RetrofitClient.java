@@ -59,7 +59,7 @@ public class RetrofitClient {
         return api;
     }
 
-    public static void initServer(JSONObject params, ECRHubResponseCallBack callBack) {
+    public static void initServer(JSONObject params, final ECRHubResponseCallBack callBack) {
         getApi().init(RetrofitClient.createJsonRequestBody(params)).enqueue(new Callback<JSONObject>() {
             @Override
             public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
@@ -78,7 +78,7 @@ public class RetrofitClient {
         });
     }
 
-    public static void senMessage(JSONObject params, ECRHubResponseCallBack callBack) {
+    public static void senMessage(JSONObject params, final ECRHubResponseCallBack callBack) {
         getApi().sendMessage(RetrofitClient.createJsonRequestBody(params)).enqueue(new Callback<JSONObject>() {
             @Override
             public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
@@ -97,7 +97,7 @@ public class RetrofitClient {
         });
     }
 
-    public static void query(JSONObject params, ECRHubResponseCallBack callBack) {
+    public static void query(JSONObject params, final ECRHubResponseCallBack callBack) {
         getApi().query(RetrofitClient.createJsonRequestBody(params)).enqueue(new Callback<JSONObject>() {
             @Override
             public void onResponse(Call<JSONObject> call, Response<JSONObject> response) {
