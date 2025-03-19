@@ -311,6 +311,8 @@ public class ECRHubMessageData {
 
         private String tip_amount;
 
+        private String tax_amount;
+
         private String price_currency;
 
         private String trans_type;
@@ -350,6 +352,15 @@ public class ECRHubMessageData {
         private String pay_channel_terminal_id;
 
         private String tip_adjustment_amount;
+
+
+        public void setTax_amount(String tax_amount) {
+            this.tax_amount = tax_amount;
+        }
+
+        public String getTax_amount() {
+            return tax_amount;
+        }
 
         public void setCard_type(String card_type) {
             this.card_type = card_type;

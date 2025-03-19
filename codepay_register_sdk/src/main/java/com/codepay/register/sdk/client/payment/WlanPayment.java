@@ -33,9 +33,7 @@ public class WlanPayment extends Payment {
     }
 
     private void addCallBack(String transType, ECRHubResponseCallBack callBack) {
-        if (callBackHashMap.containsKey(transType)) {
-            callBackHashMap.remove(transType);
-        }
+        callBackHashMap.remove(transType);
         callBackHashMap.put(transType, callBack);
     }
 
@@ -51,11 +49,17 @@ public class WlanPayment extends Payment {
             params.setTrans_type(Constants.TRANS_TYPE_CASH_BACK);
         }
         ECRHubMessageData data = new ECRHubMessageData();
-        if (null != params.getCash_amount()) {
+        if (null != params.cash_amount) {
             data.getBiz_data().setCashback_amount(params.cash_amount);
         }
+        if (null != params.tax_amount) {
+            data.getBiz_data().setTax_amount(params.tax_amount);
+        }
+        if (null != params.tip_amount) {
+            data.getBiz_data().setTip_amount(params.tip_amount);
+        }
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
-        data.getBiz_data().setTrans_type("" + params.trans_type);
+        data.getBiz_data().setTrans_type(params.trans_type);
         data.getBiz_data().setOrder_amount(params.order_amount);
         if (null != params.getOn_screen_tip()) {
             data.getBiz_data().setOn_screen_tip(params.on_screen_tip);
@@ -129,12 +133,18 @@ public class WlanPayment extends Payment {
         ECRHubMessageData data = new ECRHubMessageData();
         data.getBiz_data().setOrig_merchant_order_no(params.orig_merchant_order_no);
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
-        data.getBiz_data().setTrans_type("" + params.trans_type);
+        data.getBiz_data().setTrans_type(params.trans_type);
         data.getBiz_data().setOrder_amount(params.order_amount);
         if (null != params.getPay_scenario()) {
             data.getBiz_data().setPay_scenario(params.pay_scenario);
         } else {
             data.getBiz_data().setPay_scenario("SWIPE_CARD");
+        }
+        if (null != params.tax_amount) {
+            data.getBiz_data().setTax_amount(params.tax_amount);
+        }
+        if (null != params.tip_amount) {
+            data.getBiz_data().setTip_amount(params.tip_amount);
         }
         if (null != params.getOn_screen_tip()) {
             data.getBiz_data().setOn_screen_tip(params.on_screen_tip);

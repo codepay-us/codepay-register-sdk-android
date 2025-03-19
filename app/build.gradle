@@ -33,6 +33,6 @@ android {
 
 dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    //implementation project(path: ':codepay_register_sdk')
-    implementation 'com.github.codepay-us:codepay-register-sdk-android:1.0.7'
+    implementation project(path: ':codepay_register_sdk')
+    //implementation 'com.github.codepay-us:codepay-register-sdk-android:1.0.7'
 }

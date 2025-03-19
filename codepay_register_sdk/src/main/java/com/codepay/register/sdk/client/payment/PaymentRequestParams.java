@@ -37,6 +37,11 @@ public class PaymentRequestParams {
      */
     String tip_amount;
     /**
+     * Tax amount. This field represents the transaction tip amount. For example, 1 USD stands for one dollar, not one cent.
+     * Example: 3.50
+     */
+    String tax_amount;
+    /**
      * Whether or not to enter tips on the CodePay Register page, default is false, when "trans_type=1, 3, 4", this parameter can be set.
      */
     Boolean on_screen_tip;
@@ -95,6 +100,14 @@ public class PaymentRequestParams {
     String tip_adjustment_amount;
 
     private String card_type;
+
+    public void setTax_amount(String tax_amount) {
+        this.tax_amount = tax_amount;
+    }
+
+    public String getTax_amount() {
+        return tax_amount;
+    }
 
     public void setCard_type(String card_type) {
         this.card_type = card_type;

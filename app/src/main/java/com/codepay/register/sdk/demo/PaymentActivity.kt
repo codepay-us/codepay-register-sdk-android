@@ -57,12 +57,16 @@ class PaymentActivity : Activity() {
                 Toast.makeText(this, "Please input amount", Toast.LENGTH_LONG).show()
                 return@setOnClickListener
             }
+            var tipAmount = edit_input_tip_amount.text.toString()
             val params = PaymentRequestParams()
             params.app_id = "wz2b6cef2f18008ee7"
             merchantOrderNo = "123" + getCurDateStr("yyyyMMddHHmmss")
             params.merchant_order_no = merchantOrderNo
             params.order_amount = amount
-            params.on_screen_tip = false
+            params.tip_amount = tipAmount
+            params.tax_amount = tipAmount
+            params.confirm_on_terminal = confirm_on_terminal.isChecked
+            params.on_screen_tip = cb_screen_tip.isChecked
             params.receipt_print_mode = 0
             params.pay_scenario = "SWIPE_CARD"
             runOnUiThread {
