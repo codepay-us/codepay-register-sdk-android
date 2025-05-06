@@ -42,6 +42,10 @@ public class PaymentRequestParams {
      */
     String tax_amount;
     /**
+     * Tip adjustment amount
+     */
+    String tip_adjustment_amount;
+    /**
      * Whether or not to enter tips on the CodePay Register page, default is false, when "trans_type=1, 3, 4", this parameter can be set.
      */
     Boolean on_screen_tip;
@@ -96,8 +100,6 @@ public class PaymentRequestParams {
     Integer receipt_print_mode;
 
     String cashier;
-
-    String tip_adjustment_amount;
 
     private String card_type;
 

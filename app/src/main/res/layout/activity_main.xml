@@ -51,8 +51,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:background="#FFFFFF"
-            android:padding="10dp"
             android:gravity="center"
+            android:padding="10dp"
             android:text="UnPair" />
 
         <TextView
@@ -62,8 +62,8 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="10dp"
             android:background="#FFFFFF"
-            android:padding="10dp"
             android:gravity="center"
+            android:padding="10dp"
             android:text="Sale" />
 
         <TextView
@@ -130,8 +130,30 @@
             android:background="#FFFFFF"
             android:gravity="center"
             android:padding="10dp"
-            android:visibility="gone"
-            android:text="Close" />
+            android:text="Close"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/tv_btn_batch_close"
+            android:layout_width="390dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Batch Close" />
+
+        <TextView
+            android:id="@+id/tv_btn_tip_adjustment"
+            android:layout_width="390dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:background="#FFFFFF"
+            android:gravity="center"
+            android:padding="10dp"
+            android:text="Tip Adjustment" />
     </LinearLayout>
 
     <TextView

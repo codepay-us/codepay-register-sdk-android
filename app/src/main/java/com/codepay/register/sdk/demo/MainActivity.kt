@@ -57,6 +57,8 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
         tv_btn_query.setOnClickListener(this)
         tv_btn_close.setOnClickListener(this)
         tv_btn_exit.setOnClickListener(this)
+        tv_btn_batch_close.setOnClickListener(this)
+        tv_btn_tip_adjustment.setOnClickListener(this)
     }
 
     override fun onConnect() {
@@ -275,6 +277,28 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                 }
                 CashBackActivity.mClient = mClient
                 startActivity(Intent(applicationContext, CashBackActivity::class.java))
+            }
+
+            R.id.tv_btn_batch_close -> {
+                if (!isConnected) {
+                    runOnUiThread {
+                        Toast.makeText(this, "Server is not connect", Toast.LENGTH_LONG).show()
+                    }
+                    return
+                }
+                BatchCloseActivity.mClient = mClient
+                startActivity(Intent(applicationContext, BatchCloseActivity::class.java))
+            }
+
+            R.id.tv_btn_tip_adjustment -> {
+                if (!isConnected) {
+                    runOnUiThread {
+                        Toast.makeText(this, "Server is not connect", Toast.LENGTH_LONG).show()
+                    }
+                    return
+                }
+                TipAdjustmentActivity.mClient = mClient
+                startActivity(Intent(applicationContext, TipAdjustmentActivity::class.java))
             }
 
             R.id.tv_btn_query -> {

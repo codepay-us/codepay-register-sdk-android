@@ -1,4 +1,5 @@
 package com.codepay.register.sdk.client.payment;
+
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack;
 
 /**
@@ -23,4 +24,8 @@ public abstract class Payment {
     public abstract void auth(PaymentRequestParams params, ECRHubResponseCallBack callBack);
 
     public abstract void completion(PaymentRequestParams params, ECRHubResponseCallBack callBack);
+
+    public abstract void batchClose(PaymentRequestParams params, ECRHubResponseCallBack callBack);
+
+    public abstract void tipAdjustment(PaymentRequestParams params, ECRHubResponseCallBack callBack);
 }

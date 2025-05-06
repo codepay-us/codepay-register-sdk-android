@@ -44,6 +44,11 @@ public class Constants {
     public static final String BATCH_CLOSE_TOPIC = "ecrhub.pay.batch.close";
 
     /**
+     * batch close topic
+     */
+    public static final String TIP_ADJUSTMENT_TOPIC = "ecrhub.pay.tip.adjustment";
+
+    /**
      * trans type purchase
      */
     public static final String TRANS_TYPE_SALE = "1";
@@ -87,6 +92,17 @@ public class Constants {
      * trans type cashback
      */
     public static final String TRANS_TYPE_CASH_BACK = "11";
+
+    /**
+     * trans type batch close
+     */
+    public static final String TRANS_TYPE_BATCH_CLOSE = "12";
+
+    /**
+     * trans type tip adjustment
+     */
+    public static final String TRANS_TYPE_TIP_ADJUSTMENT = "13";
+
     /**
      * BankCard Payment
      */

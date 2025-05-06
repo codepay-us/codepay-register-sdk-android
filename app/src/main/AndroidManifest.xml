@@ -48,5 +48,11 @@
         <activity
             android:name="com.codepay.register.sdk.demo.AuthCompleteActivity"
             android:screenOrientation="portrait" />
+        <activity
+            android:name=".BatchCloseActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".TipAdjustmentActivity"
+            android:screenOrientation="portrait" />
     </application>
 </manifest>
