@@ -262,11 +262,21 @@ public class PaymentResponseParams {
 
         private String merchant_name;
 
+        private String terminal_sn;
+
         private String pay_channel_merchant_id;
 
         private String pay_channel_terminal_id;
 
         private String card_type;
+
+        public void setTerminal_sn(String terminal_sn) {
+            this.terminal_sn = terminal_sn;
+        }
+
+        public String getTerminal_sn() {
+            return terminal_sn;
+        }
 
         public String getService_charge_amount() {
             return service_charge_amount;
