@@ -1,8 +1,11 @@
 package com.codepay.register.sdk.client;
 
+import static com.codepay.register.sdk.util.Constants.BATCH_CLOSE_TOPIC;
 import static com.codepay.register.sdk.util.Constants.ECR_HUB_TOPIC_PAIR;
 import static com.codepay.register.sdk.util.Constants.ECR_HUB_TOPIC_UNPAIR;
 import static com.codepay.register.sdk.util.Constants.HEART_BEAT_TOPIC;
+import static com.codepay.register.sdk.util.Constants.QUERY_TOPIC;
+import static com.codepay.register.sdk.util.Constants.TIP_ADJUSTMENT_TOPIC;
 
 import android.content.Context;
 import android.util.Log;
@@ -23,6 +26,7 @@ import org.java_websocket.enums.ReadyState;
 import org.java_websocket.handshake.ServerHandshake;
 
 import java.net.URI;
+import java.util.Objects;
 
 /**
  * @author pupan
@@ -92,7 +96,7 @@ public class ECRHubClient {
                     pairCallBack.onSuccess(data);
                 } else if (!data.getTopic().equals(HEART_BEAT_TOPIC)) {
                     String transType = data.getBiz_data().getTrans_type();
-                    if (null == transType || "".equals(transType)) {
+                    if (null == transType || transType.isEmpty()|| Objects.equals(data.getTopic(), QUERY_TOPIC)|| Objects.equals(data.getTopic(), BATCH_CLOSE_TOPIC)|| Objects.equals(data.getTopic(), TIP_ADJUSTMENT_TOPIC)) {
                         transType = data.getTopic();
                     }
                     if (null != payment && null != payment.getResponseCallBack(transType)) {
