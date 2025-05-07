@@ -2,6 +2,7 @@ package com.codepay.register.sdk.client.payment;
 
 import static com.codepay.register.sdk.util.Constants.BATCH_CLOSE_TOPIC;
 import static com.codepay.register.sdk.util.Constants.CLOSE_TOPIC;
+import static com.codepay.register.sdk.util.Constants.INIT_TOPIC;
 import static com.codepay.register.sdk.util.Constants.PAYMENT_TOPIC;
 import static com.codepay.register.sdk.util.Constants.QUERY_TOPIC;
 import static com.codepay.register.sdk.util.Constants.TIP_ADJUSTMENT_TOPIC;
@@ -27,11 +28,6 @@ public class WlanPayment extends Payment {
 
     public ECRHubResponseCallBack getResponseCallBack(String transType) {
         return callBackHashMap.get(transType);
-    }
-
-    @Override
-    public void init(ECRHubResponseCallBack callBack) {
-
     }
 
     private void addCallBack(String transType, ECRHubResponseCallBack callBack) {
@@ -256,6 +252,7 @@ public class WlanPayment extends Payment {
         }
         ECRHubMessageData data = new ECRHubMessageData();
         data.setRequest_id("111111");
+        data.getBiz_data().setMerchant_order_no("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
         if (null != webSocketClient && webSocketClient.isOpen()) {
@@ -274,6 +271,21 @@ public class WlanPayment extends Payment {
         data.setTopic(params.getTopic());
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.getBiz_data().setTip_adjustment_amount(params.getTip_adjustment_amount());
+        data.setApp_id(params.app_id);
+        if (null != webSocketClient && webSocketClient.isOpen()) {
+            webSocketClient.send(JSON.toJSON(data).toString());
+        }
+    }
+
+    @Override
+    public void init(PaymentRequestParams params, ECRHubResponseCallBack callBack) {
+        addCallBack(INIT_TOPIC, callBack);
+        if (null == params.getTopic()) {
+            params.setTopic(INIT_TOPIC);
+        }
+        ECRHubMessageData data = new ECRHubMessageData();
+        data.setRequest_id("111111");
+        data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
         if (null != webSocketClient && webSocketClient.isOpen()) {
             webSocketClient.send(JSON.toJSON(data).toString());

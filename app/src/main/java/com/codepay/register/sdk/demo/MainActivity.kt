@@ -14,6 +14,7 @@ import android.view.View.OnClickListener
 import android.widget.Toast
 import com.codepay.register.sdk.client.ECRHubClient
 import com.codepay.register.sdk.client.ECRHubConfig
+import com.codepay.register.sdk.client.payment.PaymentRequestParams
 import com.codepay.register.sdk.client.payment.PaymentResponseParams
 import com.codepay.register.sdk.device.ECRHubDevice
 import com.codepay.register.sdk.device.ECRHubWebSocketDiscoveryService
@@ -59,6 +60,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
         tv_btn_exit.setOnClickListener(this)
         tv_btn_batch_close.setOnClickListener(this)
         tv_btn_tip_adjustment.setOnClickListener(this)
+        tv_btn_init.setOnClickListener(this)
     }
 
     override fun onConnect() {
@@ -213,6 +215,27 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
 //                        Toast.makeText(this, "Paired list is empty", Toast.LENGTH_LONG).show()
 //                    }
 //                }
+            }
+
+            R.id.tv_btn_init -> {
+                if (!isConnected) {
+                    runOnUiThread {
+                        Toast.makeText(this, "Server is not connect", Toast.LENGTH_LONG).show()
+                    }
+                    return
+                }
+                val params = PaymentRequestParams()
+                params.app_id = "wz2b6cef2f18008ee7"
+                params.topic = Constants.INIT_TOPIC
+                mClient.payment.init(params, object : ECRHubResponseCallBack {
+                    override fun onError(errorCode: String?, errorMsg: String?) {
+
+                    }
+
+                    override fun onSuccess(data: PaymentResponseParams?) {
+                        Log.e("MainActivvity", "init success" + data.toString())
+                    }
+                })
             }
 
             R.id.tv_btn_exit -> {
