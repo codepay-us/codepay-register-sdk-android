@@ -178,8 +178,8 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback, Servic
             ServiceInfo mServiceInfo = ServiceInfo.create(REMOTE_CLIENT_TYPE, deviceName + "_" + System.currentTimeMillis(), PORT, 0, 0, clientInfo.toJSONString());
             mJmdns.registerService(mServiceInfo);
             mJmdns.addServiceListener(REMOTE_SERVER_TYPE, this);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        } catch (Exception e) {
+          e.printStackTrace();
         }
     }
 
