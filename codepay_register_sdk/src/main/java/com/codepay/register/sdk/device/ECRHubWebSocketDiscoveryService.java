@@ -52,7 +52,7 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback, Servic
         InetAddress ip = NetUtils.getLocalIPAddress();
         try {
             mJmdns = JmDNS.create(ip, "ECRHubServerName");
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
