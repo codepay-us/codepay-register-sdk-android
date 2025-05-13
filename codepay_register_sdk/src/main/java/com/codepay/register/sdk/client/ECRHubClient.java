@@ -96,11 +96,12 @@ public class ECRHubClient {
                     pairCallBack.onSuccess(data);
                 } else if (!data.getTopic().equals(HEART_BEAT_TOPIC)) {
                     String transType = data.getBiz_data().getTrans_type();
-                    if (null == transType || transType.isEmpty()|| Objects.equals(data.getTopic(), QUERY_TOPIC)|| Objects.equals(data.getTopic(), BATCH_CLOSE_TOPIC)|| Objects.equals(data.getTopic(), TIP_ADJUSTMENT_TOPIC)) {
+                    if (null == transType || transType.isEmpty() || Objects.equals(data.getTopic(), QUERY_TOPIC) || Objects.equals(data.getTopic(), BATCH_CLOSE_TOPIC) || Objects.equals(data.getTopic(), TIP_ADJUSTMENT_TOPIC)) {
                         transType = data.getTopic();
                     }
                     if (null != payment && null != payment.getResponseCallBack(transType)) {
                         payment.getResponseCallBack(transType).onSuccess(data);
+                        payment.removeCurrentMessageData();
                     }
                 }
             }
@@ -125,6 +126,20 @@ public class ECRHubClient {
             @Override
             public void onClose(int code, String reason, boolean remote) {
                 Log.e(TAG, "websocket disconect：·code:" + code + "·reason:" + reason + "·remote:" + remote);
+                if (null != payment.getCurrentMessageData()) {
+                    ECRHubMessageData data = payment.getCurrentMessageData();
+                    data.setResponse_code("109");
+                    data.setResponse_msg("Network anomaly");
+                    String transType = data.getBiz_data().getTrans_type();
+                    if (null == transType || transType.isEmpty() || Objects.equals(data.getTopic(), QUERY_TOPIC) || Objects.equals(data.getTopic(), BATCH_CLOSE_TOPIC) || Objects.equals(data.getTopic(), TIP_ADJUSTMENT_TOPIC)) {
+                        transType = data.getTopic();
+                    }
+                    if (null != payment && null != payment.getResponseCallBack(transType)) {
+                        PaymentResponseParams responseData = JSON.parseObject(JSON.toJSON(data).toString(), PaymentResponseParams.class);
+                        payment.getResponseCallBack(transType).onSuccess(responseData);
+                        payment.removeCurrentMessageData();
+                    }
+                }
                 if ((code != 1000 && code != -1) || remote) {
                     if (null != connectListener) {
                         connectListener.onDisconnect();

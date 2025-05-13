@@ -1,12 +1,15 @@
 package com.codepay.register.sdk.client.payment;
 
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack;
+import com.codepay.register.sdk.util.ECRHubMessageData;
 
 /**
  * payment
  */
 public abstract class Payment {
+    public abstract void removeCurrentMessageData();
 
+    public abstract ECRHubMessageData getCurrentMessageData();
     public abstract ECRHubResponseCallBack getResponseCallBack(String transType);
 
     public abstract void sale(PaymentRequestParams params, ECRHubResponseCallBack callBack);

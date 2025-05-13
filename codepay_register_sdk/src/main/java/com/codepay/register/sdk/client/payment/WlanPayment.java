@@ -21,8 +21,18 @@ public class WlanPayment extends Payment {
     WebSocketClient webSocketClient;
     Map<String, ECRHubResponseCallBack> callBackHashMap = new HashMap<>();
 
+    private ECRHubMessageData currentMessageData;
+
     public WlanPayment(WebSocketClient webSocketClient) {
         this.webSocketClient = webSocketClient;
+    }
+
+    public void removeCurrentMessageData() {
+        currentMessageData = null;
+    }
+
+    public ECRHubMessageData getCurrentMessageData() {
+        return currentMessageData;
     }
 
 
@@ -76,6 +86,7 @@ public class WlanPayment extends Payment {
         data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
+        currentMessageData = data;
         if (null != webSocketClient && webSocketClient.isOpen()) {
             webSocketClient.send(JSON.toJSON(data).toString());
         }
@@ -96,6 +107,7 @@ public class WlanPayment extends Payment {
         data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
+        currentMessageData = data;
         if (null != webSocketClient && webSocketClient.isOpen()) {
             webSocketClient.send(JSON.toJSON(data).toString());
         }
@@ -116,6 +128,7 @@ public class WlanPayment extends Payment {
         data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
+        currentMessageData = data;
         if (null != webSocketClient && webSocketClient.isOpen()) {
             webSocketClient.send(JSON.toJSON(data).toString());
         }
@@ -153,6 +166,7 @@ public class WlanPayment extends Payment {
         data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
+        currentMessageData = data;
         if (null != webSocketClient && webSocketClient.isOpen()) {
             webSocketClient.send(JSON.toJSON(data).toString());
         }
@@ -180,6 +194,7 @@ public class WlanPayment extends Payment {
         data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
+        currentMessageData = data;
         if (null != webSocketClient && webSocketClient.isOpen()) {
             webSocketClient.send(JSON.toJSON(data).toString());
         }
@@ -211,6 +226,7 @@ public class WlanPayment extends Payment {
         data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
+        currentMessageData = data;
         if (null != webSocketClient && webSocketClient.isOpen()) {
             webSocketClient.send(JSON.toJSON(data).toString());
         }
@@ -239,6 +255,7 @@ public class WlanPayment extends Payment {
         data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
+        currentMessageData = data;
         if (null != webSocketClient && webSocketClient.isOpen()) {
             webSocketClient.send(JSON.toJSON(data).toString());
         }
@@ -255,6 +272,7 @@ public class WlanPayment extends Payment {
         data.getBiz_data().setMerchant_order_no("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
+        currentMessageData = data;
         if (null != webSocketClient && webSocketClient.isOpen()) {
             webSocketClient.send(JSON.toJSON(data).toString());
         }
@@ -272,6 +290,7 @@ public class WlanPayment extends Payment {
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.getBiz_data().setTip_adjustment_amount(params.getTip_adjustment_amount());
         data.setApp_id(params.app_id);
+        currentMessageData = data;
         if (null != webSocketClient && webSocketClient.isOpen()) {
             webSocketClient.send(JSON.toJSON(data).toString());
         }
@@ -287,9 +306,9 @@ public class WlanPayment extends Payment {
         data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
+        currentMessageData = data;
         if (null != webSocketClient && webSocketClient.isOpen()) {
             webSocketClient.send(JSON.toJSON(data).toString());
         }
     }
-
 }
