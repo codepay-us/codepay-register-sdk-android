@@ -7,7 +7,7 @@ import com.codepay.register.sdk.util.ECRHubMessageData;
  * payment
  */
 public abstract class Payment {
-    public abstract void removeCurrentMessageData();
+    public abstract void removeCurrentMessageData(String transType);
 
     public abstract ECRHubMessageData getCurrentMessageData();
     public abstract ECRHubResponseCallBack getResponseCallBack(String transType);

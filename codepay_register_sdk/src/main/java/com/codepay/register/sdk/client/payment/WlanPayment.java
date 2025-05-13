@@ -27,7 +27,8 @@ public class WlanPayment extends Payment {
         this.webSocketClient = webSocketClient;
     }
 
-    public void removeCurrentMessageData() {
+    public void removeCurrentMessageData(String transType) {
+        callBackHashMap.remove(transType);
         currentMessageData = null;
     }
 

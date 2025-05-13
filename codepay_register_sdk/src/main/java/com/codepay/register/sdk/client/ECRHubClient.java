@@ -101,7 +101,7 @@ public class ECRHubClient {
                     }
                     if (null != payment && null != payment.getResponseCallBack(transType)) {
                         payment.getResponseCallBack(transType).onSuccess(data);
-                        payment.removeCurrentMessageData();
+                        payment.removeCurrentMessageData(transType);
                     }
                 }
             }
@@ -137,7 +137,7 @@ public class ECRHubClient {
                     if (null != payment && null != payment.getResponseCallBack(transType)) {
                         PaymentResponseParams responseData = JSON.parseObject(JSON.toJSON(data).toString(), PaymentResponseParams.class);
                         payment.getResponseCallBack(transType).onSuccess(responseData);
-                        payment.removeCurrentMessageData();
+                        payment.removeCurrentMessageData(transType);
                     }
                 }
                 if ((code != 1000 && code != -1) || remote) {
