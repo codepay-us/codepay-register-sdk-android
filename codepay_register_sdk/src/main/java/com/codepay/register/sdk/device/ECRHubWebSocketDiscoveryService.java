@@ -179,9 +179,9 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback, Servic
             mJmdns.registerService(mServiceInfo);
             mJmdns.addServiceListener(REMOTE_SERVER_TYPE, this);
             ServiceInfo[] list = mJmdns.list(REMOTE_SERVER_TYPE);
-            Log.e(TAG.toString(),list.toString());
+            Log.e(TAG.toString(), list.toString());
         } catch (Exception e) {
-          e.printStackTrace();
+            e.printStackTrace();
         }
     }
 
@@ -232,6 +232,9 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback, Servic
         device.setName(data.getDevice_data().getDevice_name());
         if (null == device.getName() || "".equals(device.getName())) {
             return;
+        }
+        if (null != pairListener) {
+            pairListener.onServerFind(device);
         }
         String deviceList = SharePreferenceUtil.getString(Constants.ECR_HUB_PAIR_LIST_KEY, "");
         if (!deviceList.isEmpty()) {

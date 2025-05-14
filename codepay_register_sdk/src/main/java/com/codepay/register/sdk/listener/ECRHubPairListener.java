@@ -1,5 +1,6 @@
 package com.codepay.register.sdk.listener;
 
+import com.codepay.register.sdk.device.ECRHubDevice;
 import com.codepay.register.sdk.util.ECRHubMessageData;
 
 /**
@@ -19,4 +20,10 @@ public interface ECRHubPairListener {
      * unpair
      */
     void onDeviceUnpair(ECRHubMessageData data);
+
+    /**
+     * MDNS find new Server
+     * @param device
+     */
+    void onServerFind(ECRHubDevice device);
 }

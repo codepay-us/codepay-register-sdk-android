@@ -413,4 +413,7 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
             builder.show()
         }
     }
+
+    override fun onServerFind(device: ECRHubDevice?) {
+    }
 }
