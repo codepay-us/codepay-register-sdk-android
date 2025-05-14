@@ -233,9 +233,6 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback, Servic
         if (null == device.getName() || "".equals(device.getName())) {
             return;
         }
-        if (null != pairListener) {
-            pairListener.onServerFind(device);
-        }
         String deviceList = SharePreferenceUtil.getString(Constants.ECR_HUB_PAIR_LIST_KEY, "");
         if (!deviceList.isEmpty()) {
             array = JSON.parseArray(deviceList);
@@ -326,6 +323,9 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback, Servic
                     if (!"".equals(info.getString("ip_address"))) {
                         device.setIp_address(info.getString("ip_address"));
                     }
+                }
+                if (null != pairListener) {
+                    pairListener.onServerFind(device);
                 }
             }
             array.add(JSON.toJSON(device));

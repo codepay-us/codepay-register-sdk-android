@@ -415,5 +415,6 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
     }
 
     override fun onServerFind(device: ECRHubDevice?) {
+        Log.e("MainActivity","发现设备"+device?.terminal_sn)
     }
 }
