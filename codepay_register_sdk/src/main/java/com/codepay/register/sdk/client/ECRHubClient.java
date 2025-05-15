@@ -159,11 +159,6 @@ public class ECRHubClient {
                 }
             }
         };
-        if (config.getConnectionTimeout() != 0) {
-            webSocketClient.setConnectionLostTimeout(config.getConnectionTimeout());
-        } else {
-            webSocketClient.setConnectionLostTimeout(5);
-        }
         payment = new WlanPayment((webSocketClient));
     }
 
