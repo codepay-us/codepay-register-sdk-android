@@ -31,6 +31,8 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
         lateinit var mClient: ECRHubClient
     }
 
+
+    
     private var mPairServer: ECRHubWebSocketDiscoveryService? = null
 
     private var mPairedList = mutableListOf<ECRHubDevice>()
