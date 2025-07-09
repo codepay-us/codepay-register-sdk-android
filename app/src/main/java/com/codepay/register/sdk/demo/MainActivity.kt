@@ -145,7 +145,15 @@ class MainActivity : Activity(), ECRHubConnectListener, OnClickListener, ECRHubP
                         return
                     }
                     // Perform the connection operation
-                    val ip = "ws://" + mPairedList[0].ip_address + ":" + mPairedList[0].port
+                    //val ip = "ws://" + mPairedList[0].ip_address + ":" + mPairedList[0].port
+                    val ipAddress = if (mPairedList[0].ip_address.contains("ws", ignoreCase = true)) {
+                        //Toast.makeText(this,  mPairedList[0].ip_address, Toast.LENGTH_LONG).show()
+                        Log.i("ipAddress",  mPairedList[0].ip_address)
+                        mPairedList[0].ip_address
+                    } else {
+                        "ws://${mPairedList[0].ip_address}:${mPairedList[0].port}"
+                    }
+                    val ip = "$ipAddress"
                     ECRHubClient.getInstance().connect(ip)
                     runOnUiThread {
                         tv_text_1.text = "connect $ip"

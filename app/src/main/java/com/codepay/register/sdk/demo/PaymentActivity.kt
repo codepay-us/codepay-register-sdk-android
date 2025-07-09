@@ -2,6 +2,7 @@ package com.codepay.register.sdk.demo
 
 import android.app.Activity
 import android.os.Bundle
+import android.widget.RadioButton
 import android.widget.Toast
 import com.alibaba.fastjson.JSON
 import com.codepay.register.sdk.client.ECRHubClient
@@ -67,8 +68,19 @@ class PaymentActivity : Activity() {
             params.tax_amount = tipAmount
             params.confirm_on_terminal = confirm_on_terminal.isChecked
             params.on_screen_tip = cb_screen_tip.isChecked
-            params.receipt_print_mode = 0
+           // params.receipt_print_mode = 0
             params.pay_scenario = "SWIPE_CARD"
+            val selectedModeId = radioGroup.checkedRadioButtonId
+            if (selectedModeId != -1) {
+                val selectedMode = findViewById<RadioButton>(selectedModeId).text.toString()
+                params.receipt_print_mode = when (selectedMode) {
+                    "No print" -> 0
+                    "Merchant" -> 1
+                    "CardHolder" -> 2
+                    "All" -> 3
+                    else -> 0
+                }
+            }
             runOnUiThread {
                 tv_btn_3.text =
                     "Send Sale data --> ${params.toJSON()}"
