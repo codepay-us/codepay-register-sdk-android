@@ -1,5 +1,7 @@
 package com.codepay.register.sdk.device;
 
+import static java.sql.DriverManager.println;
+
 import android.content.Context;
 import android.os.Build;
 import android.util.Log;
@@ -284,8 +286,8 @@ public class ECRHubWebSocketDiscoveryService implements OnServerCallback, Servic
         if (data.getTopic().equals(Constants.ECR_HUB_TOPIC_UNPAIR)) {
             data.setResponse_code("000");
             connection.send(JSON.toJSON(data).toString());
-            deletePairList(data);
             pairListener.onDeviceUnpair(data);
+            deletePairList(data);
         } else {
             pairListener.onDevicePair(data, "ws://" + data.getDevice_data().getIp_address() + ":" + data.getDevice_data().getPort());
         }
