@@ -2,6 +2,7 @@ package com.codepay.register.sdk.demo
 
 import android.app.Activity
 import android.os.Bundle
+import android.widget.RadioButton
 import android.widget.Toast
 import com.alibaba.fastjson.JSON
 import com.codepay.register.sdk.client.ECRHubClient
@@ -9,6 +10,7 @@ import com.codepay.register.sdk.client.payment.PaymentRequestParams
 import com.codepay.register.sdk.client.payment.PaymentResponseParams
 import com.codepay.register.sdk.listener.ECRHubResponseCallBack
 import com.codepay.register.sdk.util.Constants
+import kotlinx.android.synthetic.main.activity_payment.radioGroup
 import kotlinx.android.synthetic.main.activity_refund.*
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -79,6 +81,18 @@ class RefundActivity : Activity() {
             params.order_amount = amount
             params.on_screen_tip = false
             params.confirm_on_terminal = false
+            val selectedModeId = radioGroup.checkedRadioButtonId
+            if (selectedModeId != -1) {
+                val selectedMode = findViewById<RadioButton>(selectedModeId).text.toString()
+                params.receipt_print_mode = when (selectedMode) {
+                    "No print" -> 0
+                    "Merchant" -> 1
+                    "CardHolder" -> 2
+                    "All" -> 3
+                    else -> 0
+                }
+            }
+
             runOnUiThread {
                 tv_btn_3.text =
                     "Send Refund data" + params.toJSON().toString()
@@ -116,6 +130,17 @@ class RefundActivity : Activity() {
                 }
             } else {
                 params.orig_merchant_order_no = merchantOrderNo
+            }
+            val selectedModeId = radioGroup.checkedRadioButtonId
+            if (selectedModeId != -1) {
+                val selectedMode = findViewById<RadioButton>(selectedModeId).text.toString()
+                params.receipt_print_mode = when (selectedMode) {
+                    "No print" -> 0
+                    "Merchant" -> 1
+                    "CardHolder" -> 2
+                    "All" -> 3
+                    else -> 0
+                }
             }
             params.merchant_order_no = "123" + getCurDateStr("yyyyMMddHHmmss")
             params.confirm_on_terminal = false

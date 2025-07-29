@@ -164,6 +164,9 @@ public class WlanPayment extends Payment {
         if (null != params.getConfirm_on_terminal()) {
             data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
         }
+        if (null != params.getReceipt_print_mode()) {
+            data.getBiz_data().setReceipt_print_mode(params.receipt_print_mode);
+        }
         data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
@@ -191,6 +194,9 @@ public class WlanPayment extends Payment {
         }
         if (null != params.getConfirm_on_terminal()) {
             data.getBiz_data().setConfirm_on_terminal(params.confirm_on_terminal);
+        }
+        if (null != params.getReceipt_print_mode()) {
+            data.getBiz_data().setReceipt_print_mode(params.receipt_print_mode);
         }
         data.setRequest_id("111111");
         data.setTopic(params.getTopic());
