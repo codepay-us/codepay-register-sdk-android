@@ -143,7 +143,7 @@ public class ECRHubClient {
                 if (null != connectListener) {
                     connectListener.onDisconnect();
                 }
-                if ((code != 1000 /*&& code != -1*/) || remote) {
+                if ((code != 1000 && code != -1) || remote) {
                     Log.e(TAG, "reconnect");
                     new Thread(new Runnable() {
                         @Override

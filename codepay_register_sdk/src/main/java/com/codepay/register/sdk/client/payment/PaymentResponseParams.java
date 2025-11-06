@@ -264,12 +264,20 @@ public class PaymentResponseParams {
 
         private String terminal_sn;
 
+        private String signature_url;
         private String pay_channel_merchant_id;
 
         private String pay_channel_terminal_id;
 
         private String card_type;
 
+        public String getSignature_url() {
+            return signature_url;
+        }
+
+        public void setSignature_url(String signature_url) {
+            this.signature_url = signature_url;
+        }
         public void setTerminal_sn(String terminal_sn) {
             this.terminal_sn = terminal_sn;
         }

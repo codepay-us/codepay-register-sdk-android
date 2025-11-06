@@ -68,7 +68,7 @@ class PaymentActivity : Activity() {
             params.tax_amount = tipAmount
             params.confirm_on_terminal = confirm_on_terminal.isChecked
             params.on_screen_tip = cb_screen_tip.isChecked
-           // params.receipt_print_mode = 0
+            params.on_screen_signature = false
             params.pay_scenario = "SWIPE_CARD"
             val selectedModeId = radioGroup.checkedRadioButtonId
             if (selectedModeId != -1) {

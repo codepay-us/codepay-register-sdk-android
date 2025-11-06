@@ -84,6 +84,9 @@ public class WlanPayment extends Payment {
         if (null != params.getReceipt_print_mode()) {
             data.getBiz_data().setReceipt_print_mode(params.receipt_print_mode);
         }
+        if (null != params.getOn_screen_signature()){
+            data.getBiz_data().setOn_screen_signature(params.on_screen_signature);
+        }
         data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
