@@ -271,6 +271,17 @@ public class PaymentResponseParams {
 
         private String card_type;
 
+        private String card_holder_name;
+        public String getCard_holder_name() {
+            return card_holder_name;
+        }
+
+        public void setCard_holder_name(String card_holder_name) {
+            this.card_holder_name = card_holder_name;
+        }
+
+
+
         public String getSignature_url() {
             return signature_url;
         }
