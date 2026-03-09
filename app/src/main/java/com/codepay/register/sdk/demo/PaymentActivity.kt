@@ -68,11 +68,12 @@ class PaymentActivity : Activity() {
             params.tax_amount = tipAmount
             params.confirm_on_terminal = confirm_on_terminal.isChecked
             params.on_screen_tip = cb_screen_tip.isChecked
-            params.on_screen_signature = false
+            params.on_screen_signature = option_signature.isChecked
             params.pay_scenario = "SWIPE_CARD"
             val selectedModeId = radioGroup.checkedRadioButtonId
             if (selectedModeId != -1) {
                 val selectedMode = findViewById<RadioButton>(selectedModeId).text.toString()
+
                 params.receipt_print_mode = when (selectedMode) {
                     "No print" -> 0
                     "Merchant" -> 1
@@ -80,6 +81,7 @@ class PaymentActivity : Activity() {
                     "All" -> 3
                     else -> 0
                 }
+                params.receipt_print_mode = 3
             }
             runOnUiThread {
                 tv_btn_3.text =

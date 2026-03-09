@@ -1,5 +1,6 @@
 package com.codepay.register.sdk.client.payment;
 
+import com.alibaba.fastjson.annotation.JSONField;
 import com.codepay.register.sdk.util.ECRHubMessageData;
 
 public class PaymentResponseParams {
@@ -272,6 +273,32 @@ public class PaymentResponseParams {
         private String card_type;
 
         private String card_holder_name;
+
+        private com.alibaba.fastjson.JSONObject  emv_tags_obj;
+        @JSONField(serialize = false)
+        public String getEmv_tags() {
+            return emv_tags_obj != null ? emv_tags_obj.toJSONString() : null;
+        }
+
+        @JSONField(name = "emv_tags")
+        public com.alibaba.fastjson.JSONObject getEmv_tags_obj() {
+            return emv_tags_obj;
+        }
+
+        public void setEmv_tags(String emv_tags) {
+            if (emv_tags != null && !emv_tags.isEmpty()) {
+                try {
+                    this.emv_tags_obj = com.alibaba.fastjson.JSON.parseObject(emv_tags);
+                } catch (Exception e) {
+                    this.emv_tags_obj = new com.alibaba.fastjson.JSONObject();
+                }
+            } else {
+                this.emv_tags_obj = null;
+            }
+        }
+
+
+
         public String getCard_holder_name() {
             return card_holder_name;
         }
