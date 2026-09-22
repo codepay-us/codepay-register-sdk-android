@@ -1,23 +1,23 @@
 buildscript {
-    ext.kotlin_version = '1.3.41'
+    ext.kotlin_version = '1.7.22'
     repositories {
-        maven {
-            url 'https://maven.aliyun.com/repository/public/'
-        }
+        maven { url 'https://maven.aliyun.com/repository/google' }
+        maven { url 'https://maven.aliyun.com/repository/public/' }
         maven {
             url 'https://maven.aliyun.com/nexus/content/groups/public/'
         }
         google()
-        jcenter()
+        mavenCentral()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:4.1.2'
+        classpath 'com.android.tools.build:gradle:7.4.2'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
     }
 }
 
 allprojects {
     repositories {
+        maven { url 'https://maven.aliyun.com/repository/google' }
         maven {
             url 'https://maven.aliyun.com/repository/public/'
         }
@@ -26,12 +26,13 @@ allprojects {
             url 'https://maven.aliyun.com/nexus/content/groups/public/'
         }
         google()
-        jcenter()
+        mavenCentral()
         maven {
             url 'http://123.56.84.239:8070/nexus/content/groups/public'
+            allowInsecureProtocol = true
         }
         maven {
-            url 'http://maven.aliyun.com/nexus/content/repositories/releases/'
+            url 'https://maven.aliyun.com/nexus/content/repositories/releases/'
         }
     }
 }

@@ -12,6 +12,7 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
+import java.util.Locale;
 import java.util.regex.Pattern;
 
 /**
@@ -41,29 +42,54 @@ public class NetUtils {
 
     /**
      * Get local Ip address.
+     *
+     * Prefers addresses of Wi-Fi / Ethernet interfaces: on devices that also have a
+     * mobile data connection the interface enumeration may list the cellular interface
+     * first, and binding mDNS to that address makes the register unreachable from the
+     * LAN (terminals could never connect to the announced address).
      */
     public static InetAddress getLocalIPAddress() {
-        Enumeration<NetworkInterface> enumeration = null;
+        InetAddress fallback = null;
         try {
-            enumeration = NetworkInterface.getNetworkInterfaces();
-        } catch (SocketException e) {
-            e.printStackTrace();
-        }
-        if (enumeration != null) {
-            while (enumeration.hasMoreElements()) {
-                NetworkInterface nif = enumeration.nextElement();
-                Enumeration<InetAddress> inetAddresses = nif.getInetAddresses();
-                if (inetAddresses != null) {
-                    while (inetAddresses.hasMoreElements()) {
-                        InetAddress inetAddress = inetAddresses.nextElement();
-                        if (!inetAddress.isLoopbackAddress() && isIPv4Address(inetAddress.getHostAddress())) {
-                            return inetAddress;
+            Enumeration<NetworkInterface> enumeration = NetworkInterface.getNetworkInterfaces();
+            if (enumeration != null) {
+                while (enumeration.hasMoreElements()) {
+                    NetworkInterface nif = enumeration.nextElement();
+                    if (!isUsableInterface(nif)) {
+                        continue;
+                    }
+                    String name = nif.getName() == null ? "" : nif.getName().toLowerCase(Locale.ROOT);
+                    boolean preferred = name.startsWith("wlan") || name.startsWith("eth") || name.startsWith("usb");
+                    boolean skip = name.startsWith("rmnet") || name.startsWith("ccmni") || name.startsWith("tun")
+                            || name.startsWith("p2p") || name.startsWith("sw");
+                    Enumeration<InetAddress> inetAddresses = nif.getInetAddresses();
+                    if (inetAddresses != null) {
+                        while (inetAddresses.hasMoreElements()) {
+                            InetAddress inetAddress = inetAddresses.nextElement();
+                            if (!inetAddress.isLoopbackAddress() && isIPv4Address(inetAddress.getHostAddress())) {
+                                if (preferred) {
+                                    return inetAddress;
+                                }
+                                if (fallback == null && !skip) {
+                                    fallback = inetAddress;
+                                }
+                            }
                         }
                     }
                 }
             }
+        } catch (SocketException e) {
+            e.printStackTrace();
         }
-        return null;
+        return fallback;
+    }
+
+    private static boolean isUsableInterface(NetworkInterface nif) {
+        try {
+            return nif != null && !nif.isLoopback() && nif.isUp();
+        } catch (SocketException e) {
+            return false;
+        }
     }
 
     /**
@@ -79,7 +105,7 @@ public class NetUtils {
             NetworkInfo info = connectivity.getActiveNetworkInfo();
             if (info != null && info.isConnected()) {
                 // 当前网络是连接的
-                android.util.Log.e(tag, "The network is connect, netType is "
+                Log.e(tag, "The network is connect, netType is "
                         + info.getType() + ", netTypeName is " + info.getTypeName());
                 return true;
             }
@@ -96,11 +122,11 @@ public class NetUtils {
                 context.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = manager.getActiveNetworkInfo();
         if (networkInfo != null && networkInfo.isConnected()) {
-            android.util.Log.e(tag, "The network is connect, netType is "
+            Log.e(tag, "The network is connect, netType is "
                     + networkInfo.getType() + ", netTypeName is " + networkInfo.getTypeName());
             return (networkInfo.getType() == ConnectivityManager.TYPE_WIFI);
         } else {
-            android.util.Log.e(tag, "The network is null or disConnect!");
+            Log.e(tag, "The network is null or disConnect!");
             return false;
         }
     }
