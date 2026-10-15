@@ -195,6 +195,16 @@ public class ECRHubMessageData {
          */
         private String port = "";
 
+        public String getMerchant_no() {
+            return merchant_no;
+        }
+
+        public void setMerchant_no(String merchant_no) {
+            this.merchant_no = merchant_no;
+        }
+
+        private String merchant_no = "";
+
         public void setAlias_name(String alias_name) {
             this.alias_name = alias_name;
         }
