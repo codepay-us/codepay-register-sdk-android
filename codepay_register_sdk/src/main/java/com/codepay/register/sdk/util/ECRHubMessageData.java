@@ -322,7 +322,7 @@ public class ECRHubMessageData {
         private String tip_amount;
 
         private String tax_amount;
-
+        private String service_charge_amount;
         private String price_currency;
 
         private String trans_type;
@@ -363,6 +363,14 @@ public class ECRHubMessageData {
 
         private String tip_adjustment_amount;
 
+
+        public String getService_charge_amount() {
+            return service_charge_amount;
+        }
+
+        public void setService_charge_amount(String service_charge_amount) {
+            this.service_charge_amount = service_charge_amount;
+        }
 
         public void setTax_amount(String tax_amount) {
             this.tax_amount = tax_amount;

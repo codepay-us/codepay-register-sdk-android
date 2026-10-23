@@ -103,6 +103,16 @@ public class PaymentRequestParams {
 
     private String card_type;
 
+    String service_charge_amount;
+    public String getService_charge_amount() {
+        return service_charge_amount;
+    }
+
+    public void setService_charge_amount(String service_charge_amount) {
+        this.service_charge_amount = service_charge_amount;
+    }
+
+
     public void setTax_amount(String tax_amount) {
         this.tax_amount = tax_amount;
     }

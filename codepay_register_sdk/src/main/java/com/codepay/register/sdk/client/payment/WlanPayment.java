@@ -67,6 +67,10 @@ public class WlanPayment extends Payment {
         if (null != params.tip_amount) {
             data.getBiz_data().setTip_amount(params.tip_amount);
         }
+        if (null != params.service_charge_amount) {
+            data.getBiz_data().setService_charge_amount(params.service_charge_amount);
+        }
+
         data.getBiz_data().setMerchant_order_no(params.merchant_order_no);
         data.getBiz_data().setTrans_type(params.trans_type);
         data.getBiz_data().setOrder_amount(params.order_amount);
@@ -160,6 +164,9 @@ public class WlanPayment extends Payment {
         }
         if (null != params.tip_amount) {
             data.getBiz_data().setTip_amount(params.tip_amount);
+        }
+        if (null != params.service_charge_amount) {
+            data.getBiz_data().setService_charge_amount(params.service_charge_amount);
         }
         if (null != params.getOn_screen_tip()) {
             data.getBiz_data().setOn_screen_tip(params.on_screen_tip);
