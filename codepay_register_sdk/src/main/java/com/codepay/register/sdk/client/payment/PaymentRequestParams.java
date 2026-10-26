@@ -101,7 +101,7 @@ public class PaymentRequestParams {
 
     String cashier;
 
-    private String card_type;
+    String card_type;
 
     String service_charge_amount;
     public String getService_charge_amount() {

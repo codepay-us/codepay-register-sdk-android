@@ -91,6 +91,9 @@ public class WlanPayment extends Payment {
         if (null != params.getOn_screen_signature()){
             data.getBiz_data().setOn_screen_signature(params.on_screen_signature);
         }
+        if (null != params.getCard_type()){
+            data.getBiz_data().setCard_type(params.card_type);
+        }
         data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
@@ -177,6 +180,9 @@ public class WlanPayment extends Payment {
         if (null != params.getReceipt_print_mode()) {
             data.getBiz_data().setReceipt_print_mode(params.receipt_print_mode);
         }
+        if (null != params.getCard_type()){
+            data.getBiz_data().setCard_type(params.card_type);
+        }
         data.setRequest_id("111111");
         data.setTopic(params.getTopic());
         data.setApp_id(params.app_id);
@@ -238,6 +244,9 @@ public class WlanPayment extends Payment {
             data.getBiz_data().setPay_scenario(params.pay_scenario);
         } else {
             data.getBiz_data().setPay_scenario("SWIPE_CARD");
+        }
+        if (null != params.getCard_type()){
+            data.getBiz_data().setCard_type(params.card_type);
         }
         data.getBiz_data().setPay_scenario(params.pay_scenario);
         data.setRequest_id("111111");
