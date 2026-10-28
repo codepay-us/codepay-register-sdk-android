@@ -337,6 +337,8 @@ public class ECRHubMessageData {
 
         private String card_network_type;
 
+        private String card_brand;
+
         private boolean required_terminal_authentication;
 
         private boolean on_screen_signature;
@@ -363,6 +365,13 @@ public class ECRHubMessageData {
 
         private String tip_adjustment_amount;
 
+        public String getCard_brand() {
+            return card_brand;
+        }
+
+        public void setCard_brand(String card_brand) {
+            this.card_brand = card_brand;
+        }
 
         public String getService_charge_amount() {
             return service_charge_amount;
